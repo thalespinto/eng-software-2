@@ -1,0 +1,23 @@
+{
+  "name": "carona-back",
+  "version": "1.0.0",
+  "description": "Um aplicativo de carona pra conectar pessoas da UFF",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thalespinto/eng-software-2.git#main-back"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thalespinto/eng-software-2/issues"
+  },
+  "homepage": "https://github.com/thalespinto/eng-software-2/tree/main-back#readme",
+  "dependencies": {
+    "axes": "^0.0.0",
+    "express": "^4.19.2"
+  }
+}
