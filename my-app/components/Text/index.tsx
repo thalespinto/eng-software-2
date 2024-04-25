@@ -1,5 +1,5 @@
 import { useTheme } from "@rneui/themed";
-import { Text as RNText, StyleProp, TextStyle } from "react-native";
+import { Text as RNText, StyleProp, TextProps, TextStyle } from "react-native";
 
 interface ITextVariants {
   actions: StyleProp<TextStyle>;
@@ -10,12 +10,12 @@ interface ITextVariants {
   messages: StyleProp<TextStyle>;
 }
 
-interface IText {
+interface IText extends TextProps {
   children: string;
   variant?: "Action" | "Body" | "Menu" | "Title" | "Subtitle" | "Message";
 }
 
-const Text = ({ children, variant }: IText) => {
+const Text = ({ children, variant, ...props }: IText) => {
   const { theme } = useTheme();
 
   const textVariants: ITextVariants = {
@@ -63,9 +63,9 @@ const Text = ({ children, variant }: IText) => {
     case "Title":
       textStyle = textVariants.title;
       break;
-	case "Subtitle":
-		textStyle = textVariants.subtitle;
-		break;
+    case "Subtitle":
+      textStyle = textVariants.subtitle;
+      break;
     case "Message":
       textStyle = textVariants.messages;
       break;
@@ -74,7 +74,11 @@ const Text = ({ children, variant }: IText) => {
       break;
   }
 
-  return <RNText style={textStyle}>{children}</RNText>;
+  return (
+    <RNText style={[textStyle, props?.style]} {...props}>
+      {children}
+    </RNText>
+  );
 };
 
 export default Text;
