@@ -1,12 +1,16 @@
 import { StyleSheet } from "react-native";
 import BottomNav from "./components/BottomNav";
 import { NavigationContainer } from "@react-navigation/native";
+import { ThemeProvider } from "@rneui/themed";
+import { theme } from "./styles/theme";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <BottomNav />
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <BottomNav />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 
