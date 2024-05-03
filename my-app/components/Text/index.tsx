@@ -1,4 +1,5 @@
 import { useTheme } from "@rneui/themed";
+import { ReactNode } from "react";
 import { Text as RNText, StyleProp, TextProps, TextStyle } from "react-native";
 
 interface ITextVariants {
@@ -11,7 +12,7 @@ interface ITextVariants {
 }
 
 interface IText extends TextProps {
-  children: string;
+  children: ReactNode;
   variant?: "Action" | "Body" | "Menu" | "Title" | "Subtitle" | "Message";
 }
 
@@ -75,7 +76,7 @@ const Text = ({ children, variant, ...props }: IText) => {
   }
 
   return (
-    <RNText style={[textStyle, props?.style]} {...props}>
+    <RNText {...props} style={[textStyle, props?.style]}>
       {children}
     </RNText>
   );
