@@ -1,15 +1,14 @@
 import { Text, View } from "react-native";
-import HitchHike from "../../screens/HItchHike/index.";
-import OfferRide from "../../screens/OfferRide";
-import Profile from "../../screens/Profile";
-import RidesList from "../../screens/RidesList";
+import HitchHike from "../../screens/Private/HItchHike/index.";
+import OfferRide from "../../screens/Private/OfferRide";
+import Profile from "../../screens/Private/Profile";
+import RidesList from "../../screens/Private/RidesList";
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-const Tab = createBottomTabNavigator();
 const screenOptions: BottomTabNavigationOptions = {
   tabBarShowLabel: false,
   headerShown: false,
@@ -24,6 +23,7 @@ const screenOptions: BottomTabNavigationOptions = {
   },
 };
 const BottomNav = () => {
+  const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen
@@ -38,7 +38,13 @@ const BottomNav = () => {
                   size={24}
                   color={focused ? "#16247d" : "#2D3F56"}
                 />
-                <Text style={{ fontSize: 12, color: "#2D3F56", fontWeight: focused ? "800" : "400" }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#2D3F56",
+                    fontWeight: focused ? "800" : "400",
+                  }}
+                >
                   PEDIR CARONA
                 </Text>
               </View>
@@ -58,7 +64,13 @@ const BottomNav = () => {
                   size={24}
                   color={focused ? "#16247d" : "#2D3F56"}
                 />
-                <Text style={{ fontSize: 12, color: "#2D3F56", fontWeight: focused ? "800" : "400"  }}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#2D3F56",
+                    fontWeight: focused ? "800" : "400",
+                  }}
+                >
                   DAR CARONA
                 </Text>
               </View>
@@ -78,7 +90,15 @@ const BottomNav = () => {
                   size={24}
                   color={focused ? "#16247d" : "#2D3F56"}
                 />
-                <Text style={{ fontSize: 12, color: "#2D3F56", fontWeight: focused ? "800" : "400"  }}>CARONAS</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#2D3F56",
+                    fontWeight: focused ? "800" : "400",
+                  }}
+                >
+                  CARONAS
+                </Text>
               </View>
             );
           },
@@ -96,7 +116,15 @@ const BottomNav = () => {
                   size={24}
                   color={focused ? "#16247d" : "#2D3F56"}
                 />
-                <Text style={{ fontSize: 12, color: "#2D3F56", fontWeight: focused ? "800" : "400"  }}>PERFIL</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: "#2D3F56",
+                    fontWeight: focused ? "800" : "400",
+                  }}
+                >
+                  PERFIL
+                </Text>
               </View>
             );
           },

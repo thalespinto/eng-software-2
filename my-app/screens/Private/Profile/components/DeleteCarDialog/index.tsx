@@ -1,7 +1,7 @@
 import { Button, Dialog, useTheme } from "@rneui/themed";
-import { ICar } from "../../../../interfaces/ICar";
+import { ICar } from "../../../../../interfaces/ICar";
 import { View } from "react-native";
-import Text from "../../../../components/Text";
+import Text from "../../../../../components/Text";
 
 interface IDeleteCarDialog {
   car: ICar;

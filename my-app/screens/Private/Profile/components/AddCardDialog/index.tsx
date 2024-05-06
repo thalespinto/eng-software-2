@@ -1,31 +1,32 @@
 import { Button, Dialog, useTheme, Input } from "@rneui/themed";
-import { ICar } from "../../../../interfaces/ICar";
+import { ICar } from "../../../../../interfaces/ICar";
 import { View } from "react-native";
-import Text from "../../../../components/Text";
+import Text from "../../../../../components/Text";
 
-interface IEditCarDialog {
-  car: ICar;
+interface IAddCarDialog {
   isVisible: boolean;
   onBackdropPress: () => void;
 }
 
-const EditCarDialog = ({ car, isVisible, onBackdropPress }: IEditCarDialog) => {
+const AddCarDialog = ({ isVisible, onBackdropPress }: IAddCarDialog) => {
   const { theme } = useTheme();
 
   return (
     <Dialog isVisible={isVisible} onBackdropPress={onBackdropPress}>
       <Text variant="Subtitle" style={{ textAlign: "center" }}>
-        Edite o veículo
+        Insira os dados do veículo
       </Text>
       <View style={{ marginTop: 20 }}>
-        <Input label="Modelo" defaultValue={car.modelo} />
-        <Input label="Placa" defaultValue={car.placa} />
+        <Input label="Modelo" />
+        <Input label="Placa" />
         <Button onPress={onBackdropPress} color="secondary" uppercase>
-          <Text variant="Action" style={{color: theme.colors.white}}>Confirmar</Text>
+          <Text variant="Action" style={{ color: theme.colors.white }}>
+            Confirmar
+          </Text>
         </Button>
       </View>
     </Dialog>
   );
 };
 
-export default EditCarDialog;
+export default AddCarDialog;
