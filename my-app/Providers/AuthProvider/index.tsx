@@ -1,9 +1,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
-  useMemo,
-  useReducer,
   useState,
 } from "react";
 import { ILogin } from "../../interfaces/ILogin";
