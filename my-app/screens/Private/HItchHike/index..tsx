@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import OriginAndDestination from "./components/OriginAndDestination";
 import { userContext } from "../../../Providers/UserProvider";
 import { IHike } from "../../../interfaces/IHike";
+import RideDate from "./components/Date";
 
 const MyComponent = (props: any) => {
   return (
@@ -20,7 +21,7 @@ const HitchHike = () => {
 
   const content = [
     <OriginAndDestination setHikeInfos={setHikeInfos} />,
-    <MyComponent title="Component 2" />,
+    <RideDate/>,
     <MyComponent title="Component 3" />,
     <MyComponent title="Component 4" />,
   ];
