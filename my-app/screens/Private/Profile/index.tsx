@@ -1,15 +1,19 @@
 import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
-import PageContainer from "../../components/PageContainer";
-import Text from "../../components/Text";
+import PageContainer from "../../../components/PageContainer";
+import Text from "../../../components/Text";
 import { Avatar, Button, useTheme, Icon } from "@rneui/themed";
 import { Rating } from "react-native-ratings";
 import CarCard from "./components/CarCard";
-import { veiculos } from "../../mock/cars";
-import { useState } from "react";
+import { veiculos } from "../../../mock/cars";
+import { useContext, useState } from "react";
 import AddCarDialog from "./components/AddCardDialog";
+import { userContext } from "../../../Providers/UserProvider";
+import { authContext } from "../../../Providers/AuthProvider";
 
 const Profile = () => {
+  const authInfos = useContext(authContext);
+  const userInfos = useContext(userContext);
   const { theme } = useTheme();
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
@@ -29,7 +33,7 @@ const Profile = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text variant="Title">Nome do usuário</Text>
+          <Text variant="Title">{userInfos?.user?.nome}</Text>
           <Rating imageSize={36} readonly startingValue={2} />
         </View>
         <View
@@ -57,7 +61,7 @@ const Profile = () => {
               borderRadius: 18,
             }}
           >
-            CPF: 11111111111
+            CPF: {userInfos?.user?.cpf}
           </Text>
         </View>
       </View>
@@ -92,6 +96,12 @@ const Profile = () => {
         isVisible={openAddCarDialog}
         onBackdropPress={toggleAddCarDialog}
       />
+      <Button
+        buttonStyle={{ marginTop: 20, marginBottom: 150 }}
+        onPress={() => authInfos?.SignOut()}
+      >
+        Sair
+      </Button>
     </PageContainer>
   );
 };
@@ -104,7 +114,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 30,
     marginLeft: 15,
     marginRight: 15,
   },

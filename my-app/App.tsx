@@ -1,24 +1,21 @@
-import { StyleSheet } from "react-native";
-import BottomNav from "./components/BottomNav";
-import { NavigationContainer } from "@react-navigation/native";
+import "react-native-gesture-handler";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "./styles/theme";
+import Routes from "./Routes";
+import AuthProvider from "./Providers/AuthProvider";
+import UserProvider from "./Providers/UserProvider";
+import LocationProvider from "./Providers/LocationProvider";
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <BottomNav />
-      </NavigationContainer>
+      <UserProvider>
+        <AuthProvider>
+          <LocationProvider>
+            <Routes />
+          </LocationProvider>
+        </AuthProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
