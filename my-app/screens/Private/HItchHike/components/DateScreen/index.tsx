@@ -8,7 +8,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { hikeContext as hc } from "../../Provider/HikeProvider";
 import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
-const HikeDate = () => {
+const DateScreen = () => {
   const hikeContext = useContext(hc);
 
   const [date, setDate] = useState<Date>(
@@ -81,4 +81,4 @@ const HikeDate = () => {
   );
 };
 
-export default HikeDate;
+export default DateScreen;

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import GooglePlacesInput from "../../../../../components/GooglePlacesInput";
 
-const OriginAndDestination = () => {
+const OriginAndDestinationScreen = () => {
   return (
     <View style={{ paddingTop: 30 }}>
       <GooglePlacesInput placeHolder="De" />
@@ -10,4 +10,4 @@ const OriginAndDestination = () => {
   );
 };
 
-export default OriginAndDestination;
+export default OriginAndDestinationScreen;

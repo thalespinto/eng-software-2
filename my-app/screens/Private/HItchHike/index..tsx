@@ -1,10 +1,11 @@
 import { Text, View } from "react-native";
 import Stepper from "../../../components/Stepper";
 import { useState } from "react";
-import OriginAndDestination from "./components/OriginAndDestination";
-import HikeDate from "./components/Date";
+import OriginAndDestinationScreen from "./components/OriginAndDestinationScreen";
+import DateScreen from "./components/DateScreen";
 import { useTheme } from "@rneui/themed";
 import HikeProvider from "./Provider/HikeProvider";
+import PassangersScreen from "./components/PassangersScreen";
 
 const MyComponent = (props: any) => {
   return (
@@ -20,9 +21,9 @@ const HitchHike = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const content = [
-    <OriginAndDestination />,
-    <HikeDate />,
-    <MyComponent title="Component 3" />,
+    <OriginAndDestinationScreen />,
+    <DateScreen />,
+    <PassangersScreen />,
     <MyComponent title="Component 4" />,
   ];
 
