@@ -123,7 +123,7 @@ const Stepper: FC<StepperProps> = (props) => {
           );
         })}
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false}>
         {content[active]}
       </ScrollView>
       {showButton && (

@@ -13,7 +13,7 @@ interface IMarker {
 }
 
 interface IMap {
-  setLocationText: React.Dispatch<React.SetStateAction<string>>;
+  setLocationText: (value: string) => void;
   setOpenMap: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -34,6 +34,20 @@ const Map = ({ setLocationText, setOpenMap }: IMap) => {
       coordinate: {
         latitude: -22.89833961313873,
         longitude: -43.13233189121773,
+      },
+    },
+    {
+      name: "Alcântara",
+      coordinate: {
+        latitude: -22.822237603561355,
+        longitude: -43.00100039240775,
+      },
+    },
+    {
+      name: "Rodoviária Novo Rio",
+      coordinate: {
+        latitude: -22.89908289663967,
+        longitude: -43.20941446238868,
       },
     },
   ];
