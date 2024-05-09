@@ -1,31 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Map from "../Map";
 import { Icon } from "@rneui/themed";
+import { hikeContext } from "../../screens/Private/HItchHike/Provider/HikeProvider";
 
 interface IGooglePlacesInput {
   placeHolder: string;
-  setLocationText: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const GooglePlacesInput = ({
-  placeHolder,
-  setLocationText,
-}: IGooglePlacesInput) => {
+const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
+  const hikeInfos = useContext(hikeContext);
   const ref = useRef<any>();
 
   const [openMap, setOpenMap] = useState(false);
 
   useEffect(() => {
-    setLocationText(ref.current?.getAddressText());
-  }, [ref.current?.setAddressText]);
+    placeHolder === "De"
+      ? ref.current?.setAddressText(hikeInfos?.hikeInfos.origin)
+      : ref.current?.setAddressText(hikeInfos?.hikeInfos.destination);
+  }, []);
 
   return (
     <>
       {openMap && (
         <Map
-          setLocationText={ref.current?.setAddressText}
+          setLocationText={(value) => {
+            ref.current?.setAddressText(value);
+            placeHolder === "De"
+              ? hikeInfos?.setOrigin(value)
+              : hikeInfos?.setDestination(value);
+          }}
           setOpenMap={setOpenMap}
         />
       )}
@@ -46,9 +51,14 @@ const GooglePlacesInput = ({
                 width: 300,
               },
             }}
+            onPress={(data) =>
+              placeHolder === "De"
+                ? hikeInfos?.setOrigin(data.description)
+                : hikeInfos?.setDestination(data.description)
+            }
             placeholder={`${placeHolder}                                                                            `}
             query={{
-              key: "AIzaSyAuAxfURi1SqjZuoSAmmm78LAGfPK4_fZo",
+              key: "",
               language: "pt-br",
               location: `${-22.900101722294394},${-43.131130042074695}`,
               radius: "10000",
