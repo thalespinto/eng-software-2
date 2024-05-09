@@ -3,7 +3,6 @@ import React, { FC, useState, ReactElement } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   ViewStyle,
   TextStyle,
   ScrollView,
