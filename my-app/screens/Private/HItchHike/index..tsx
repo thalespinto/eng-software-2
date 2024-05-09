@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import Stepper from "../../../components/Stepper";
 import { useState } from "react";
 import OriginAndDestination from "./components/OriginAndDestination";
-import RideDate from "./components/Date";
+import HikeDate from "./components/Date";
 import { useTheme } from "@rneui/themed";
 import HikeProvider from "./Provider/HikeProvider";
 
@@ -21,7 +21,7 @@ const HitchHike = () => {
 
   const content = [
     <OriginAndDestination />,
-    <RideDate />,
+    <HikeDate />,
     <MyComponent title="Component 3" />,
     <MyComponent title="Component 4" />,
   ];

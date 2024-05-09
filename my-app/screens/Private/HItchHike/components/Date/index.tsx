@@ -4,10 +4,16 @@ import {
 } from "@react-native-community/datetimepicker";
 import PageContainer from "../../../../../components/PageContainer";
 import { Input } from "@rneui/themed";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { hikeContext as hc } from "../../Provider/HikeProvider";
+import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
-const RideDate = () => {
-  const [date, setDate] = useState<Date>(new Date());
+const HikeDate = () => {
+  const hikeContext = useContext(hc);
+
+  const [date, setDate] = useState<Date>(
+    hikeContext?.hikeInfos.date ? hikeContext.hikeInfos.date : new Date()
+  );
 
   const dateInputRef = useRef<any>(null);
 
@@ -16,7 +22,6 @@ const RideDate = () => {
     selectedDate?: Date | undefined
   ) => {
     const currentDate = selectedDate;
-    console.log(selectedDate);
     setDate(currentDate!);
   };
 
@@ -52,6 +57,10 @@ const RideDate = () => {
     return `${hours}:${minutes}`;
   }
 
+  useEffect(() => {
+    hikeContext?.setHikeInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 3) }));
+  }, [date]);
+
   return (
     <>
       <PageContainer>
@@ -72,4 +81,4 @@ const RideDate = () => {
   );
 };
 
-export default RideDate;
+export default HikeDate;
