@@ -60,7 +60,7 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
             }
             placeholder={`${placeHolder}                                                                            `}
             query={{
-              key: "AIzaSyA0oaZUzyjCcQJgKsFy8PFUHpt_Phlo7Dw",
+              key: "",
               language: "pt-br",
               location: `${-22.900101722294394},${-43.131130042074695}`,
               radius: "10000",
