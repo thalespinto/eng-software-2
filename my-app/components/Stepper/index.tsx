@@ -1,13 +1,6 @@
 import { Button } from "@rneui/themed";
 import React, { FC, useState, ReactElement } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ViewStyle,
-  TextStyle,
-  ScrollView,
-} from "react-native";
+import { View, Text, ViewStyle, TextStyle, ScrollView } from "react-native";
 
 export interface StepperProps {
   active: number;
@@ -59,7 +52,7 @@ const Stepper: FC<StepperProps> = (props) => {
     });
   };
   return (
-    <View style={wrapperStyle}>
+    <View style={{display: "flex", flexDirection: "column", height: "95%"}}>
       <View
         style={{
           flexDirection: "row",
@@ -123,7 +116,10 @@ const Stepper: FC<StepperProps> = (props) => {
           );
         })}
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
         {content[active]}
       </ScrollView>
       {showButton && (
@@ -131,6 +127,7 @@ const Stepper: FC<StepperProps> = (props) => {
           style={{
             flexDirection: "column",
             gap: 5,
+            justifyContent: "flex-end",
           }}
         >
           {content.length - 1 !== active && (

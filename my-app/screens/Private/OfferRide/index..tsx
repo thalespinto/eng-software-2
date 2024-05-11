@@ -3,9 +3,12 @@ import Stepper from "../../../components/Stepper";
 import { useState } from "react";
 import OriginAndDestinationScreen from "./components/OriginAndDestinationScreen";
 import DateScreen from "./components/DateScreen";
+import CNHScreen from "./components/CNHScreen";
+import AddV from "./components/AddVehicle";
+import PassengerScreen from "./components/PassengerScreen";
+import ConfirmationScreen from "./components/ConfirmationScreen";
 import { useTheme } from "@rneui/themed";
-import HikeProvider from "./Provider/HikeProvider";
-import PassangersScreen from "./components/PassangersScreen";
+import RideProvider from "./Provider/RideProvider";
 
 const MyComponent = (props: any) => {
   return (
@@ -15,16 +18,18 @@ const MyComponent = (props: any) => {
   );
 };
 
-const HitchHike = () => {
+const OfferRide = () => {
   const { theme } = useTheme();
 
   const [activeStep, setActiveStep] = useState(0);
 
   const content = [
+    <CNHScreen />,
+    <AddV />,
     <OriginAndDestinationScreen />,
     <DateScreen />,
-    <PassangersScreen />,
-    <MyComponent title="Component 4" />,
+    <PassengerScreen />,
+    <ConfirmationScreen />,
   ];
 
   return (
@@ -36,7 +41,7 @@ const HitchHike = () => {
           paddingTop: 50,
         }}
       >
-        <HikeProvider>
+        <RideProvider>
           <Stepper
             active={activeStep}
             content={content}
@@ -48,10 +53,10 @@ const HitchHike = () => {
               setActiveStep((p) => p + 1);
             }}
           />
-        </HikeProvider>
+        </RideProvider>
       </View>
     </>
   );
 };
 
-export default HitchHike;
+export default OfferRide;
