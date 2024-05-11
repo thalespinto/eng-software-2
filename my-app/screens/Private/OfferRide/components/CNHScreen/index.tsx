@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Text, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Input } from '@rneui/themed';
+import { hikeContext as hc } from "../../Provider/RideProvider"; // Importe o contexto
 
 const CNHScreen = () => {
+  const hikeContext = useContext(hc); // Corrigido para useContext(hc)
   const [cnhNumber, setCNHNumber] = useState('');
+  const cnhInputRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (hikeContext) {
+      setCNHNumber(hikeContext.hikeInfos.cnh ?? ''); // Define o número da CNH a partir do contexto
+    }
+  }, [hikeContext]);
+
+  const updateCNH = (cnh: string) => {
+    if (hikeContext) {
+      hikeContext.setCNH(cnh); // Utiliza a função setCNH do contexto para atualizar a CNH
+    }
+    setCNHNumber(cnh);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -14,9 +30,10 @@ const CNHScreen = () => {
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }} keyboardShouldPersistTaps="handled">
         <Text style={{ fontSize: 20, marginBottom: 10, textAlign: 'center' }}>Primeiro precisamos confirmar sua carteira de habilitação</Text>
         <Input
+          ref={cnhInputRef}
           style={{ width: '100%', height: 40, paddingHorizontal: 10, marginBottom: 10 }}
           placeholder="Nº da Carteira de Habilitação"
-          onChangeText={setCNHNumber}
+          onChangeText={updateCNH}
           value={cnhNumber}
           keyboardType="numeric"
         />
@@ -26,4 +43,3 @@ const CNHScreen = () => {
 };
 
 export default CNHScreen;
-

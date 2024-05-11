@@ -1,36 +1,61 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
-import { IHike } from "../../../../../interfaces/IHike";
+import React, { createContext, useState, ReactNode } from 'react';
+import { IOffer } from "../../../../../interfaces/IOffer";
 import { IUser } from "../../../../../interfaces/IUser";
 
+interface IVehicle {
+  modelo: string;
+  placa: string;
+  capacidade: string;
+}
+
 export const hikeContext = createContext<{
-  hikeInfos: Partial<IHike>;
-  setHikeInfos: React.Dispatch<React.SetStateAction<Partial<IHike>>>;
+  hikeInfos: Partial<IOffer>;
+  setHikeInfos: React.Dispatch<React.SetStateAction<Partial<IOffer>>>;
   setOrigin: (origin: string) => void;
   setDestination: (destination: string) => void;
-  setPassangers: (passangers: IUser[]) => void;
+  setPassengers: (passengers: IUser[]) => void;
+  setCNH: (cnh: string) => void;
+  vehicles: IVehicle[];
+  addVehicle: (vehicle: IVehicle) => void;
+  deleteVehicle: (index: number) => void;
 } | null>(null);
 
 const RideProvider = ({ children }: { children: ReactNode }) => {
-  const [hikeInfos, setHikeInfos] = useState<Partial<IHike>>({
+  const [hikeInfos, setHikeInfos] = useState<Partial<IOffer>>({
     destination: "",
     origin: "",
+    date: new Date(),
+    passengers: [],
+    cnh: "",
   });
 
+  const [vehicles, setVehicles] = useState<IVehicle[]>([]);
+
   const setOrigin = (origin: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, origin: origin }));
+    setHikeInfos((prevState) => ({ ...prevState, origin }));
   };
 
   const setDestination = (destination: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, destination: destination }));
+    setHikeInfos((prevState) => ({ ...prevState, destination }));
   };
 
-  const setPassangers = (passangers: IUser[]) => {
-    setHikeInfos((prevState) => ({ ...prevState, passengers: passangers }));
+  const setPassengers = (passengers: IUser[]) => {
+    setHikeInfos((prevState) => ({ ...prevState, passengers }));
   };
 
-  useEffect(() => {
-    console.log(hikeInfos);
-  }, [hikeInfos]);
+  const setCNH = (cnh: string) => {
+    setHikeInfos((prevState) => ({ ...prevState, cnh }));
+  };
+
+  const addVehicle = (vehicle: IVehicle) => {
+    setVehicles([...vehicles, vehicle]);
+  };
+
+  const deleteVehicle = (index: number) => {
+    const updatedVehicles = [...vehicles];
+    updatedVehicles.splice(index, 1);
+    setVehicles(updatedVehicles);
+  };
 
   return (
     <hikeContext.Provider
@@ -39,7 +64,11 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
         setHikeInfos,
         setOrigin,
         setDestination,
-        setPassangers,
+        setPassengers,
+        setCNH,
+        vehicles,
+        addVehicle,
+        deleteVehicle,
       }}
     >
       {children}

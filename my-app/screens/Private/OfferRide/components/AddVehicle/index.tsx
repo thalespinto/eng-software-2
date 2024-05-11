@@ -1,40 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Swipeable } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { hikeContext as hc } from "../../Provider/RideProvider";
+import { Swipeable } from 'react-native-gesture-handler';
 
-
-const AddV = () => {
+const AddVehicle = () => {
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [capacidade, setCapacidade] = useState('');
-  const [veiculos, setVeiculos] = useState<{ modelo: string; placa: string; capacidade: string; }[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
-
-  const saveSelectedVehicleIndex = async (index: number | null) => {
-    try {
-      await AsyncStorage.setItem('selectedVehicleIndex', JSON.stringify(index));
-    } catch (error) {
-      console.error('Erro ao salvar o índice do veículo selecionado:', error);
-    }
-  };
-
-  const loadSelectedVehicleIndex = async () => {
-    try {
-      const index = await AsyncStorage.getItem('selectedVehicleIndex');
-      if (index !== null) {
-        setSelectedVehicleIndex(parseInt(index));
-      }
-    } catch (error) {
-      console.error('Erro ao carregar o índice do veículo selecionado:', error);
-    }
-  };
-
-  useEffect(() => {
-    loadSelectedVehicleIndex();
-  }, []);
+  const hikeContext = useContext(hc);
 
   const handleAddVehicle = () => {
     if (!modelo || !placa || !capacidade) {
@@ -46,31 +23,19 @@ const AddV = () => {
       placa,
       capacidade,
     };
-    setVeiculos([...veiculos, newVehicle]);
+    hikeContext?.addVehicle(newVehicle);
     setModelo('');
     setPlaca('');
     setCapacidade('');
     setShowModal(false);
   };
 
-  const toggleSelectVehicle = (index: number) => {
-    if (selectedVehicleIndex === index) {
-      setSelectedVehicleIndex(null);
-      saveSelectedVehicleIndex(null);
-    } else {
-      setSelectedVehicleIndex(index);
-      saveSelectedVehicleIndex(index);
-    }
+  const deleteVehicle = (index: number) => {
+    hikeContext?.deleteVehicle(index);
   };
 
-  const deleteVehicle = (index: number) => {
-    const updatedVehicles = [...veiculos];
-    updatedVehicles.splice(index, 1);
-    setVeiculos(updatedVehicles);
-    if (selectedVehicleIndex === index) {
-      setSelectedVehicleIndex(null);
-      saveSelectedVehicleIndex(null);
-    }
+  const toggleSelectVehicle = (index: number) => {
+    setSelectedVehicleIndex(index === selectedVehicleIndex ? null : index);
   };
 
   return (
@@ -81,7 +46,7 @@ const AddV = () => {
       </TouchableOpacity>
       <ScrollView>
         <View>
-          {veiculos.map((veiculo, index) => (
+          {hikeContext?.vehicles.map((vehicle, index) => (
             <Swipeable
               key={index}
               renderRightActions={() => (
@@ -92,18 +57,15 @@ const AddV = () => {
               onSwipeableRightWillOpen={() => deleteVehicle(index)}
             >
               <TouchableOpacity
-                style={{
-                  backgroundColor: selectedVehicleIndex === index ? '#3F51B5' : '#f0f0f0',
-                  marginBottom: 10,
-                  padding: 10,
-                  borderRadius: 5,
-                }}
+                style={[
+                  styles.vehicleItem,
+                  selectedVehicleIndex === index && styles.selectedVehicleItem,
+                ]}
                 onPress={() => toggleSelectVehicle(index)}
-                onLongPress={() => setSelectedVehicleIndex(null)}
               >
-                <Text>{veiculo.modelo}</Text>
-                <Text>{veiculo.placa}</Text>
-                <Text>{veiculo.capacidade}</Text>
+                <Text>{vehicle.modelo}</Text>
+                <Text>{vehicle.placa}</Text>
+                <Text>{vehicle.capacidade}</Text>
               </TouchableOpacity>
             </Swipeable>
           ))}
@@ -197,6 +159,15 @@ const styles = StyleSheet.create({
   cancelButton: {
     backgroundColor: 'red',
   },
+  vehicleItem: {
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 5,
+  },
+  selectedVehicleItem: {
+    backgroundColor: 'blue',
+  },
 });
 
-export default AddV;
+export default AddVehicle;
+
