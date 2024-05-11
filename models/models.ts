@@ -5,18 +5,13 @@ interface UsuarioAttributes {
     cpf: string;
     senha: string;
     nome: string;
-    esta_oferecendo_carona: boolean;
-    reputacao?: number;
 }
 
 class Usuario extends Model<UsuarioAttributes> implements UsuarioAttributes {
     public id!: number;
-    public login!: string;
     public cpf!: string;
     public senha!: string;
     public nome!: string;
-    public esta_oferecendo_carona!: boolean;
-    public reputacao?: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -36,13 +31,6 @@ Usuario.init(
         nome: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        esta_oferecendo_carona: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        reputacao: {
-            type: DataTypes.INTEGER,
         },
     },
     {
@@ -96,38 +84,36 @@ Veiculo.init(
 ); 
 export { Veiculo };
 
-interface CaronaAtualAttributes {
-    local_de_partida: string;
+interface CaronaAttributes {
+    origem: string;
     destino: string;
     data: Date;
     horario_de_partida: Date;
     horario_de_retorno: Date;
     qt_de_passageiros: number;
     aceita_automaticamente: boolean;
-    em_progresso: boolean;
     raio_de_aceitacao_em_km: number;
 }
 
-class CaronaAtual extends Model<CaronaAtualAttributes> implements CaronaAtualAttributes {
+class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
     public id_carona_atual!: number;
     public id_usuario!: number;
-    public local_de_partida!: string;
+    public origem!: string;
     public destino!: string;
     public data!: Date;
     public horario_de_partida!: Date;
     public horario_de_retorno!: Date;
     public qt_de_passageiros!: number;
     public aceita_automaticamente!: boolean;
-    public em_progresso!: boolean;
     public raio_de_aceitacao_em_km!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
 
-CaronaAtual.init(
+Carona.init(
     {
-        local_de_partida: {
+        origem: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -155,10 +141,6 @@ CaronaAtual.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        em_progresso: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
         raio_de_aceitacao_em_km: {
             type: DataTypes.DOUBLE,
             allowNull: false,
@@ -166,61 +148,13 @@ CaronaAtual.init(
     },
     {
         sequelize,
-        tableName: 'CARONAS_ATUAIS',
+        tableName: 'CARONA',
         timestamps: false,
     }
 );
 
-CaronaAtual.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-export { CaronaAtual };
-
-interface CaronaPassadaAttributes {
-    local_de_partida: string;
-    destino: string;
-    data: Date;
-    qt_de_passageiros: number;
-}
-
-class CaronaPassada extends Model<CaronaPassadaAttributes> implements CaronaPassadaAttributes {
-    public id_carona_passada!: number;
-    public id_usuario!: number;
-    public local_de_partida!: string;
-    public destino!: string;
-    public data!: Date;
-    public qt_de_passageiros!: number;
-
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-}
-
-CaronaPassada.init(
-    {
-        local_de_partida: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        destino: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        data: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        qt_de_passageiros: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'CARONAS_PASSADAS',
-        timestamps: false,
-    }
-);
-
-CaronaPassada.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-export { CaronaPassada };
+Carona.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+export { Carona };
 
 interface AvaliacaoAttributes {
     qualidade_da_carona: number;
@@ -246,12 +180,12 @@ Avaliacao.init(
     },
     {
         sequelize,
-        tableName: 'AVALIACOES',
+        tableName: 'AVALIACAO',
         timestamps: false,
     }
 );
 
 Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliador' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliado' });
-Avaliacao.belongsTo(CaronaAtual, { foreignKey: 'id_da_carona' });
+Avaliacao.belongsTo(Carona, { foreignKey: 'id_da_carona' });
 export { Avaliacao };

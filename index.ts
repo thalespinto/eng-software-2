@@ -12,4 +12,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
+// importando rotas
+import userRoute from './routes/user.routes';
+
+// usando rotas
+app.use('/user', userRoute);
+
 app.listen(port, () => console.log(`Express app running on port ${port}!`));
