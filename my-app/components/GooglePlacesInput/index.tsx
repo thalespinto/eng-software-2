@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Map from "../Map";
@@ -16,10 +16,12 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
   const [openMap, setOpenMap] = useState(false);
 
   useEffect(() => {
-    placeHolder === "De"
-      ? ref.current?.setAddressText(hikeInfos?.hikeInfos.origin)
-      : ref.current?.setAddressText(hikeInfos?.hikeInfos.destination);
-  }, []);
+    if (placeHolder && hikeInfos && ref.current) {
+      placeHolder === "De"
+        ? ref.current?.setAddressText(hikeInfos?.hikeInfos.origin)
+        : ref.current?.setAddressText(hikeInfos?.hikeInfos.destination);
+    }
+  }, [placeHolder, hikeInfos]);
 
   return (
     <>
