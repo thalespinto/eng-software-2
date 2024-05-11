@@ -15,6 +15,7 @@ export const hikeContext = createContext<{
   setDestination: (destination: string) => void;
   setPassengers: (passengers: IUser[]) => void;
   setCNH: (cnh: string) => void;
+  setPassengerCount: (passengerCount: string) => void;
   vehicles: IVehicle[];
   addVehicle: (vehicle: IVehicle) => void;
   deleteVehicle: (index: number) => void;
@@ -27,6 +28,8 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
     date: new Date(),
     passengers: [],
     cnh: "",
+    vehicles: [],
+    passengerCount: "",
   });
 
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
@@ -45,6 +48,10 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
 
   const setCNH = (cnh: string) => {
     setHikeInfos((prevState) => ({ ...prevState, cnh }));
+  };
+
+  const setPassengerCount = (passengerCount: string) => {
+    setHikeInfos((prevState) => ({ ...prevState, passengerCount }));
   };
 
   const addVehicle = (vehicle: IVehicle) => {
@@ -66,6 +73,7 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
         setDestination,
         setPassengers,
         setCNH,
+        setPassengerCount,
         vehicles,
         addVehicle,
         deleteVehicle,

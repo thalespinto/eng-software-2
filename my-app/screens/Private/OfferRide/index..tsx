@@ -5,6 +5,7 @@ import OriginAndDestinationScreen from "./components/OriginAndDestinationScreen"
 import DateScreen from "./components/DateScreen";
 import CNHScreen from "./components/CNHScreen";
 import AddV from "./components/AddVehicle";
+import PassengerScreen from "./components/PassengerScreen";
 import { useTheme } from "@rneui/themed";
 import RideProvider from "./Provider/RideProvider";
 
@@ -26,8 +27,7 @@ const OfferRide = () => {
     <AddV />,
     <OriginAndDestinationScreen />,
     <DateScreen />,
-
-    <MyComponent title="Component 4" />,
+    <PassengerScreen />,
   ];
 
   return (

@@ -6,7 +6,8 @@ export interface IOffer {
     date: Date;
     passengers: IUser[];
     cnh: string;
-    vehicles: IVehicle[]; // Adicionando a lista de veículos
+    vehicles: IVehicle[]; 
+    passengerCount: string;
 }
 
 export interface IVehicle {
