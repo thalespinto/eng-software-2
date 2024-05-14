@@ -53,24 +53,25 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 
 export const loginUser = async (req: Request, res: Response) => {
-  try {
-      const { cpf, senha } = req.body;
-      const user = await Usuario.findOne({ where: { cpf } });
-
-      if (!user) {
-          return res.status(401).json({ message: 'Usuário não encontrado' });
-      }
-
-      const passwordMatch = await bcrypt.compare(senha, user.senha);
-
-      if (!passwordMatch) {
-          return res.status(401).json({ message: 'Credenciais inválidas' });
-      }
-
-      res.status(200).json({ message: 'Login realizado com sucesso', user: { id: user.id, nome: user.nome, cpf: user.cpf }});
-  } catch (error) {
-      res.status(500).json({ message: 'Erro ao fazer login' });
-  }
+    const { cpf, senha } = req.body;
+    try {
+        const user = await Usuario.findOne({ where: { cpf: cpf } });
+  
+        if (!user) {
+            return res.status(401).json({ message: 'Usuário não encontrado' });
+        }
+  
+        const passwordMatch = await bcrypt.compare(senha, user.senha);
+  
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Credenciais inválidas' });
+        }
+  
+        res.status(200).send({ cpf });
+    } catch (error) {
+        console.error("Erro ao fazer login:", error);
+        res.status(500).json({ message: 'Erro ao fazer login' });
+    }
 };
 
 export const deleteUser = async (req: Request, res: Response) => {

@@ -1,35 +1,32 @@
-import {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 import { ILogin } from "../../interfaces/ILogin";
 import { userContext } from "../UserProvider";
+import { createSession } from "../../server/api";
 
 export const authContext = createContext<{
   isSignedIn: boolean;
-  SignIn: (credentials: ILogin) => void;
+  SignIn: (credentials: ILogin) => Promise<void>;
   SignOut: () => void;
 } | null>(null);
 
 const AuthProvider = ({ children }: { children: any }) => {
   const userInfos = useContext(userContext);
-
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const SignIn = (crenditials: ILogin) => {
-    userInfos?.setUser({
-      createdAt: new Date("2024-05-06T08:00:00Z"),
-      updatedAt: new Date("2024-05-06T08:30:00Z"),
-      id: 1,
-      login: "usuario123",
-      cpf: "123.456.789-00",
-      senha: "senha123",
-      nome: "João da Silva",
-      esta_oferecendo_carona: true,
-      reputacao: 4.5,
-    });
-    setIsSignedIn(true);
+  const SignIn = async (credentials: ILogin) => {
+    try {
+      const response = await createSession(credentials.cpf, credentials.senha);
+      console.log("AuthProvider Response:", response);
+      if (response?.user) {
+        userInfos?.setUser(response.user);
+        setIsSignedIn(true);
+      } else {
+        alert(response?.message || "Credenciais inválidas");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Erro ao fazer login. Tente novamente mais tarde.");
+    }
   };
 
   const SignOut = () => {
@@ -38,9 +35,7 @@ const AuthProvider = ({ children }: { children: any }) => {
   };
 
   return (
-    <authContext.Provider
-      value={{ isSignedIn: isSignedIn, SignIn: SignIn, SignOut: SignOut }}
-    >
+    <authContext.Provider value={{ isSignedIn, SignIn, SignOut }}>
       {children}
     </authContext.Provider>
   );
