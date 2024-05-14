@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { Usuario } from '../models/models';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -68,9 +67,7 @@ export const loginUser = async (req: Request, res: Response) => {
           return res.status(401).json({ message: 'Credenciais inválidas' });
       }
 
-      const token = jwt.sign({ userId: user.id }, 'seu_segredo', { expiresIn: '1h' });
-
-      res.status(200).json({ token });
+      res.status(200).json({ message: 'Login realizado com sucesso', user: { id: user.id, nome: user.nome, cpf: user.cpf }});
   } catch (error) {
       res.status(500).json({ message: 'Erro ao fazer login' });
   }
