@@ -42,10 +42,12 @@ Usuario.init(
 export { Usuario };
 
 interface VeiculoAttributes {
+    id?: number;
     placa: string;
     marca?: string;
     modelo?: string;
     cor?: string;
+    id_usuario: number;
 }
 
 class Veiculo extends Model<VeiculoAttributes> implements VeiculoAttributes {
@@ -54,6 +56,7 @@ class Veiculo extends Model<VeiculoAttributes> implements VeiculoAttributes {
     public marca?: string;
     public modelo?: string;
     public cor?: string;
+    public id_usuario!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -61,6 +64,11 @@ class Veiculo extends Model<VeiculoAttributes> implements VeiculoAttributes {
 
 Veiculo.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         placa: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -75,6 +83,10 @@ Veiculo.init(
         cor: {
             type: DataTypes.STRING,
         },
+        id_usuario: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         sequelize,
@@ -82,9 +94,13 @@ Veiculo.init(
         timestamps: false,
     }
 ); 
+
+Veiculo.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 export { Veiculo };
 
 interface CaronaAttributes {
+    id_carona_atual?: number;
+    id_usuario: number;
     origem: string;
     destino: string;
     data: Date;
@@ -113,6 +129,15 @@ class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
 
 Carona.init(
     {
+        id_carona_atual: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        id_usuario: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         origem: {
             type: DataTypes.STRING,
             allowNull: false,
