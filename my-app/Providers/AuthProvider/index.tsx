@@ -16,16 +16,16 @@ const AuthProvider = ({ children }: { children: any }) => {
   const SignIn = async (credentials: ILogin) => {
     try {
       const response = await createSession(credentials.cpf, credentials.senha);
-      console.log("AuthProvider Response:", response);
       if (response?.user) {
         userInfos?.setUser(response.user);
         setIsSignedIn(true);
-      } else {
-        alert(response?.message || "Credenciais inválidas");
       }
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
-      alert("Erro ao fazer login. Tente novamente mais tarde.");
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        alert(error.response.data.message);
+      } else if (error.response?.status === 500) {
+        alert(error.response.data.message);
+      }
     }
   };
 
