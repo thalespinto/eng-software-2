@@ -5,31 +5,38 @@ import {
 } from "react";
 import { ILogin } from "../../interfaces/ILogin";
 import { userContext } from "../UserProvider";
+import { createSession } from "../../server/api";
 
 export const authContext = createContext<{
   isSignedIn: boolean;
-  SignIn: (credentials: ILogin) => void;
+  SignIn: (credentials: ILogin) => Promise<void>;
   SignOut: () => void;
 } | null>(null);
 
 const AuthProvider = ({ children }: { children: any }) => {
   const userInfos = useContext(userContext);
-
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const SignIn = (crenditials: ILogin) => {
-    userInfos?.setUser({
-      createdAt: new Date("2024-05-06T08:00:00Z"),
-      updatedAt: new Date("2024-05-06T08:30:00Z"),
-      id: 1,
-      login: "usuario123",
-      cpf: "123.456.789-00",
-      senha: "senha123",
-      nome: "João da Silva",
-      esta_oferecendo_carona: true,
-      reputacao: 4.5,
-    });
-    setIsSignedIn(true);
+  const SignIn = async (crenditials: ILogin) => {
+    try {
+      const response = await createSession(crenditials.cpf, crenditials.senha);
+      if (response.user) {  
+        userInfos?.setUser({
+          createdAt: new Date(response.user.createdAt),
+          updatedAt: new Date(response.user.updatedAt),
+          id: response.user.id,
+          login: response.user.login,
+          cpf: response.user.cpf,
+          senha: response.user.senha,
+          nome: response.user.nome,
+          esta_oferecendo_carona: response.user.esta_oferecendo_carona,
+          // reputacao: response.user.reputacao,
+        });
+        setIsSignedIn(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const SignOut = () => {

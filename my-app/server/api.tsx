@@ -5,10 +5,16 @@ export const api = axios.create({
 });
 
 export const createSession = async (cpf: string, senha: string) => {
-  const response = await api.post("/sessions", {
-    cpf,
-    senha,
-  });
+  try {
+    const response = await api.post("/sessions", {
+      cpf,
+      senha,
+    });
 
-  return response.data;
-}
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
+  }
+};
