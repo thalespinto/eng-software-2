@@ -6,6 +6,8 @@ import DateScreen from "./components/DateScreen";
 import { useTheme } from "@rneui/themed";
 import HikeProvider from "./Provider/HikeProvider";
 import PassangersScreen from "./components/PassangersScreen";
+import ChooseHikeScreen from "./components/ChooseHikeScreen";
+import ConfirmHikeScreen from "./components/ConfirmHikeScreen";
 
 const MyComponent = (props: any) => {
   return (
@@ -24,7 +26,8 @@ const HitchHike = () => {
     <OriginAndDestinationScreen />,
     <DateScreen />,
     <PassangersScreen />,
-    <MyComponent title="Component 4" />,
+    <ChooseHikeScreen />,
+    <ConfirmHikeScreen />,
   ];
 
   return (

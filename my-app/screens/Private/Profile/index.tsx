@@ -3,13 +3,13 @@ import { StyleSheet } from "react-native";
 import PageContainer from "../../../components/PageContainer";
 import Text from "../../../components/Text";
 import { Avatar, Button, useTheme, Icon } from "@rneui/themed";
-import { Rating } from "react-native-ratings";
 import CarCard from "./components/CarCard";
 import { veiculos } from "../../../mock/cars";
 import { useContext, useState } from "react";
 import AddCarDialog from "./components/AddCardDialog";
 import { userContext } from "../../../Providers/UserProvider";
 import { authContext } from "../../../Providers/AuthProvider";
+import { Rating } from "react-native-ratings";
 
 const Profile = () => {
   const authInfos = useContext(authContext);
@@ -34,7 +34,12 @@ const Profile = () => {
           }}
         >
           <Text variant="Title">{userInfos?.user?.nome}</Text>
-          <Rating imageSize={36} readonly startingValue={2} />
+          <Rating
+            imageSize={32}
+            readonly
+            startingValue={3.5}
+            tintColor={theme.colors.white}
+          />
         </View>
         <View
           style={{

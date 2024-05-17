@@ -169,7 +169,7 @@ const Stepper: FC<StepperProps> = (props) => {
               onPress={() => onFinish()}
             >
               <Text style={[{ color: "white" }, buttonTextStyle]}>
-                Confirmar
+                Confirmar Viagem
               </Text>
             </Button>
           )}
