@@ -21,12 +21,13 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    console.log("CPF:", cpf);
-    console.log("Senha:", password);
-    authInfos?.SignIn({ cpf: cpf, password: password });
-    // Após o login bem-sucedido, navegue para a página CNH
-    //navigation.navigate('CNH');
+  const handleLogin = async () => {
+    try {
+      await authInfos?.SignIn({ cpf, senha: password });
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Erro ao fazer login. Verifique suas credenciais e tente novamente.");
+    }
   };
 
   const toggleShowPassword = () => {
@@ -35,7 +36,7 @@ const LoginScreen = () => {
 
   return (
     <ImageBackground
-      source={require("C:/Users/david/Documents/GitHub/eng-software-2/my-app/assets/uff-logo.png")}
+      source={require("C:/Users/LLevy/Documents/GitHub/eng-software-2/my-app/assets/uff-logo.png")}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView
