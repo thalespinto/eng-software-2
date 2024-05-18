@@ -51,3 +51,23 @@ export const oferecerCarona = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Erro ao oferecer carona' });
     }
 };
+
+export const getHistoricoCaronas = async (req: Request, res: Response) => {
+    const { id_usuario } = req.params;
+
+    try {
+        const historicoCaronas = await Carona.findAll({
+            where: { id_usuario },
+            order: [['data', 'DESC']],
+        });
+
+        if (!historicoCaronas.length) {
+            return res.status(404).json({ message: 'Nenhuma carona encontrada' });
+        }
+
+        res.status(200).json(historicoCaronas);
+    } catch (error) {
+        console.error('Erro ao buscar histórico de caronas:', error);
+        res.status(500).json({ message: 'Erro ao buscar histórico de caronas' });
+    }
+};
