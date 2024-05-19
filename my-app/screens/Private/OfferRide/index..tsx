@@ -3,7 +3,6 @@ import Stepper from "../../../components/Stepper";
 import { useState } from "react";
 import OriginAndDestinationScreen from "./components/OriginAndDestinationScreen";
 import DateScreen from "./components/DateScreen";
-import CNHScreen from "./components/CNHScreen";
 import AddV from "./components/AddVehicle";
 import PassengerScreen from "./components/PassengerScreen";
 import ConfirmationScreen from "./components/ConfirmationScreen";
@@ -24,7 +23,6 @@ const OfferRide = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const content = [
-    <CNHScreen />,
     <AddV />,
     <OriginAndDestinationScreen />,
     <DateScreen />,

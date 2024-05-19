@@ -7,7 +7,6 @@ const ConfirmationScreen = () => {
 
   // Verifica se o contexto está definido e se as informações da viagem foram fornecidas
   const passengerCount = hikeContext ? hikeContext.hikeInfos.passengerCount : '';
-  const cnhNumber = hikeContext ? hikeContext.hikeInfos.cnh : '';
   const vehicles = hikeContext ? hikeContext.vehicles : [];
   const date = hikeContext ? hikeContext.hikeInfos.date : '';
   const formattedDate = date ? new Date(date) : '';
@@ -32,10 +31,6 @@ const ConfirmationScreen = () => {
       <Text style={styles.title}>
         Confirmação da Viagem
       </Text>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Número da CNH:</Text>
-        <Text style={styles.info}>{cnhNumber}</Text>
-      </View>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Data:</Text>
         <Text style={styles.info}>{formattedDate ? formatDate(formattedDate) : ''}</Text>
