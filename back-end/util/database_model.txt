@@ -1,0 +1,14 @@
+import { Sequelize } from 'sequelize';
+
+const sequelize = new Sequelize({
+  dialect: 'mysql',
+  host: 'localhost',
+  username: 'root',
+  password: 'root',
+  database: 'TRABALHOES2',
+});
+
+export default sequelize;
+
+# Modelo de login para o Banco de Dados, crie o arquivo database.ts nessa mesma pasta e cole este conteúdo.
+# Atualize user name e password para o seu banco de dados local.

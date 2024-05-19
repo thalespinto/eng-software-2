@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://jogar.storyadventure.com.br:3000",
+  baseURL: "http://192.168.15.120:3000",
 });
 
 export const createSession = async (cpf: string, senha: string) => {
