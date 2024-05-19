@@ -5,7 +5,10 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm test",
-    "dev": "nodemon --exec ts-node index.ts"
+    "dev": "nodemon --exec ts-node index.ts",
+    "dev:stop": "npm run dev:stop:posix || npm run dev:stop:windows",
+    "dev:stop:posix": "pkill -f 'nodemon --exec ts-node index.ts'",
+    "dev:stop:windows": "taskkill /F /IM node.exe /T"
   },
   "repository": {
     "type": "git",
