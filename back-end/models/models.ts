@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../util/database';
 
+
 interface UsuarioAttributes {
     cpf: string;
     senha: string;
@@ -39,7 +40,6 @@ Usuario.init(
         timestamps: false,
     }
 ); 
-export { Usuario };
 
 interface VeiculoAttributes {
     id?: number;
@@ -96,11 +96,11 @@ Veiculo.init(
 ); 
 
 Veiculo.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-export { Veiculo };
 
 interface CaronaAttributes {
     id_carona_atual?: number;
     id_usuario: number;
+    id_veiculo: number;
     origem: string;
     destino: string;
     data: Date;
@@ -114,6 +114,7 @@ interface CaronaAttributes {
 class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
     public id_carona_atual!: number;
     public id_usuario!: number;
+    public id_veiculo: number;
     public origem!: string;
     public destino!: string;
     public data!: Date;
@@ -137,6 +138,10 @@ Carona.init(
         id_usuario: {
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        id_veiculo: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         origem: {
             type: DataTypes.STRING,
@@ -179,10 +184,13 @@ Carona.init(
 );
 
 Carona.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-export { Carona };
 
 interface AvaliacaoAttributes {
-    qualidade_da_carona: number;
+    id_avaliacao: number;
+    id_usuario_avaliador: number;
+    id_usuario_avaliado: number;
+    id_da_carona: number;
+    nota: number;
 }
 
 class Avaliacao extends Model<AvaliacaoAttributes> implements AvaliacaoAttributes {
@@ -190,7 +198,7 @@ class Avaliacao extends Model<AvaliacaoAttributes> implements AvaliacaoAttribute
     public id_usuario_avaliador!: number;
     public id_usuario_avaliado!: number;
     public id_da_carona!: number;
-    public qualidade_da_carona!: number;
+    public nota!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -198,7 +206,24 @@ class Avaliacao extends Model<AvaliacaoAttributes> implements AvaliacaoAttribute
 
 Avaliacao.init(
     {
-        qualidade_da_carona: {
+        id_avaliacao: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: true
+        },
+        id_usuario_avaliador: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        id_usuario_avaliado: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        id_da_carona: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        nota: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -213,4 +238,45 @@ Avaliacao.init(
 Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliador' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliado' });
 Avaliacao.belongsTo(Carona, { foreignKey: 'id_da_carona' });
-export { Avaliacao };
+
+
+interface CaronaPassageiroAttributes {
+    id_carona: number;
+    id_passageiro: number;
+}
+
+class CaronaPassageiro extends Model<CaronaPassageiroAttributes> implements CaronaPassageiroAttributes {
+    public id_carona: number;
+    public id_passageiro: number;
+
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+}
+
+CaronaPassageiro.init(
+    {
+        id_carona: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: false
+        },
+        id_passageiro: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            unique: false
+        }
+    },
+    {
+        sequelize,
+        tableName: 'CARONA_PASSAGEIRO',
+        timestamps: false
+    }
+);
+
+
+// Many-to-many relatioships
+Usuario.belongsToMany(Carona, { through: 'CaronaPassageiro' });
+Carona.belongsToMany(Usuario, { through: 'CaronaPassageiro' });
+
+
+export { Usuario, Veiculo, Carona, Avaliacao, CaronaPassageiro };
