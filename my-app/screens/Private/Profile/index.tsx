@@ -62,14 +62,24 @@ const Profile = () => {
             gap: 10,
           }}
         >
-          <Avatar
-            size={120}
-            rounded
-            title={initials}
-            containerStyle={{
-              backgroundColor: theme.colors.grey0,
-            }}
-          />
+          { userInfos?.user?.profile_pic ? (
+            <Avatar
+              size={120}
+              rounded
+              source={{ uri: userInfos?.user?.profile_pic }}
+            />
+          ) : (
+            initials && (
+              <Avatar
+                size={120}
+                rounded
+                title={initials}
+                containerStyle={{
+                  backgroundColor: theme.colors.grey0,
+                }}
+              />
+            )
+          )}
 
           <Text
             style={{
