@@ -1,7 +1,8 @@
 module.exports = {
     preset: 'react-native',
     transform: {
-      '^.+\\.[t|j]sx?$': 'babel-jest',
+      '^.+\\.jsx?$': 'babel-jest',
+      '^.+\\.tsx?$': 'babel-jest',
     },
     setupFilesAfterEnv: ['./jest-setup.ts'],
     transformIgnorePatterns: [

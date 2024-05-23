@@ -1,0 +1,23 @@
+Documentação do Código de Tela de Login
+
+Descrição:
+Este componente LoginScreen é uma tela de login para um aplicativo React Native. Ele permite que os usuários insiram seu CPF e senha, e façam login no sistema. Há também a funcionalidade de mostrar ou ocultar a senha inserida pelo usuário.
+
+Componente LoginScreen:
+
+Hooks e Estados
+useNavigation: Hook para navegação entre telas.
+useContext(authContext): Obtém as informações de autenticação do contexto.
+useState: Gerencia os estados do CPF, senha e visibilidade da senha.
+
+Funções
+handleLogin: Função assíncrona que chama o método de login do contexto de autenticação. Se falhar, exibe um alerta com a mensagem de erro.
+toggleShowPassword: Alterna a visibilidade da senha.
+
+JSX
+ImageBackground: Define a imagem de fundo da tela.
+KeyboardAvoidingView: Evita que o teclado sobreponha os campos de entrada.
+View e Text: Estruturas de layout e texto.
+TextInput: Campos de entrada de texto para CPF e senha.
+TouchableOpacity: Botões para mostrar/ocultar senha e para o login.
+Icon: Ícone de olho para alternar a visibilidade da senha.

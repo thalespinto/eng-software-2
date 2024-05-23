@@ -15,6 +15,17 @@ const Profile = () => {
   const authInfos = useContext(authContext);
   const userInfos = useContext(userContext);
   const { theme } = useTheme();
+  const nomeCompleto = userInfos?.user?.nome;
+  let initials = "";
+
+  if (nomeCompleto) {
+    const partesNome = nomeCompleto.split(" ");
+    initials = partesNome[0].charAt(0).toUpperCase();
+
+  if (partesNome.length > 1) {
+    initials += partesNome[1].charAt(0).toUpperCase(); 
+  } 
+}
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
 
@@ -54,11 +65,12 @@ const Profile = () => {
           <Avatar
             size={120}
             rounded
-            title="RM"
+            title={initials}
             containerStyle={{
               backgroundColor: theme.colors.grey0,
             }}
           />
+
           <Text
             style={{
               backgroundColor: theme.colors.primary,

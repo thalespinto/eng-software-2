@@ -13,23 +13,31 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { authContext } from "../../../Providers/AuthProvider";
 
+// Componente de tela de login
 const LoginScreen = () => {
+  // Hook para navegação entre telas
   const navigation = useNavigation();
+  // Contexto de autenticação
   const authInfos = useContext(authContext);
 
+  // Estados para CPF, senha e visibilidade da senha
   const [cpf, setCPF] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Função para lidar com o login
   const handleLogin = async () => {
     try {
+      // Tenta fazer o login usando as informações fornecidas
       await authInfos?.SignIn({ cpf, senha: password });
     } catch (error) {
+      // Caso ocorra um erro, loga o erro no console e mostra um alerta para o usuário
       console.error("Erro ao fazer login:", error);
       alert("Erro ao fazer login. Verifique suas credenciais e tente novamente.");
     }
   };
 
+  // Função para alternar a visibilidade da senha
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -43,9 +51,11 @@ const LoginScreen = () => {
         style={styles.container}
         keyboardVerticalOffset={Platform.OS === "ios" ? 40 : 0}
       >
+        {/*Logo e texto de boas-vindas */}
         <View style={styles.logoContainer}>
           <Text style={styles.loginText}>Bem-vindo à UFF</Text>
         </View>
+        {/* Usuário */}
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -54,6 +64,7 @@ const LoginScreen = () => {
             value={cpf}
             keyboardType="numeric"
           />
+          {/* Senha e ícone de visibilidade */}
           <View style={styles.passwordContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -62,6 +73,7 @@ const LoginScreen = () => {
               value={password}
               secureTextEntry={!showPassword}
             />
+            {/* Botão para alternar a visibilidade da senha */}
             <TouchableOpacity
               onPress={toggleShowPassword}
               accessibilityRole="button"
@@ -74,6 +86,7 @@ const LoginScreen = () => {
               />
             </TouchableOpacity>
           </View>
+          {/* Botão de login */}
           <TouchableOpacity
             style={styles.loginButton}
             onPress={handleLogin}
@@ -88,6 +101,7 @@ const LoginScreen = () => {
   );
 };
 
+// Estilos do componente
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
