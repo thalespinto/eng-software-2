@@ -101,7 +101,7 @@ const LoginScreen = () => {
   );
 };
 
-// Estilos para o componente
+// Estilos do componente
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
