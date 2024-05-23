@@ -62,7 +62,11 @@ const LoginScreen = () => {
               value={password}
               secureTextEntry={!showPassword}
             />
-            <TouchableOpacity onPress={toggleShowPassword}>
+            <TouchableOpacity
+              onPress={toggleShowPassword}
+              accessibilityRole="button"
+              accessibilityLabel={showPassword ? "Ocultar senha" : "Mostrar senha"}
+            >
               <Icon
                 name={showPassword ? "eye-slash" : "eye"}
                 size={20}
@@ -70,7 +74,12 @@ const LoginScreen = () => {
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleLogin}
+            accessibilityRole="button"
+            accessibilityLabel="Login"
+          >
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
