@@ -8,4 +8,5 @@ export interface IUser {
   nome: string;
   esta_oferecendo_carona: boolean;
   reputacao?: number;
+  profile_pic?: string;
 }
