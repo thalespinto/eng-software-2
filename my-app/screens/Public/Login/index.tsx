@@ -73,7 +73,7 @@ const LoginScreen = () => {
               value={password}
               secureTextEntry={!showPassword}
             />
-            {/* Botão para alternar a visibilidade da senha */}
+            {/* Botão para alternar a visibilidade da senha*/}
             <TouchableOpacity
               onPress={toggleShowPassword}
               accessibilityRole="button"
