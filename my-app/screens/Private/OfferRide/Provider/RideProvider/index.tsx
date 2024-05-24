@@ -8,9 +8,9 @@ interface IVehicle {
   capacidade: string;
 }
 
-export const hikeContext = createContext<{
-  hikeInfos: Partial<IOffer>;
-  setHikeInfos: React.Dispatch<React.SetStateAction<Partial<IOffer>>>;
+export const RideContext = createContext<{
+  RideInfos: Partial<IOffer>;
+  setRideInfos: React.Dispatch<React.SetStateAction<Partial<IOffer>>>;
   setOrigin: (origin: string) => void;
   setDestination: (destination: string) => void;
   setPassengers: (passengers: IUser[]) => void;
@@ -22,7 +22,7 @@ export const hikeContext = createContext<{
 } | null>(null);
 
 const RideProvider = ({ children }: { children: ReactNode }) => {
-  const [hikeInfos, setHikeInfos] = useState<Partial<IOffer>>({
+  const [RideInfos, setRideInfos] = useState<Partial<IOffer>>({
     destination: "",
     origin: "",
     date: new Date(),
@@ -35,23 +35,23 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
   const [vehicles, setVehicles] = useState<IVehicle[]>([]);
 
   const setOrigin = (origin: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, origin }));
+    setRideInfos((prevState) => ({ ...prevState, origin }));
   };
 
   const setDestination = (destination: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, destination }));
+    setRideInfos((prevState) => ({ ...prevState, destination }));
   };
 
   const setPassengers = (passengers: IUser[]) => {
-    setHikeInfos((prevState) => ({ ...prevState, passengers }));
+    setRideInfos((prevState) => ({ ...prevState, passengers }));
   };
 
   const setCNH = (cnh: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, cnh }));
+    setRideInfos((prevState) => ({ ...prevState, cnh }));
   };
 
   const setPassengerCount = (passengerCount: string) => {
-    setHikeInfos((prevState) => ({ ...prevState, passengerCount }));
+    setRideInfos((prevState) => ({ ...prevState, passengerCount }));
   };
 
   const addVehicle = (vehicle: IVehicle) => {
@@ -65,10 +65,10 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <hikeContext.Provider
+    <RideContext.Provider
       value={{
-        hikeInfos,
-        setHikeInfos,
+        RideInfos,
+        setRideInfos,
         setOrigin,
         setDestination,
         setPassengers,
@@ -80,7 +80,7 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </hikeContext.Provider>
+    </RideContext.Provider>
   );
 };
 

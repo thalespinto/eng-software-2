@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { hikeContext as hc } from "../../Provider/RideProvider";
+import { RideContext as hc } from "../../Provider/RideProvider";
 import { Swipeable } from 'react-native-gesture-handler';
 
 const AddVehicle = () => {
@@ -11,10 +11,10 @@ const AddVehicle = () => {
   const [capacidade, setCapacidade] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
-  const hikeContext = useContext(hc);
+  const RideContext = useContext(hc);
 
   const handleAddVehicle = () => {
-    if (!modelo || !placa) {
+    if (!modelo || !placa || !capacidade) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
@@ -23,7 +23,7 @@ const AddVehicle = () => {
       placa,
       capacidade,
     };
-    hikeContext?.addVehicle(newVehicle);
+    RideContext?.addVehicle(newVehicle);
     setModelo('');
     setPlaca('');
     setCapacidade('');
@@ -31,7 +31,7 @@ const AddVehicle = () => {
   };
 
   const deleteVehicle = (index: number) => {
-    hikeContext?.deleteVehicle(index);
+    RideContext?.deleteVehicle(index);
   };
 
   const toggleSelectVehicle = (index: number) => {
@@ -46,7 +46,7 @@ const AddVehicle = () => {
       </TouchableOpacity>
       <ScrollView>
         <View>
-          {hikeContext?.vehicles.map((vehicle, index) => (
+          {RideContext?.vehicles.map((vehicle, index) => (
             <Swipeable
               key={index}
               renderRightActions={() => (
@@ -86,6 +86,13 @@ const AddVehicle = () => {
               placeholder="Placa do Veículo"
               value={placa}
               onChangeText={setPlaca}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Capacidade de passageiros"
+              keyboardType="numeric"
+              value={capacidade}
+              onChangeText={setCapacidade}
             />
             <TouchableOpacity onPress={handleAddVehicle} style={styles.modalButton}>
               <Text style={styles.modalButtonText}>Adicionar Veículo</Text>

@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Switch, TextInput } from 'react-native';
-import { hikeContext as hc } from "../../Provider/RideProvider";
+import { RideContext as hc } from "../../Provider/RideProvider";
 
 const ConfirmationScreen = () => {
-  const hikeContext = useContext(hc);
+  const RideContext = useContext(hc);
   const [acceptAutomatically, setAcceptAutomatically] = useState(false);
   const [radius, setRadius] = useState('');
 
-  const passengerCount = hikeContext ? hikeContext.hikeInfos.passengerCount : '';
-  const vehicles = hikeContext ? hikeContext.vehicles : [];
-  const date = hikeContext ? hikeContext.hikeInfos.date : '';
+  const passengerCount = RideContext ? RideContext.RideInfos.passengerCount : '';
+  const vehicles = RideContext ? RideContext.vehicles : [];
+  const date = RideContext ? RideContext.RideInfos.date : '';
   const formattedDate = date ? new Date(date) : '';
 
   const formatDate = (date: Date) => {
