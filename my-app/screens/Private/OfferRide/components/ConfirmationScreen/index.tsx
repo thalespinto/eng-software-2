@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { hikeContext as hc } from "../../Provider/RideProvider"; // Importe o contexto
+import React, { useContext, useState } from 'react';
+import { Text, View, StyleSheet, Switch, TextInput } from 'react-native';
+import { hikeContext as hc } from "../../Provider/RideProvider";
 
 const ConfirmationScreen = () => {
   const hikeContext = useContext(hc);
+  const [acceptAutomatically, setAcceptAutomatically] = useState(false);
+  const [radius, setRadius] = useState('');
 
-  // Verifica se o contexto está definido e se as informações da viagem foram fornecidas
   const passengerCount = hikeContext ? hikeContext.hikeInfos.passengerCount : '';
   const vehicles = hikeContext ? hikeContext.vehicles : [];
   const date = hikeContext ? hikeContext.hikeInfos.date : '';
@@ -28,9 +29,7 @@ const ConfirmationScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        Confirmação da Viagem
-      </Text>
+      <Text style={styles.title}>Confirmação da Viagem</Text>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Data:</Text>
         <Text style={styles.info}>{formattedDate ? formatDate(formattedDate) : ''}</Text>
@@ -49,10 +48,28 @@ const ConfirmationScreen = () => {
           <View key={index} style={styles.vehicleInfoContainer}>
             <Text style={styles.vehicleInfo}>Modelo: {vehicle.modelo}</Text>
             <Text style={styles.vehicleInfo}>Placa: {vehicle.placa}</Text>
-            <Text style={styles.vehicleInfo}>Capacidade: {vehicle.capacidade}</Text>
           </View>
         ))}
       </View>
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchLabel}>Aceitar automaticamente passageiros:</Text>
+        <Switch
+          value={acceptAutomatically}
+          onValueChange={(value) => setAcceptAutomatically(value)}
+        />
+      </View>
+      {acceptAutomatically && (
+        <View style={styles.radiusContainer}>
+          <Text style={styles.radiusLabel}>Raio em quilômetros:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o raio"
+            keyboardType="numeric"
+            value={radius}
+            onChangeText={setRadius}
+          />
+        </View>
+      )}
       {/* Outras informações de confirmação podem ser adicionadas aqui */}
     </View>
   );
@@ -97,6 +114,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 5,
     textAlign: 'left',
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  switchLabel: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  radiusContainer: {
+    marginTop: 10,
+  },
+  radiusLabel: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
 });
 

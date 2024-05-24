@@ -14,7 +14,7 @@ const AddVehicle = () => {
   const hikeContext = useContext(hc);
 
   const handleAddVehicle = () => {
-    if (!modelo || !placa || !capacidade) {
+    if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
@@ -86,13 +86,6 @@ const AddVehicle = () => {
               placeholder="Placa do Veículo"
               value={placa}
               onChangeText={setPlaca}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Capacidade de passageiros"
-              keyboardType="numeric"
-              value={capacidade}
-              onChangeText={setCapacidade}
             />
             <TouchableOpacity onPress={handleAddVehicle} style={styles.modalButton}>
               <Text style={styles.modalButtonText}>Adicionar Veículo</Text>
