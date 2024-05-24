@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RideContext as hc } from "../../Provider/RideProvider";
+import { RideContext as rc } from "../../Provider/RideProvider";
 import { Swipeable } from 'react-native-gesture-handler';
 
 const AddVehicle = () => {
@@ -11,7 +11,7 @@ const AddVehicle = () => {
   const [capacidade, setCapacidade] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
-  const RideContext = useContext(hc);
+  const RideContext = useContext(rc);
 
   const handleAddVehicle = () => {
     if (!modelo || !placa || !capacidade) {

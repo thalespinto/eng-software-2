@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Switch, TextInput } from 'react-native';
-import { RideContext as hc } from "../../Provider/RideProvider";
+import { RideContext as rc } from "../../Provider/RideProvider";
 
 const ConfirmationScreen = () => {
-  const RideContext = useContext(hc);
+  const RideContext = useContext(rc);
   const [acceptAutomatically, setAcceptAutomatically] = useState(false);
   const [radius, setRadius] = useState('');
 
