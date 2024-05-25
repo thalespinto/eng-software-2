@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Carona, Usuario, Veiculo } from '../models/models';
-import sequelize from '../util/database';
+import { Carona, Usuario, Veiculo, Avaliacao } from '../models/models';
+import { Op, fn, col } from 'sequelize';
 
 
 export const oferecerCarona = async (req: Request, res: Response) => {
@@ -75,46 +75,70 @@ export const getHistoricoCaronas = async (req: Request, res: Response) => {
     }
 };
 
+
 export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
-    const { origem, destino, data, horario_de_partida } = req.params;
+    const { origem_, destino_, data_, horario_de_partida_ } = req.params;
 
     try {
-        const resultado = await sequelize.query(
-            `
-            WITH
-                caronas_disponiveis AS (
-                    SELECT *
-                    FROM CARONA
-                    WHERE CARONA.origem LIKE ${origem}
-                        AND CARONA.destino LIKE ${destino}
-                        AND CARONA.data = ${data}
-                        AND CARONA.horario_de_partida = ${horario_de_partida}
-                ),
-                total_caronas_e_nota AS (
-                    SELECT 
-                        MOTORISTA.id AS id_motorista,
-                        MOTORISTA.nome AS nome_motorista,
-                        count(DISTINCT CARONA.id_carona_atual) AS total_caronas,
-                        avg(AVALIACAO.nota) AS nota_motorista
-                    FROM USUARIO AS MOTORISTA
-                    JOIN CARONA ON MOTORISTA.id = CARONA.id_usuario
-                    JOIN AVALIACAO ON AVALIACAO.id_usuario_avaliado = MOTORISTA.id AND AVALIACAO.id_da_carona = CARONA.id_carona_atual
-                    GROUP BY MOTORISTA.id 
-               )
-            SELECT 
-                cd.id_carona_atual AS id_carona, 
-                cd.data,
-                cd.horario_de_partida,
-                tce.id_motorista, 
-                tce.nome_motorista, 
-                tce.total_caronas, 
-                tce.nota_motorista
-            FROM caronas_disponiveis AS cd
-            JOIN total_caronas_e_nota AS tce ON cd.id_usuario = tce.id_motorista;
-            `
-        );
+        const caronasDisponiveis = await Carona.findAll({
+            where: { 
+                origem: origem_,
+                destino: destino_,
+                data: data_,
+                horario_de_partida: horario_de_partida_
+            },
+            raw: true
+        });
+        
+        const dadosMotorista = await Usuario.findAll({
+            attributes: [
+                ['id', 'id_motorista'],
+                ['nome', 'nome_motorista'],
+                [fn('count', fn('DISTINCT', col('caronas.id_carona_atual'))), 'total_caronas'],
+                [fn('avg', col('avaliacoes_recebidas.nota')), 'nota_motorista'],
+            ],
+            include: [
+                {
+                    model: Carona,
+                    attributes: [],
+                    as: 'caronas',
+                    required: true
+                },
+                {
+                    model: Avaliacao,
+                    attributes: [],
+                    required: true,
+                    as: 'avaliacoes_recebidas',
+                    where: {
+                        id_da_carona: { [Op.col]: 'caronas.id_carona_atual' }
+                    }
+                }
+            ],
+            group: ['id_motorista'],
+            raw: true,
+        });
+        
+        // Isso é necessário para que eu possa acessar as colunas `total_caronas` e `nota_motorista`
+        const motoristas: any[] = JSON.parse(JSON.stringify(dadosMotorista));
+        
+        // Concatena os dados de interesse da carona com os dados de interesse do motorista
+        // É como se essa fosse a query principal e as de cima fossem subqueries
+        const resultado = caronasDisponiveis.map(c => {
+            const motorista = motoristas.find(m => m.id_motorista === c.id_usuario);
 
-        if (!resultado) {
+            return motorista ? {
+                id_carona: c.id_carona_atual,
+                data: c.data,
+                horario_de_partida: c.horario_de_partida,
+                id_motorista: motorista.id_motorista,
+                nome_motorista: motorista.nome_motorista,
+                total_caronas: motorista.total_caronas,
+                nota_motorista: motorista.nota_motorista
+            } : null;
+        }).filter(item => item !== null);
+                      
+        // Caso nenhuma carona seja encontrada a partir dos dados fornecidos
+        if (resultado.length === 0) {
             res.status(404).json({ message: 'Nenhuma carona encontrada' });
         }
 
@@ -123,4 +147,3 @@ export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Erro ao pedir carona' });
     }
 };
-

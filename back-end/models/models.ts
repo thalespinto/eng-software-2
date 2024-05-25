@@ -41,6 +41,7 @@ Usuario.init(
     }
 ); 
 
+
 interface VeiculoAttributes {
     id?: number;
     placa: string;
@@ -114,9 +115,11 @@ interface CaronaAttributes {
 class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
     public id_carona_atual!: number;
     public id_usuario!: number;
-    public id_veiculo: number;
+    public id_veiculo!: number;
     public origem!: string;
     public destino!: string;
+    // TODO: os datatypes dos 3 atributos abaixo estão corretos?
+    // se alguém ver no PR me avise sobre
     public data!: Date;
     public horario_de_partida!: Date;
     public horario_de_retorno!: Date;
@@ -152,7 +155,7 @@ Carona.init(
             allowNull: false,
         },
         data: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         horario_de_partida: {
@@ -183,7 +186,6 @@ Carona.init(
     }
 );
 
-Carona.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 interface AvaliacaoAttributes {
     id_avaliacao: number;
@@ -209,7 +211,8 @@ Avaliacao.init(
         id_avaliacao: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            unique: true
+            unique: true,
+            primaryKey: true
         },
         id_usuario_avaliador: {
             type: DataTypes.INTEGER,
@@ -235,10 +238,6 @@ Avaliacao.init(
     }
 );
 
-Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliador' });
-Avaliacao.belongsTo(Usuario, { foreignKey: 'id_usuario_avaliado' });
-Avaliacao.belongsTo(Carona, { foreignKey: 'id_da_carona' });
-
 
 interface CaronaPassageiroAttributes {
     id_carona: number;
@@ -246,8 +245,8 @@ interface CaronaPassageiroAttributes {
 }
 
 class CaronaPassageiro extends Model<CaronaPassageiroAttributes> implements CaronaPassageiroAttributes {
-    public id_carona: number;
-    public id_passageiro: number;
+    public id_carona!: number;
+    public id_passageiro!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -274,9 +273,59 @@ CaronaPassageiro.init(
 );
 
 
-// Many-to-many relatioships
-Usuario.belongsToMany(Carona, { through: 'CaronaPassageiro' });
-Carona.belongsToMany(Usuario, { through: 'CaronaPassageiro' });
+// Many-to-many relatioships, tabela própria
+Usuario.belongsToMany(Carona, { 
+    through: CaronaPassageiro
+});
+Carona.belongsToMany(Usuario, { 
+    through: CaronaPassageiro
+});
+
+// 1 carona está associada a 1 motorista
+// 1 motorista pode conduzir muitas caronas
+Usuario.hasMany(Carona, {
+    foreignKey: 'id_usuario',
+    as: 'caronas'
+})
+Carona.belongsTo(Usuario, {
+    foreignKey: 'id_usuario',
+    as: 'motorista'
+});
+
+
+Usuario.hasMany(Avaliacao, {
+    foreignKey: 'id_usuario_avaliador',
+    as: 'avaliacoes_dadas'
+});
+Avaliacao.belongsTo(Usuario, {
+    foreignKey: 'id_usuario_avaliador'
+});
+
+Usuario.hasMany(Avaliacao, {
+    foreignKey: 'id_usuario_avaliado',
+    as: 'avaliacoes_recebidas'
+});
+Avaliacao.belongsTo(Usuario, {
+    foreignKey: 'id_usuario_avaliado'
+});
+
+
+Carona.hasMany(Avaliacao, {
+    foreignKey: 'id_da_carona',
+    as: 'avaliacoes'
+});
+Avaliacao.belongsTo(Carona, {
+    foreignKey: 'id_da_carona',
+    as: 'carona'
+});
+
+
+Usuario.hasMany(Veiculo, {
+    foreignKey: 'id_usuario'
+});
+Veiculo.belongsTo(Usuario, {
+    foreignKey: 'id_usuario'
+});
 
 
 export { Usuario, Veiculo, Carona, Avaliacao, CaronaPassageiro };
