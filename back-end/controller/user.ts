@@ -4,9 +4,9 @@ import bcrypt from 'bcrypt';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-      const { cpf, senha, nome } = req.body;
+      const { cpf, senha, nome, profile_pic } = req.body;
       const hashedPassword = await bcrypt.hash(senha, 10);
-      const newUser = await Usuario.create({ cpf, senha: hashedPassword, nome });
+      const newUser = await Usuario.create({ cpf, senha: hashedPassword, nome, profile_pic });
       res.status(201).json(newUser);
   } catch (error) {
       res.status(500).json({ message: 'Erro ao criar usuário' });
@@ -38,11 +38,11 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { cpf, senha, nome } = req.body;
+    const { cpf, senha, nome, profile_pic } = req.body;
     try {
         const user = await Usuario.findByPk(id);
         if (user) {
-            await user.update({ cpf, senha, nome });
+            await user.update({ cpf, senha, nome, profile_pic });
             res.status(200).json({ message: 'Usuário atualizado com sucesso' });
         } else {
             res.status(404).json({ message: 'Usuário não encontrado' });
@@ -67,7 +67,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(401).json({ message: 'Credenciais inválidas' });
         }
   
-        res.status(200).json({ message: 'Login realizado com sucesso', user: { id: user.id, nome: user.nome, cpf: user.cpf } });
+        res.status(200).json({ message: 'Login realizado com sucesso', user: { id: user.id, nome: user.nome, cpf: user.cpf, profile_pic: user.profile_pic } });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao fazer login' });
     }

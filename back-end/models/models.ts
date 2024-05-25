@@ -6,6 +6,7 @@ interface UsuarioAttributes {
     cpf: string;
     senha: string;
     nome: string;
+    profile_pic?: string;
 }
 
 class Usuario extends Model<UsuarioAttributes> implements UsuarioAttributes {
@@ -13,6 +14,7 @@ class Usuario extends Model<UsuarioAttributes> implements UsuarioAttributes {
     public cpf!: string;
     public senha!: string;
     public nome!: string;
+    public profile_pic?: string;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -32,6 +34,9 @@ Usuario.init(
         nome: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        profile_pic: {
+            type: DataTypes.STRING,
         },
     },
     {

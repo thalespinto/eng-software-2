@@ -15,6 +15,17 @@ const Profile = () => {
   const authInfos = useContext(authContext);
   const userInfos = useContext(userContext);
   const { theme } = useTheme();
+  const nomeCompleto = userInfos?.user?.nome;
+  let initials = "";
+
+  if (nomeCompleto) {
+    const partesNome = nomeCompleto.split(" ");
+    initials = partesNome[0].charAt(0).toUpperCase();
+
+  if (partesNome.length > 1) {
+    initials += partesNome[1].charAt(0).toUpperCase(); 
+  } 
+}
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
 
@@ -51,14 +62,25 @@ const Profile = () => {
             gap: 10,
           }}
         >
-          <Avatar
-            size={120}
-            rounded
-            title="RM"
-            containerStyle={{
-              backgroundColor: theme.colors.grey0,
-            }}
-          />
+          { userInfos?.user?.profile_pic ? (
+            <Avatar
+              size={120}
+              rounded
+              source={{ uri: userInfos?.user?.profile_pic }}
+            />
+          ) : (
+            initials && (
+              <Avatar
+                size={120}
+                rounded
+                title={initials}
+                containerStyle={{
+                  backgroundColor: theme.colors.grey0,
+                }}
+              />
+            )
+          )}
+
           <Text
             style={{
               backgroundColor: theme.colors.primary,

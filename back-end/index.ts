@@ -15,9 +15,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // importando rotas
 import userRoute from './routes/user.routes';
 import caronaRoute from './routes/carona.routes';
+import vehicleRoute from './routes/vehicle.routes';
 
 // usando rotas
 app.use('/user', userRoute);
 app.use('/carona', caronaRoute);
+app.use('/vehicle', vehicleRoute);
 
 app.listen(port, () => console.log(`Express app running on port ${port}!`));
