@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Carona, Usuario, Veiculo, Avaliacao } from '../models/models';
 import { Op, fn, col } from 'sequelize';
+import moment from 'moment';
 
 
 export const oferecerCarona = async (req: Request, res: Response) => {
@@ -28,7 +29,7 @@ export const oferecerCarona = async (req: Request, res: Response) => {
             horario_de_retorno,
             qt_de_passageiros,
             aceita_automaticamente,
-            raio_de_aceitacao_em_km
+            raio_de_aceitacao_em_km: aceita_automaticamente ? raio_de_aceitacao_em_km : null
         });
 
         const resposta = {
@@ -80,12 +81,23 @@ export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
     const { origem_, destino_, data_, horario_de_partida_ } = req.params;
 
     try {
+        const dataFormatada = moment(data_, 'YYYY-MM-DD')
+        const horarioFormatado = moment(horario_de_partida_, 'HH:mm')
+
+        if (!dataFormatada.isValid()) {
+            return res.status(400).json({ message: 'Data inválida' });
+        }
+
+        if (!horarioFormatado.isValid()) {
+            return res.status(400).json({ message: 'Horário inválido' });
+        }
+
         const caronasDisponiveis = await Carona.findAll({
             where: { 
                 origem: origem_,
                 destino: destino_,
-                data: data_,
-                horario_de_partida: horario_de_partida_
+                data: dataFormatada,
+                horario_de_partida: horarioFormatado
             },
             raw: true
         });
@@ -144,6 +156,7 @@ export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
 
         res.status(201).json(resultado);
     } catch(error) {
+        console.log(error);
         res.status(500).json({ message: 'Erro ao pedir carona' });
     }
 };

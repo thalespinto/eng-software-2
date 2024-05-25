@@ -114,7 +114,7 @@ interface CaronaAttributes {
     horario_de_retorno: Date;
     qt_de_passageiros: number;
     aceita_automaticamente: boolean;
-    raio_de_aceitacao_em_km: number;
+    raio_de_aceitacao_em_km?: number | null;
 }
 
 class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
@@ -130,7 +130,7 @@ class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
     public horario_de_retorno!: Date;
     public qt_de_passageiros!: number;
     public aceita_automaticamente!: boolean;
-    public raio_de_aceitacao_em_km!: number;
+    public raio_de_aceitacao_em_km!: number | null;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -181,7 +181,7 @@ Carona.init(
         },
         raio_de_aceitacao_em_km: {
             type: DataTypes.DOUBLE,
-            allowNull: false,
+            allowNull: true,
         },
     },
     {
