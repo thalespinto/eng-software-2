@@ -81,82 +81,36 @@ export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
     const { origem_, destino_, data_, horario_de_partida_ } = req.params;
 
     try {
-        const dataFormatada = moment(data_, 'YYYY-MM-DD')
-        const horarioFormatado = moment(horario_de_partida_, 'HH:mm')
+        const dataFormatada = moment(data_, 'YYYY-MM-DD', true);
+        const horarioDePartidaFormatado = moment(horario_de_partida_, 'HH:mm:ss', true);
 
-        if (!dataFormatada.isValid()) {
-            return res.status(400).json({ message: 'Data inválida' });
-        }
-
-        if (!horarioFormatado.isValid()) {
-            return res.status(400).json({ message: 'Horário inválido' });
+        if (!dataFormatada.isValid() || !horarioDePartidaFormatado.isValid()) {
+            return res.status(400).json({ message: 'Formato de data ou horário inválido' });
         }
 
         const caronasDisponiveis = await Carona.findAll({
             where: { 
                 origem: origem_,
                 destino: destino_,
-                data: dataFormatada,
-                horario_de_partida: horarioFormatado
+                data: dataFormatada.format('YYYY-MM-DD'),
+                horario_de_partida: horarioDePartidaFormatado.format('HH:mm:ss')
             },
+            include: [
+                {
+                    model: Usuario,
+                    as: 'motorista',
+                    attributes: ['id', 'nome'],
+                }
+            ],
             raw: true
         });
         
-        const dadosMotorista = await Usuario.findAll({
-            attributes: [
-                ['id', 'id_motorista'],
-                ['nome', 'nome_motorista'],
-                [fn('count', fn('DISTINCT', col('caronas.id_carona_atual'))), 'total_caronas'],
-                [fn('avg', col('avaliacoes_recebidas.nota')), 'nota_motorista'],
-            ],
-            include: [
-                {
-                    model: Carona,
-                    attributes: [],
-                    as: 'caronas',
-                    required: true
-                },
-                {
-                    model: Avaliacao,
-                    attributes: [],
-                    required: true,
-                    as: 'avaliacoes_recebidas',
-                    where: {
-                        id_da_carona: { [Op.col]: 'caronas.id_carona_atual' }
-                    }
-                }
-            ],
-            group: ['id_motorista'],
-            raw: true,
-        });
-        
-        // Isso é necessário para que eu possa acessar as colunas `total_caronas` e `nota_motorista`
-        const motoristas: any[] = JSON.parse(JSON.stringify(dadosMotorista));
-        
-        // Concatena os dados de interesse da carona com os dados de interesse do motorista
-        // É como se essa fosse a query principal e as de cima fossem subqueries
-        const resultado = caronasDisponiveis.map(c => {
-            const motorista = motoristas.find(m => m.id_motorista === c.id_usuario);
-
-            return motorista ? {
-                id_carona: c.id_carona_atual,
-                data: c.data,
-                horario_de_partida: c.horario_de_partida,
-                id_motorista: motorista.id_motorista,
-                nome_motorista: motorista.nome_motorista,
-                total_caronas: motorista.total_caronas,
-                nota_motorista: motorista.nota_motorista
-            } : null;
-        }).filter(item => item !== null);
-                      
-        // Caso nenhuma carona seja encontrada a partir dos dados fornecidos
-        if (resultado.length === 0) {
-            res.status(404).json({ message: 'Nenhuma carona encontrada' });
+        if (!caronasDisponiveis.length) {
+            return res.status(404).json({ message: 'Nenhuma carona disponível' });
         }
 
-        res.status(201).json(resultado);
-    } catch(error) {
-        console.log(error);
-        res.status(500).json({ message: 'Erro ao pedir carona' });
+        res.status(200).json(caronasDisponiveis);
+    } catch (error) {;
+        res.status(500).json({ message: 'Erro ao listar caronas disponíveis' });
     }
 };
