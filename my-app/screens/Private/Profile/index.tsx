@@ -4,7 +4,6 @@ import PageContainer from "../../../components/PageContainer";
 import Text from "../../../components/Text";
 import { Avatar, Button, useTheme, Icon } from "@rneui/themed";
 import CarCard from "./components/CarCard";
-import { veiculos } from "../../../mock/cars";
 import { useContext, useEffect, useState } from "react";
 import AddCarDialog from "./components/AddCardDialog";
 import { userContext } from "../../../Providers/UserProvider";
@@ -24,10 +23,10 @@ const Profile = () => {
     const partesNome = nomeCompleto.split(" ");
     initials = partesNome[0].charAt(0).toUpperCase();
 
-  if (partesNome.length > 1) {
-    initials += partesNome[1].charAt(0).toUpperCase(); 
-  } 
-}
+    if (partesNome.length > 1) {
+      initials += partesNome[1].charAt(0).toUpperCase(); 
+    } 
+  }
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
   const [veiculos, setVeiculos] = useState<ICar[]>([]);
@@ -54,14 +53,7 @@ const Profile = () => {
   return (
     <PageContainer>
       <View style={styles.profileHeader}>
-        <View
-          style={{
-            width: "50%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
+        <View style={styles.nameAndRating}>
           <Text variant="Title">{userInfos?.user?.nome}</Text>
           <Rating
             imageSize={32}
@@ -70,16 +62,7 @@ const Profile = () => {
             tintColor={theme.colors.white}
           />
         </View>
-        <View
-          style={{
-            width: "50%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+        <View style={styles.avatarAndCPF}>
           { userInfos?.user?.profile_pic ? (
             <Avatar
               size={120}
@@ -99,35 +82,20 @@ const Profile = () => {
             )
           )}
 
-          <Text
-            style={{
-              backgroundColor: theme.colors.primary,
-              padding: 5,
-              borderRadius: 18,
-            }}
-          >
+          <Text style={[styles.cpfText, { backgroundColor: theme.colors.primary }]}>
             CPF: {userInfos?.user?.cpf}
           </Text>
         </View>
       </View>
       <View style={styles.carsListContainer}>
         <Text variant="Subtitle">Seus Veículos:</Text>
-        <ScrollView
-          style={{
-            width: "100%",
-            height: 400,
-            borderColor: theme.colors.black,
-            borderWidth: 1,
-            borderRadius: 8,
-            padding: 10,
-          }}
-        >
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
           <Button
             type="clear"
-            style={{ width: 120 }}
+            style={styles.addButton}
             icon={<Icon name="add" />}
             uppercase
-            buttonStyle={{ width: 200 }}
+            buttonStyle={styles.buttonStyle}
             onPress={toggleAddCarDialog}
           >
             Adicionar Veículo
@@ -142,7 +110,7 @@ const Profile = () => {
         onBackdropPress={toggleAddCarDialog}
       />
       <Button
-        buttonStyle={{ marginTop: 20, marginBottom: 150 }}
+        buttonStyle={styles.signOutButton}
         onPress={() => authInfos?.SignOut()}
       >
         Sair
@@ -162,11 +130,48 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
-  carsListContainer: {
-    marginTop: 40,
+  nameAndRating: {
+    width: "50%",
     display: "flex",
     flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  avatarAndCPF: {
+    width: "50%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    gap: 20,
+    gap: 10,
+  },
+  cpfText: {
+    padding: 5,
+    borderRadius: 18,
+    alignSelf: 'flex-start',
+    marginLeft: -1, 
+  },
+  carsListContainer: {
+    marginTop: 40,
+    flex: 1,
+    width: "100%",
+  },
+  scrollView: {
+    flexGrow: 1,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+  },
+  scrollViewContent: {
+    alignItems: "center",
+  },
+  addButton: {
+    width: 120,
+  },
+  buttonStyle: {
+    width: 200,
+  },
+  signOutButton: {
+    marginTop: 20,
+    marginBottom: 150,
   },
 });
