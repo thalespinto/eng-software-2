@@ -114,7 +114,7 @@ interface CaronaAttributes {
     horario_de_retorno: Date;
     qt_de_passageiros: number;
     aceita_automaticamente: boolean;
-    raio_de_aceitacao_em_km: number;
+    raio_de_aceitacao_em_km?: number | null;
 }
 
 class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
@@ -130,7 +130,7 @@ class Carona extends Model<CaronaAttributes> implements CaronaAttributes {
     public horario_de_retorno!: Date;
     public qt_de_passageiros!: number;
     public aceita_automaticamente!: boolean;
-    public raio_de_aceitacao_em_km!: number;
+    public raio_de_aceitacao_em_km!: number | null;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -181,7 +181,7 @@ Carona.init(
         },
         raio_de_aceitacao_em_km: {
             type: DataTypes.DOUBLE,
-            allowNull: false,
+            allowNull: true,
         },
     },
     {
@@ -277,60 +277,47 @@ CaronaPassageiro.init(
     }
 );
 
-
-// Many-to-many relatioships, tabela própria
-Usuario.belongsToMany(Carona, { 
-    through: CaronaPassageiro
-});
-Carona.belongsToMany(Usuario, { 
-    through: CaronaPassageiro
-});
-
-// 1 carona está associada a 1 motorista
-// 1 motorista pode conduzir muitas caronas
+// Associações de Usuario
 Usuario.hasMany(Carona, {
     foreignKey: 'id_usuario',
     as: 'caronas'
-})
-Carona.belongsTo(Usuario, {
-    foreignKey: 'id_usuario',
-    as: 'motorista'
 });
-
-
 Usuario.hasMany(Avaliacao, {
     foreignKey: 'id_usuario_avaliador',
     as: 'avaliacoes_dadas'
 });
-Avaliacao.belongsTo(Usuario, {
-    foreignKey: 'id_usuario_avaliador'
-});
-
 Usuario.hasMany(Avaliacao, {
     foreignKey: 'id_usuario_avaliado',
     as: 'avaliacoes_recebidas'
 });
-Avaliacao.belongsTo(Usuario, {
-    foreignKey: 'id_usuario_avaliado'
+
+// Associações de Carona
+Carona.belongsTo(Usuario, {
+    foreignKey: 'id_usuario',
+    as: 'motorista'
 });
-
-
 Carona.hasMany(Avaliacao, {
     foreignKey: 'id_da_carona',
     as: 'avaliacoes'
+});
+
+// Associações de Avaliacao
+Avaliacao.belongsTo(Usuario, {
+    foreignKey: 'id_usuario_avaliador',
+    as: 'avaliador'
+});
+Avaliacao.belongsTo(Usuario, {
+    foreignKey: 'id_usuario_avaliado',
+    as: 'avaliado'
 });
 Avaliacao.belongsTo(Carona, {
     foreignKey: 'id_da_carona',
     as: 'carona'
 });
 
-
-Usuario.hasMany(Veiculo, {
-    foreignKey: 'id_usuario'
-});
-Veiculo.belongsTo(Usuario, {
-    foreignKey: 'id_usuario'
-});
+// Many-to-many relationships
+Usuario.belongsToMany(Carona, { through: 'CaronaPassageiro' });
+Carona.belongsToMany(Usuario, { through: 'CaronaPassageiro' });
 
 
 export { Usuario, Veiculo, Carona, Avaliacao, CaronaPassageiro };
