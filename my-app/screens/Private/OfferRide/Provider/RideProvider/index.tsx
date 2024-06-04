@@ -5,7 +5,6 @@ import { IUser } from "../../../../../interfaces/IUser";
 interface IVehicle {
   modelo: string;
   placa: string;
-  capacidade: string;
 }
 
 export const RideContext = createContext<{

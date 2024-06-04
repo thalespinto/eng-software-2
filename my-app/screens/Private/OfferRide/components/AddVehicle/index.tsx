@@ -8,25 +8,22 @@ import { Swipeable } from 'react-native-gesture-handler';
 const AddVehicle = () => {
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
-  const [capacidade, setCapacidade] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
   const RideContext = useContext(rc);
 
   const handleAddVehicle = () => {
-    if (!modelo || !placa || !capacidade) {
+    if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
     const newVehicle = {
       modelo,
       placa,
-      capacidade,
     };
     RideContext?.addVehicle(newVehicle);
     setModelo('');
     setPlaca('');
-    setCapacidade('');
     setShowModal(false);
   };
 
@@ -65,7 +62,6 @@ const AddVehicle = () => {
               >
                 <Text>{vehicle.modelo}</Text>
                 <Text>{vehicle.placa}</Text>
-                <Text>{vehicle.capacidade}</Text>
               </TouchableOpacity>
             </Swipeable>
           ))}
@@ -86,13 +82,6 @@ const AddVehicle = () => {
               placeholder="Placa do Veículo"
               value={placa}
               onChangeText={setPlaca}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Capacidade de passageiros"
-              keyboardType="numeric"
-              value={capacidade}
-              onChangeText={setCapacidade}
             />
             <TouchableOpacity onPress={handleAddVehicle} style={styles.modalButton}>
               <Text style={styles.modalButtonText}>Adicionar Veículo</Text>
