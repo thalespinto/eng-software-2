@@ -4,6 +4,6 @@ export interface ICar {
   marca?: string;
   modelo?: string;
   cor?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

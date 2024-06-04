@@ -5,11 +5,13 @@ import Text from "../../../components/Text";
 import { Avatar, Button, useTheme, Icon } from "@rneui/themed";
 import CarCard from "./components/CarCard";
 import { veiculos } from "../../../mock/cars";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddCarDialog from "./components/AddCardDialog";
 import { userContext } from "../../../Providers/UserProvider";
 import { authContext } from "../../../Providers/AuthProvider";
 import { Rating } from "react-native-ratings";
+import { getUserVehicles } from "../../../server/api";
+import { ICar } from "../../../interfaces/ICar";
 
 const Profile = () => {
   const authInfos = useContext(authContext);
@@ -28,10 +30,26 @@ const Profile = () => {
 }
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
+  const [veiculos, setVeiculos] = useState<ICar[]>([]);
 
   const toggleAddCarDialog = () => {
     setOpenAddCarDialog(!openAddCarDialog);
   };
+
+  useEffect(() => {
+    const fetchUserVehicles = async () => {
+      try {
+        if (userInfos?.user?.id) {
+          const userVehicles = await getUserVehicles(userInfos?.user?.id);
+          setVeiculos(userVehicles);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar veículos do usuário:", error);
+      }
+    };
+
+    fetchUserVehicles();
+  }, [userInfos?.user?.id]);
 
   return (
     <PageContainer>
