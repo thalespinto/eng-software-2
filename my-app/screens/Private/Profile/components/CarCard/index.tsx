@@ -6,14 +6,19 @@ import { useState } from "react";
 import DeleteCarDialog from "../DeleteCarDialog";
 import EditCarDialog from "../EditCarDialog";
 
-const CarCard = ({ car }: { car: ICar }) => {
+interface CarCardProps {
+  car: ICar;
+  fetchUserVehicles: () => void;
+}
+
+const CarCard = ({ car, fetchUserVehicles }: CarCardProps) => {
   const { theme } = useTheme();
 
-  const [openDeleteCarDialog, setopenDeleteCarDialog] = useState(false);
+  const [openDeleteCarDialog, setOpenDeleteCarDialog] = useState(false);
   const [openEditCarDialog, setOpenEditCarDialog] = useState(false);
 
   const toggleDeleteCarDialog = () => {
-    setopenDeleteCarDialog(!openDeleteCarDialog);
+    setOpenDeleteCarDialog(!openDeleteCarDialog);
   };
 
   const toggleEditCarDialog = () => {
@@ -70,11 +75,13 @@ const CarCard = ({ car }: { car: ICar }) => {
         car={car}
         isVisible={openDeleteCarDialog}
         onBackdropPress={toggleDeleteCarDialog}
+        onSuccess={fetchUserVehicles}
       />
       <EditCarDialog
         car={car}
         isVisible={openEditCarDialog}
         onBackdropPress={toggleEditCarDialog}
+        onSuccess={fetchUserVehicles}
       />
     </View>
   );

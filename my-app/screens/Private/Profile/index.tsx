@@ -35,18 +35,18 @@ const Profile = () => {
     setOpenAddCarDialog(!openAddCarDialog);
   };
 
-  useEffect(() => {
-    const fetchUserVehicles = async () => {
-      try {
-        if (userInfos?.user?.id) {
-          const userVehicles = await getUserVehicles(userInfos?.user?.id);
-          setVeiculos(userVehicles);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar veículos do usuário:", error);
+  const fetchUserVehicles = async () => {
+    try {
+      if (userInfos?.user?.id) {
+        const userVehicles = await getUserVehicles(userInfos?.user?.id);
+        setVeiculos(userVehicles);
       }
-    };
+    } catch (error) {
+      console.error("Erro ao buscar veículos do usuário:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchUserVehicles();
   }, [userInfos?.user?.id]);
 
@@ -101,13 +101,14 @@ const Profile = () => {
             Adicionar Veículo
           </Button>
           {veiculos.map((veiculo) => (
-            <CarCard key={veiculo.id} car={veiculo} />
+            <CarCard key={veiculo.id} car={veiculo} fetchUserVehicles={fetchUserVehicles} />
           ))}
         </ScrollView>
       </View>
       <AddCarDialog
         isVisible={openAddCarDialog}
         onBackdropPress={toggleAddCarDialog}
+        onSuccess={fetchUserVehicles}
       />
       <Button
         buttonStyle={styles.signOutButton}

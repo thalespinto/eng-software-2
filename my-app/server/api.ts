@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "http://192.168.15.100:3000",
+  baseURL: "http://jogar.storyadventure.com.br:3000",
 });
 
 export const createSession = async (cpf: string, senha: string) => {
@@ -21,3 +21,12 @@ export const getUserVehicles = async (userId: number) => {
     throw error;
   }
 };
+
+export const deleteUserVehicle = async (carId: number) => {
+  try {
+    await api.delete(`/vehicle/delete/${carId}`);
+  } catch (error) {
+    throw error;
+  }
+};
+

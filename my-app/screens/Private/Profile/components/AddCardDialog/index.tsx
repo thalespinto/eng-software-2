@@ -9,9 +9,10 @@ import { userContext } from "../../../../../Providers/UserProvider";
 interface IAddCarDialog {
   isVisible: boolean;
   onBackdropPress: () => void;
+  onSuccess: () => void;
 }
 
-const AddCarDialog = ({ isVisible, onBackdropPress }: IAddCarDialog) => {
+const AddCarDialog = ({ isVisible, onBackdropPress, onSuccess }: IAddCarDialog) => {
   const { theme } = useTheme();
   const [modelo, setModelo] = useState("");
   const [placa, setPlaca] = useState("");
@@ -24,6 +25,7 @@ const AddCarDialog = ({ isVisible, onBackdropPress }: IAddCarDialog) => {
     await api.post("/vehicle/create", { modelo, placa, id_usuario: userId, });
 
     Alert.alert("Veículo cadastrado com sucesso!");
+    onSuccess();
     onBackdropPress();
     } catch (error) {
       console.error("Erro ao cadastrar veículo:", error);
