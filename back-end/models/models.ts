@@ -7,6 +7,7 @@ interface UsuarioAttributes {
     senha: string;
     nome: string;
     profile_pic?: string;
+    nota_media?: number;
 }
 
 class Usuario extends Model<UsuarioAttributes> implements UsuarioAttributes {
@@ -15,6 +16,7 @@ class Usuario extends Model<UsuarioAttributes> implements UsuarioAttributes {
     public senha!: string;
     public nome!: string;
     public profile_pic?: string;
+    public nota_media!: number;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -38,13 +40,17 @@ Usuario.init(
         profile_pic: {
             type: DataTypes.STRING,
         },
+        nota_media: {
+            type: DataTypes.DOUBLE,
+            defaultValue: 5,
+        },
     },
     {
         sequelize,
         tableName: 'USUARIO',
         timestamps: false,
     }
-); 
+);
 
 
 interface VeiculoAttributes {
@@ -193,7 +199,7 @@ Carona.init(
 
 
 interface AvaliacaoAttributes {
-    id_avaliacao: number;
+    id_avaliacao?: number;
     id_usuario_avaliador: number;
     id_usuario_avaliado: number;
     id_da_carona: number;
@@ -215,8 +221,7 @@ Avaliacao.init(
     {
         id_avaliacao: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
+            autoIncrement: true,
             primaryKey: true
         },
         id_usuario_avaliador: {
@@ -229,7 +234,7 @@ Avaliacao.init(
         },
         id_da_carona: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         nota: {
             type: DataTypes.INTEGER,
