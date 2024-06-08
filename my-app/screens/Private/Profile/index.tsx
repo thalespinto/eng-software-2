@@ -9,7 +9,7 @@ import AddCarDialog from "./components/AddCardDialog";
 import { userContext } from "../../../Providers/UserProvider";
 import { authContext } from "../../../Providers/AuthProvider";
 import { Rating } from "react-native-ratings";
-import { getUserVehicles } from "../../../server/api";
+import { getUserVehicles, getUserInfo } from "../../../server/api";
 import { ICar } from "../../../interfaces/ICar";
 
 const Profile = () => {
@@ -30,6 +30,7 @@ const Profile = () => {
 
   const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
   const [veiculos, setVeiculos] = useState<ICar[]>([]);
+  const [notaMedia, setNotaMedia] = useState(5);
 
   const toggleAddCarDialog = () => {
     setOpenAddCarDialog(!openAddCarDialog);
@@ -46,8 +47,20 @@ const Profile = () => {
     }
   };
 
+  const fetchUserInfo = async () => {
+    try {
+      if (userInfos?.user?.id) {
+        const userInfo = await getUserInfo(userInfos?.user?.id);
+        setNotaMedia(userInfo.nota_media);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar informações do usuário:", error);
+    }
+  };
+
   useEffect(() => {
     fetchUserVehicles();
+    fetchUserInfo();
   }, [userInfos?.user?.id]);
 
   return (
@@ -58,7 +71,7 @@ const Profile = () => {
           <Rating
             imageSize={32}
             readonly
-            startingValue={3.5}
+            startingValue={notaMedia}
             tintColor={theme.colors.white}
           />
         </View>
