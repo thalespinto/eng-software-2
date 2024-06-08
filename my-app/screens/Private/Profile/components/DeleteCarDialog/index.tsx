@@ -1,20 +1,35 @@
 import { Button, Dialog, useTheme } from "@rneui/themed";
 import { ICar } from "../../../../../interfaces/ICar";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import Text from "../../../../../components/Text";
+import { deleteUserVehicle } from "../../../../../server/api";
 
 interface IDeleteCarDialog {
   car: ICar;
   isVisible: boolean;
   onBackdropPress: () => void;
+  onSuccess: () => void;
 }
 
 const DeleteCarDialog = ({
   car,
   isVisible,
   onBackdropPress,
+  onSuccess,
 }: IDeleteCarDialog) => {
   const { theme } = useTheme();
+
+  const handleDeleteCar = async () => {
+    try {
+      await deleteUserVehicle(car.id);
+      Alert.alert("Veículo excluído com sucesso!");
+      onSuccess();
+      onBackdropPress();
+    } catch (error) {
+      console.error("Erro ao excluir veículo:", error);
+      Alert.alert("Erro ao excluir veículo");
+    }
+  };
 
   return (
     <Dialog isVisible={isVisible} onBackdropPress={onBackdropPress}>
@@ -23,7 +38,7 @@ const DeleteCarDialog = ({
         <Button onPress={onBackdropPress} buttonStyle={{ width: "80%" }} color="warning">
           Voltar
         </Button>
-        <Button buttonStyle={{ width: "80%" }} type="outline">
+        <Button onPress={handleDeleteCar} buttonStyle={{ width: "80%" }} type="outline">
           Excluir
         </Button>
       </View>

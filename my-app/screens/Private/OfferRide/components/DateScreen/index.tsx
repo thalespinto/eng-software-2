@@ -5,14 +5,14 @@ import {
 import PageContainer from "../../../../../components/PageContainer";
 import { Input } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
-import { hikeContext as hc } from "../../Provider/RideProvider";
+import { RideContext as rc } from "../../Provider/RideProvider";
 import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
 const DateScreen = () => {
-  const hikeContext = useContext(hc);
+  const RideContext = useContext(rc);
 
   const [date, setDate] = useState<Date>(
-    hikeContext?.hikeInfos.date ? hikeContext.hikeInfos.date : new Date()
+    RideContext?.RideInfos.date ? RideContext.RideInfos.date : new Date()
   );
 
   const dateInputRef = useRef<any>(null);
@@ -58,7 +58,7 @@ const DateScreen = () => {
   }
 
   useEffect(() => {
-    hikeContext?.setHikeInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 0) }));
+    RideContext?.setRideInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 0) }));
   }, [date]);
 
   return (

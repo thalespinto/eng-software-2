@@ -13,7 +13,7 @@ CREATE TABLE USUARIO (
     cpf VARCHAR(14) UNIQUE NOT NULL,
     senha VARCHAR(200) NOT NULL,
     nome VARCHAR(100) NOT NULL,
-    profile_pic VARCHAR(255),
+    profile_pic VARCHAR(255)
 );
 
 CREATE TABLE VEICULO (
@@ -50,7 +50,7 @@ CREATE TABLE AVALIACAO (
     nota INT,
     FOREIGN KEY (id_usuario_avaliador) REFERENCES USUARIO(id),
     FOREIGN KEY (id_usuario_avaliado) REFERENCES USUARIO(id),
-    FOREIGN KEY (id_da_carona) REFERENCES CARONA(id_carona_atual)
+    FOREIGN KEY (id_da_carona) REFERENCES CARONA(id_usuario)
 );
 
 CREATE TABLE CARONA_PASSAGEIRO (
