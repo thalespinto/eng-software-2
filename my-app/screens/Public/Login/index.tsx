@@ -15,9 +15,7 @@ import { authContext } from "../../../Providers/AuthProvider";
 
 // Componente de tela de login
 const LoginScreen = () => {
-  // Hook para navegação entre telas
-  const navigation = useNavigation();
-  // Contexto de autenticação
+    // Contexto de autenticação
   const authInfos = useContext(authContext);
 
   // Estados para CPF, senha e visibilidade da senha
