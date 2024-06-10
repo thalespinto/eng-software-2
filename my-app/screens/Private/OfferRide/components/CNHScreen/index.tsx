@@ -1,22 +1,22 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Text, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Input } from '@rneui/themed';
-import { hikeContext as hc } from "../../Provider/RideProvider"; // Importe o contexto
+import { RideContext as rc } from "../../Provider/RideProvider"; // Importe o contexto
 
 const CNHScreen = () => {
-  const hikeContext = useContext(hc); // Corrigido para useContext(hc)
+  const RideContext = useContext(rc); // Corrigido para useContext(hc)
   const [cnhNumber, setCNHNumber] = useState('');
   const cnhInputRef = useRef<any>(null);
 
   useEffect(() => {
-    if (hikeContext) {
-      setCNHNumber(hikeContext.hikeInfos.cnh ?? ''); // Define o número da CNH a partir do contexto
+    if (RideContext) {
+      setCNHNumber(RideContext.RideInfos.cnh ?? ''); // Define o número da CNH a partir do contexto
     }
-  }, [hikeContext]);
+  }, [RideContext]);
 
   const updateCNH = (cnh: string) => {
-    if (hikeContext) {
-      hikeContext.setCNH(cnh); // Utiliza a função setCNH do contexto para atualizar a CNH
+    if (RideContext) {
+      RideContext.setCNH(cnh); // Utiliza a função setCNH do contexto para atualizar a CNH
     }
     setCNHNumber(cnh);
   };

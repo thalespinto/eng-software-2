@@ -1,22 +1,22 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Text, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Input } from '@rneui/themed';
-import { hikeContext as hc } from "../../Provider/RideProvider"; // Importe o contexto
+import { RideContext as rc } from "../../Provider/RideProvider"; // Importe o contexto
 
 const PassengerScreen = () => {
-  const hikeContext = useContext(hc);
+  const RideContext = useContext(rc);
   const [passengerCount, setPassengerCount] = useState('');
   const passengerInputRef = useRef<any>(null);
 
   useEffect(() => {
-    if (hikeContext) {
-      setPassengerCount(hikeContext.hikeInfos.passengerCount ?? '');
+    if (RideContext) {
+      setPassengerCount(RideContext.RideInfos.passengerCount ?? '');
     }
-  }, [hikeContext]);
+  }, [RideContext]);
 
   const updatePassengerCount = (count: string) => {
-    if (hikeContext) {
-      hikeContext.setPassengerCount(count);
+    if (RideContext) {
+      RideContext.setPassengerCount(count);
     }
     setPassengerCount(count);
   };

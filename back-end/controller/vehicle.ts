@@ -29,6 +29,16 @@ export const getVehicle = async (req: Request, res: Response) => {
     }
 };
 
+export const getUserVehicles = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    try {
+        const vehicles = await Veiculo.findAll({ where: { id_usuario: userId } });
+        res.status(200).json(vehicles);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao obter veículos do usuário' });
+    }
+}
+
 export const getVehicleById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {

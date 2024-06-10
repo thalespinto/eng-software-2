@@ -6,6 +6,7 @@ const router = express.Router();
 router.post('/create', vehicleController.createVehicle);
 router.get('/getAll', vehicleController.getAllVehicles);
 router.get('/getId/:id', vehicleController.getVehicleById);
+router.get('/getUserVehicles/:userId', vehicleController.getUserVehicles);
 router.put('/update/:id', vehicleController.updateVehicle);
 router.delete('/delete/:id', vehicleController.deleteVehicle);
 
