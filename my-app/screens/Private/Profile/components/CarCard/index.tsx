@@ -8,7 +8,7 @@ import EditCarDialog from "../EditCarDialog";
 
 interface CarCardProps {
   car: ICar;
-  fetchUserVehicles: () => void;
+  fetchUserVehicles: () => Promise<void>;
 }
 
 const CarCard = ({ car, fetchUserVehicles }: CarCardProps) => {
