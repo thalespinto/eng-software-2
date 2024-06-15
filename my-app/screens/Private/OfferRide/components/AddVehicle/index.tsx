@@ -1,38 +1,86 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RideContext as rc } from "../../Provider/RideProvider";
 import { Swipeable } from 'react-native-gesture-handler';
+import { api, getUserVehicles, deleteUserVehicle } from "../../../../../server/api";
+import { userContext } from "../../../../../Providers/UserProvider";
+import { RideContext } from "../../Provider/RideProvider";
+import { ICar } from "../../../../../interfaces/ICar";
 
 const AddVehicle = () => {
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [vehicles, setVehicles] = useState<ICar[]>([]);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
-  const RideContext = useContext(rc);
+  const userInfos = useContext(userContext);
+  const rideContext = useContext(RideContext);
 
-  const handleAddVehicle = () => {
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+
+  const fetchVehicles = async () => {
+    try {
+      const userId = userInfos?.user?.id;
+      if (userId) {
+        const vehiclesData = await getUserVehicles(userId);
+        setVehicles(vehiclesData);
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    } catch (error) {
+      console.error("Erro ao carregar veículos:", error);
+      Alert.alert("Erro ao carregar veículos");
+    }
+  };
+
+  const handleAddVehicle = async () => {
     if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
-    const newVehicle = {
-      modelo,
-      placa,
-    };
-    RideContext?.addVehicle(newVehicle);
-    setModelo('');
-    setPlaca('');
-    setShowModal(false);
+
+    try {
+      const userId = userInfos?.user?.id;
+      if (userId) {
+        await api.post("/vehicle/create", { modelo, placa, id_usuario: userId });
+
+        Alert.alert("Veículo cadastrado com sucesso!");
+        fetchVehicles();
+        setModelo('');
+        setPlaca('');
+        setShowModal(false);
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar veículo:", error);
+      Alert.alert("Erro ao cadastrar veículo");
+    }
   };
 
-  const deleteVehicle = (index: number) => {
-    RideContext?.deleteVehicle(index);
+  const deleteVehicle = async (index: number) => {
+    try {
+      const vehicleId = vehicles[index].id;
+      await deleteUserVehicle(vehicleId);
+
+      Alert.alert("Veículo deletado com sucesso!");
+      fetchVehicles();
+    } catch (error) {
+      console.error("Erro ao deletar veículo:", error);
+      Alert.alert("Erro ao deletar veículo");
+    }
   };
 
   const toggleSelectVehicle = (index: number) => {
-    setSelectedVehicleIndex(index === selectedVehicleIndex ? null : index);
+    if (index === selectedVehicleIndex) {
+      setSelectedVehicleIndex(null);
+      rideContext?.setSelectedVehicle(null);
+    } else {
+      setSelectedVehicleIndex(index);
+      rideContext?.setSelectedVehicle(vehicles[index]);
+    }
   };
 
   return (
@@ -43,7 +91,7 @@ const AddVehicle = () => {
       </TouchableOpacity>
       <ScrollView>
         <View>
-          {RideContext?.vehicles.map((vehicle, index) => (
+          {vehicles.map((vehicle, index) => (
             <Swipeable
               key={index}
               renderRightActions={() => (

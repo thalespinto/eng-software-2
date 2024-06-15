@@ -154,25 +154,6 @@ const Stepper: FC<StepperProps> = (props) => {
             </Button>
           )}
 
-          {content.length - 1 === active && (
-            <Button
-              buttonStyle={[
-                {
-                  padding: 10,
-                  borderRadius: 4,
-                  backgroundColor: "#1976d2",
-                  alignSelf: "flex-start",
-                  width: "100%",
-                },
-                buttonStyle,
-              ]}
-              onPress={() => onFinish()}
-            >
-              <Text style={[{ color: "white" }, buttonTextStyle]}>
-                Confirmar Viagem
-              </Text>
-            </Button>
-          )}
           {active !== 0 && (
             <Button
               buttonStyle={[

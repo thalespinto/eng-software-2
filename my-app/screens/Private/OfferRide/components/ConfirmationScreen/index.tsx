@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, StyleSheet, Switch, TextInput } from 'react-native';
+import { Text, View, StyleSheet, Switch, TextInput, TouchableOpacity } from 'react-native';
 import { RideContext as rc } from "../../Provider/RideProvider";
 
 const ConfirmationScreen = () => {
@@ -8,7 +8,7 @@ const ConfirmationScreen = () => {
   const [radius, setRadius] = useState('');
 
   const passengerCount = RideContext ? RideContext.RideInfos.passengerCount : '';
-  const vehicles = RideContext ? RideContext.vehicles : [];
+  const selectedVehicle = RideContext ? RideContext.selectedVehicle : null;
   const date = RideContext ? RideContext.RideInfos.date : '';
   const formattedDate = date ? new Date(date) : '';
 
@@ -25,6 +25,12 @@ const ConfirmationScreen = () => {
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${hours}:${minutes}`;
+  };
+
+  const handleSubmit = async () => {
+    if (RideContext) {
+      await RideContext.submitRide();
+    }
   };
 
   return (
@@ -44,18 +50,23 @@ const ConfirmationScreen = () => {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Veículo:</Text>
-        {vehicles.map((vehicle, index) => (
-          <View key={index} style={styles.vehicleInfoContainer}>
-            <Text style={styles.vehicleInfo}>Modelo: {vehicle.modelo}</Text>
-            <Text style={styles.vehicleInfo}>Placa: {vehicle.placa}</Text>
+        {selectedVehicle ? (
+          <View style={styles.vehicleInfoContainer}>
+            <Text style={styles.vehicleInfo}>Modelo: {selectedVehicle.modelo}</Text>
+            <Text style={styles.vehicleInfo}>Placa: {selectedVehicle.placa}</Text>
           </View>
-        ))}
+        ) : (
+          <Text style={styles.info}>Nenhum veículo selecionado</Text>
+        )}
       </View>
       <View style={styles.switchContainer}>
         <Text style={styles.switchLabel}>Aceitar automaticamente passageiros:</Text>
         <Switch
           value={acceptAutomatically}
-          onValueChange={(value) => setAcceptAutomatically(value)}
+          onValueChange={(value) => {
+            setAcceptAutomatically(value);
+            RideContext?.setAcceptAutomatically(value);
+          }}
         />
       </View>
       {acceptAutomatically && (
@@ -66,11 +77,16 @@ const ConfirmationScreen = () => {
             placeholder="Digite o raio"
             keyboardType="numeric"
             value={radius}
-            onChangeText={setRadius}
+            onChangeText={(text) => {
+              setRadius(text);
+              RideContext?.setRadius(text);
+            }}
           />
         </View>
       )}
-      {/* Outras informações de confirmação podem ser adicionadas aqui */}
+      <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
+        <Text style={styles.submitButtonText}>Confirmar Viagem</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -79,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'flex-start', 
+    alignItems: 'flex-start',
     paddingHorizontal: 20,
   },
   title: {
@@ -88,17 +104,17 @@ const styles = StyleSheet.create({
     marginLeft: 23,
     fontWeight: 'bold',
     textAlign: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   infoContainer: {
     marginBottom: 10,
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   label: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginRight: 10, 
+    marginRight: 10,
     textAlign: 'left',
   },
   info: {
@@ -137,6 +153,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 5,
+  },
+  submitButton: {
+    backgroundColor: '#1976d2',
+    width: '100%',
+    padding: 4,
+    marginTop: 60,
+    borderRadius: 5,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 

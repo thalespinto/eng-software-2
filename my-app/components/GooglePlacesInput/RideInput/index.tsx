@@ -1,27 +1,27 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import Map from "../Map";
+import Map from "../../Map";
 import { Icon } from "@rneui/themed";
-import { hikeContext } from "../../screens/Private/HItchHike/Provider/HikeProvider";
+import { RideContext } from "../../../screens/Private/OfferRide/Provider/RideProvider";
 
 interface IGooglePlacesInput {
   placeHolder: string;
 }
 
 const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
-  const hikeInfos = useContext(hikeContext);
+  const rideInfos = useContext(RideContext);
   const ref = useRef<any>();
 
   const [openMap, setOpenMap] = useState(false);
 
   useEffect(() => {
-    if (placeHolder && hikeInfos && ref.current) {
+    if (placeHolder && rideInfos && ref.current) {
       placeHolder === "De"
-        ? ref.current?.setAddressText(hikeInfos?.hikeInfos.origin)
-        : ref.current?.setAddressText(hikeInfos?.hikeInfos.destination);
+        ? ref.current?.setAddressText(rideInfos?.RideInfos.origin || "")
+        : ref.current?.setAddressText(rideInfos?.RideInfos.destination || "");
     }
-  }, [placeHolder, hikeInfos]);
+  }, [placeHolder, rideInfos]);
 
   return (
     <>
@@ -30,8 +30,8 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
           setLocationText={(value) => {
             ref.current?.setAddressText(value);
             placeHolder === "De"
-              ? hikeInfos?.setOrigin(value)
-              : hikeInfos?.setDestination(value);
+              ? rideInfos?.setOrigin(value)
+              : rideInfos?.setDestination(value);
           }}
           setOpenMap={setOpenMap}
         />
@@ -55,10 +55,10 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
             }}
             onPress={(data) =>
               placeHolder === "De"
-                ? hikeInfos?.setOrigin(data.description)
-                : hikeInfos?.setDestination(data.description)
+                ? rideInfos?.setOrigin(data.description)
+                : rideInfos?.setDestination(data.description)
             }
-            placeholder={`${placeHolder}                                                                            `}
+            placeholder={`${placeHolder}`}
             query={{
               key: "",
               language: "pt-br",

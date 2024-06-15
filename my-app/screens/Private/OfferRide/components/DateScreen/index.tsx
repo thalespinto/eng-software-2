@@ -6,13 +6,12 @@ import PageContainer from "../../../../../components/PageContainer";
 import { Input } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { RideContext as rc } from "../../Provider/RideProvider";
-import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
 const DateScreen = () => {
   const RideContext = useContext(rc);
 
   const [date, setDate] = useState<Date>(
-    RideContext?.RideInfos.date ? RideContext.RideInfos.date : new Date()
+    RideContext?.RideInfos.date ? new Date(RideContext.RideInfos.date) : new Date()
   );
 
   const dateInputRef = useRef<any>(null);
@@ -50,15 +49,15 @@ const DateScreen = () => {
     return `${day}/${month}/${year}`;
   };
 
-  function formatTime(date: Date) {
+  const formatTime = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${hours}:${minutes}`;
-  }
+  };
 
   useEffect(() => {
-    RideContext?.setRideInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 0) }));
+    RideContext?.setRideInfos((prevState) => ({ ...prevState, date }));
   }, [date]);
 
   return (
