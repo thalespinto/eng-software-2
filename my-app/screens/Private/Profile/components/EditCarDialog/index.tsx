@@ -9,7 +9,7 @@ interface IEditCarDialog {
   car: ICar;
   isVisible: boolean;
   onBackdropPress: () => void;
-  onSuccess: () => void;
+  onSuccess: () => Promise<void>;
 }
 
 const EditCarDialog = ({ car, isVisible, onBackdropPress, onSuccess }: IEditCarDialog) => {
@@ -24,7 +24,6 @@ const EditCarDialog = ({ car, isVisible, onBackdropPress, onSuccess }: IEditCarD
       onSuccess();
       onBackdropPress();
     } catch (error) {
-      console.error("Erro ao editar veículo:", error);
       Alert.alert("Erro ao editar veículo");
     }
   };

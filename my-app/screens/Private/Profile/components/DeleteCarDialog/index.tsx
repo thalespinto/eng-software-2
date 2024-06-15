@@ -8,7 +8,7 @@ interface IDeleteCarDialog {
   car: ICar;
   isVisible: boolean;
   onBackdropPress: () => void;
-  onSuccess: () => void;
+  onSuccess: () => Promise<void>;
 }
 
 const DeleteCarDialog = ({
@@ -23,10 +23,9 @@ const DeleteCarDialog = ({
     try {
       await deleteUserVehicle(car.id);
       Alert.alert("Veículo excluído com sucesso!");
-      onSuccess();
+      await onSuccess();
       onBackdropPress();
     } catch (error) {
-      console.error("Erro ao excluir veículo:", error);
       Alert.alert("Erro ao excluir veículo");
     }
   };
