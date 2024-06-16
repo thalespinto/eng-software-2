@@ -147,6 +147,7 @@ const Stepper: FC<StepperProps> = (props) => {
                 pushData(active + 1);
                 onNext();
               }}
+              testID="continueButton"
             >
               <Text style={[{ color: "white" }, buttonTextStyle]}>
                 Continuar

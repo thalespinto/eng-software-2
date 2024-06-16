@@ -1,0 +1,94 @@
+Documentação do Componente AddVehicle
+
+Descrição:
+O componente AddVehicle permite ao usuário adicionar novos veículos à sua lista através de um modal interativo. Ele facilita a entrada de informações como modelo e placa do veículo, além de permitir a exclusão de veículos existentes por meio de gestos de deslize. Este componente é integrado ao contexto de veículos (RideContext).
+
+Componente AddVehicle:
+
+Hooks e Estados:
+useState: Utilizado para gerenciar os estados locais modelo, placa, showModal e selectedVehicleIndex, responsáveis por controlar a entrada de dados do usuário e a visibilidade do modal de adição de veículo, bem como o destaque visual do veículo selecionado na lista.
+useContext: Utilizado para acessar o contexto RideContext, que provê funcionalidades para adicionar e deletar veículos na lista do usuário.
+
+Funções:
+handleAddVehicle: Função chamada ao confirmar a adição de um novo veículo, validando os campos obrigatórios (modelo e placa) e chamando a função addVehicle do contexto RideContext.
+deleteVehicle: Função para deletar um veículo da lista, utilizando a função deleteVehicle do contexto RideContext com base no índice do veículo.
+toggleSelectVehicle: Função para alternar a seleção de um veículo na lista, destacando visualmente o item selecionado.
+
+JSX:
+TouchableOpacity: Componente interativo utilizado para abrir o modal de adição de veículo quando pressionado, exibindo um ícone e um texto descritivo.
+Modal: Componente utilizado para apresentar o formulário de adição de veículo de forma modal, garantindo foco no processo de entrada de dados.
+TextInput: Componente para entrada de texto utilizado para capturar o modelo e a placa do veículo que o usuário deseja adicionar.
+Swipeable: Componente utilizado para permitir a ação de deletar um veículo da lista por meio de gestos de deslize, exibindo um ícone de exclusão.
+Ionicons: Componente utilizado para renderizar ícones visuais, como ícones de adição e exclusão de veículos.
+
+
+
+Documentação do Componente ConfirmationScreen
+
+Descrição:
+O componente ConfirmationScreen exibe informações detalhadas sobre a confirmação de uma viagem, incluindo data, hora, número de passageiros e detalhes do veículo selecionado. Ele também oferece a funcionalidade de aceitar automaticamente passageiros, permitindo configurar um raio de aceitação caso essa opção esteja ativada. 
+
+Componente ConfirmationScreen:
+
+Hooks e Estados:
+useState: Utilizado para gerenciar os estados locais acceptAutomatically e radius, que controlam a configuração de aceitação automática de passageiros e o raio de aceitação, respectivamente.
+useContext: Utilizado para acessar o contexto RideContext, que fornece informações como contagem de passageiros, detalhes do veículo e data da viagem.
+
+Funções:
+formatDate: Função para formatar a data da viagem no formato "DD/MM/YYYY".
+formatTime: Função para formatar a hora da viagem no formato "HH".
+
+JSX:
+Text: Componente para exibir títulos, rótulos e informações textuais, garantindo uma apresentação clara e legível das informações da viagem.
+View: Componente básico do React Native para estruturar o layout, agrupando e organizando os diferentes elementos visuais.
+Switch: Componente interativo utilizado para ativar ou desativar a aceitação automática de passageiros.
+TextInput: Componente para entrada de texto utilizado para capturar o raio de aceitação quando a aceitação automática está ativada.
+StyleSheet.create: Utilizado para definir estilos CSS-in-JS que estruturam e estilizam os componentes visuais, garantindo consistência estética e funcional.
+
+
+
+Documentação do Componente DateScreen
+
+Descrição:
+O componente DateScreen é responsável por permitir ao usuário selecionar e modificar a data e hora de uma viagem. 
+
+Componente DateScreen:
+
+Hooks e Estados:
+useState: Utilizado para gerenciar os estados locais date, que armazena a data selecionada para a viagem.
+useContext: Utilizado para acessar o contexto RideContext, que fornece informações como data inicial da viagem e métodos para atualizá-la.
+
+Funções:
+onDateChange: Função para lidar com a mudança na data selecionada pelo usuário no DateTimePickerAndroid.
+showDatePicker: Função para exibir o seletor de data.
+showTimePicker: Função para exibir o seletor de hora.
+formatDate: Função para formatar a data no formato "DD/MM/YYYY".
+formatTime: Função para formatar a hora no formato "HH".
+
+JSX:
+Input: Componente de entrada de texto usado para exibir e interagir com a data e hora selecionadas.
+PageContainer: Componente que envolve o conteúdo da página, fornecendo um layout estruturado.
+View e Text: Componentes básicos do React Native para estruturar o layout e exibir informações textuais.
+StyleSheet.create: Utilizado para definir estilos que estruturam e estilizam os componentes visuais.
+
+
+
+Documentação do Componente PassengerScreen
+
+Descrição:
+O componente PassengerScreen permite ao usuário inserir e atualizar o número de passageiros para uma viagem. Ele exibe um campo de entrada de texto onde o usuário pode digitar o número desejado de passageiros.
+
+Componente PassengerScreen:
+
+Hooks e Estados:
+useState: Utilizado para gerenciar o estado local passengerCount, que armazena o número atual de passageiros.
+useContext: Utilizado para acessar o contexto RideContext, que fornece informações sobre a viagem, incluindo o número de passageiros.
+useRef: Utilizado para criar uma referência ao componente de entrada de texto (Input) para focar e manipular programaticamente.
+
+Funções:
+updatePassengerCount: Função para atualizar o número de passageiros tanto no estado local quanto no contexto RideContext.
+
+JSX:
+KeyboardAvoidingView: Componente do React Native usado para evitar que o teclado sobreponha o campo de entrada de texto, garantindo uma experiência de usuário consistente em diferentes plataformas (ios e android).
+ScrollView: Componente que permite rolar o conteúdo dentro da tela, mantendo a interface acessível mesmo quando o teclado está aberto.
+Text e Input (do pacote @rneui/themed): Componentes utilizados para exibir texto informativo e capturar a entrada do usuário de forma estilizada e responsiva.

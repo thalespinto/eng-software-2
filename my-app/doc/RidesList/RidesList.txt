@@ -1,0 +1,147 @@
+Documentação do Componente ManageRideDialog
+
+Descrição:
+O componente ManageRideDialog é um diálogo usado para gerenciar viagens em um aplicativo React Native. Ele permite que o usuário visualize detalhes da viagem, interaja com os participantes, e, dependendo do papel do usuário (Motorista ou não), tome ações específicas como remarcar ou cancelar a viagem.
+
+Componente ManageRideDialog:
+
+Props
+isVisible: boolean: Controla a visibilidade do diálogo.
+onBackdropPress: () => void: Função chamada quando o fundo do diálogo é pressionado.
+role: string: Define o papel do usuário (Motorista ou Participante).
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Gerencia os estados dos diálogos de remarcação e avaliação dos participantes.
+openRescheduleRideDialog: boolean: Controla a visibilidade do diálogo de remarcação.
+openRateParticipantsDialog: boolean: Controla a visibilidade do diálogo de avaliação dos participantes.
+
+Funções
+toggleOpenRescheduleRideDialog: Alterna a visibilidade do diálogo de remarcação de viagem.
+toggleOpenRateParticipantsDialog: Alterna a visibilidade do diálogo de avaliação dos participantes.
+
+JSX
+Dialog: Componente que encapsula o conteúdo do diálogo.
+View: Estruturas de layout para organizar o conteúdo.
+Text: Exibe textos descritivos e informativos.
+Icon: Exibe ícones para interação (ex.: pessoa, chat).
+Button: Botões para ações como remarcar, cancelar viagem e avaliar participantes.
+RequestCard: Cartão que exibe solicitações de participantes para o motorista.
+RescheduleRideDialog: Diálogo para remarcar a viagem.
+RateParticipantesDialog: Diálogo para avaliar os participantes.
+
+
+
+Documentação do Componente RateParticipantCard
+
+Descrição:
+O componente RateParticipantCard é um cartão que exibe informações de um participante, incluindo seu nome e uma avaliação com estrelas. Esse cartão é utilizado em um contexto onde os usuários podem visualizar as avaliações dos participantes de uma viagem.
+
+Componente RateParticipantCard:
+
+Hooks
+useTheme: Hook para acessar o tema do aplicativo.
+
+JSX
+View: Estruturas de layout para organizar o conteúdo.
+Text: Exibe o nome do participante.
+Rating: Componente para exibir a avaliação do participante.
+Icon: Exibe um ícone para interação (por exemplo, envio de uma mensagem).
+
+
+
+Documentação do Componente RateParticipantesDialog
+Descrição:
+O componente RateParticipantesDialog é um diálogo que permite visualizar e avaliar múltiplos participantes de uma viagem em um aplicativo React Native. Ele exibe uma lista de cartões de avaliação (RateParticipantCard) e um botão para fechar o diálogo.
+
+Componente RateParticipantesDialog:
+
+Props
+isVisible: boolean: Controla a visibilidade do diálogo.
+onBackdropPress: () => void: Função chamada quando o fundo do diálogo é pressionado.
+
+Hooks
+useTheme: Hook para acessar o tema do aplicativo.
+
+JSX
+Dialog: Componente que encapsula o conteúdo do diálogo.
+View: Estrutura de layout para organizar o conteúdo.
+Text: Exibe textos descritivos e informativos.
+RateParticipantCard: Componente que exibe a avaliação de um participante.
+Button: Botão para fechar o diálogo.
+
+
+
+Documentação do Componente RescheduleRideDialog
+Descrição:
+O componente RescheduleRideDialog é um diálogo que permite aos usuários remarcar as datas e horários de ida e retorno de uma viagem em um aplicativo React Native. Ele utiliza seletores de data e hora para ajustar as informações da viagem.
+
+Componente RescheduleRideDialog:
+
+Props
+isVisible: boolean: Controla a visibilidade do diálogo.
+onBackdropPress: () => void: Função chamada quando o fundo do diálogo é pressionado.
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Gerencia os estados das datas e horários de ida e retorno.
+date: Date: Estado para a data de ida.
+date2: Date: Estado para a data de retorno.
+useRef: Referências para os campos de entrada de data e hora.
+Funções
+onDateChange: Atualiza o estado date quando a data de ida é selecionada.
+onDateChange2: Atualiza o estado date2 quando a data de retorno é selecionada.
+showDatePicker: Abre o seletor de data para a ida.
+showDatePicker2: Abre o seletor de data para o retorno.
+showTimePicker: Abre o seletor de hora para a ida.
+showTimePicker2: Abre o seletor de hora para o retorno.
+formatDate: Formata a data no formato dd/mm/yyyy.
+formatTime: Formata a hora no formato hh:mm.
+
+JSX
+Dialog: Componente que encapsula o conteúdo do diálogo.
+View: Estrutura de layout para organizar o conteúdo.
+Text: Exibe textos descritivos e informativos.
+Input: Campos de entrada para as datas e horas de ida e retorno.
+Button: Botões para confirmar e voltar, fechando o diálogo.
+
+
+
+Documentação do Componente RequestCard
+Descrição:
+O componente RequestCard é um cartão que exibe informações de uma solicitação de participante para uma viagem. Ele mostra o nome do solicitante, uma avaliação com estrelas, e ícones para aceitar ou rejeitar a solicitação.
+
+Componente RequestCard:
+
+Hooks
+useTheme: Hook para acessar o tema do aplicativo.
+
+JSX
+View: Estruturas de layout para organizar o conteúdo.
+Text: Exibe o nome do solicitante.
+Rating: Componente para exibir a avaliação do solicitante.
+Icon: Exibe ícones para aceitar (check) e rejeitar (delete) a solicitação.
+
+
+
+Documentação do Componente RideCard
+Descrição:
+O componente RideCard é um cartão interativo que exibe informações básicas sobre uma viagem e permite gerenciar essa viagem ao abrir um diálogo detalhado (ManageRideDialog). O componente é estilizado e responsivo, adaptando-se ao tema do aplicativo.
+
+Componente RideCard:
+
+Props
+role: string: Define o papel do usuário (por exemplo, "Motorista" ou "Passageiro").
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Gerencia o estado de visibilidade do diálogo de gerenciamento de viagem.
+openManageRideDialog: boolean: Controla a visibilidade do ManageRideDialog.
+Funções
+toggleOpenManageRideDialog: Alterna o estado openManageRideDialog para abrir ou fechar o diálogo de gerenciamento de viagem.
+
+JSX
+TouchableOpacity: Componente interativo que, ao ser pressionado, abre o diálogo de gerenciamento de viagem.
+Icon: Ícone de pessoa para representar o motorista.
+Text: Exibe informações sobre o motorista e a viagem.
+ManageRideDialog: Diálogo que permite gerenciar a viagem, visível quando openManageRideDialog é true.

@@ -1,0 +1,153 @@
+Documentação do Componente AddCarDialog
+
+Descrição:
+O componente AddCarDialog é um diálogo modal que permite aos usuários adicionar um novo veículo ao sistema. Ele solicita ao usuário que insira o modelo e a placa do veículo e envia esses dados para um servidor ao confirmar.
+
+Componente AddCarDialog:
+
+Props
+isVisible: boolean: Define a visibilidade do diálogo.
+onBackdropPress: () => void: Função chamada ao pressionar o fundo do diálogo.
+onSuccess: () => void: Função chamada ao concluir com sucesso o cadastro do veículo.
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Gerencia os estados dos campos de entrada do modelo e da placa do veículo.
+modelo: string: Armazena o modelo do veículo.
+placa: string: Armazena a placa do veículo.
+useContext(userContext): Obtém as informações do usuário do contexto.
+
+Funções
+handleAddCar: Função assíncrona que envia os dados do veículo para o servidor.
+Tenta cadastrar o veículo usando a API.
+Exibe um alerta de sucesso ou erro conforme o resultado da operação.
+Chama onSuccess e onBackdropPress em caso de sucesso.
+
+JSX
+Dialog: Componente de diálogo modal.
+Text: Exibe o título do diálogo.
+View: Contém os campos de entrada e o botão de confirmação.
+Input: Campos de entrada para o modelo e a placa do veículo.
+Button: Botão para confirmar o cadastro do veículo.
+
+
+
+Documentação do Componente CarCard
+
+Descrição:
+O componente CarCard exibe as informações de um veículo específico e fornece botões para editar ou excluir o veículo. Ele utiliza diálogos modais (DeleteCarDialog e EditCarDialog) para confirmar a exclusão ou permitir a edição dos detalhes do veículo.
+
+Componente CarCard:
+
+Props
+car: ICar: Objeto que contém as informações do veículo.
+fetchUserVehicles: () => Promise<void>: Função para atualizar a lista de veículos do usuário após uma operação bem-sucedida.
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Gerencia os estados de visibilidade dos diálogos de edição e exclusão.
+openDeleteCarDialog: boolean: Controla a visibilidade do diálogo de exclusão.
+openEditCarDialog: boolean: Controla a visibilidade do diálogo de edição.
+
+Funções
+toggleDeleteCarDialog: Alterna a visibilidade do diálogo de exclusão.
+toggleEditCarDialog: Alterna a visibilidade do diálogo de edição.
+
+JSX
+View: Contém o layout principal do cartão do veículo.
+Icon: Exibe um ícone representando o veículo.
+Text: Exibe o modelo e a placa do veículo.
+Button: Botões para editar e excluir o veículo.
+DeleteCarDialog: Diálogo modal para confirmar a exclusão do veículo.
+EditCarDialog: Diálogo modal para editar as informações do veículo.
+
+
+
+Documentação do Componente DeleteCarDialog
+
+Descrição:
+O componente DeleteCarDialog exibe um diálogo modal para confirmar a exclusão de um veículo. Ele permite ao usuário confirmar ou cancelar a exclusão do veículo selecionado.
+
+Componente DeleteCarDialog:
+
+Props
+car: ICar: Objeto que contém as informações do veículo a ser excluído.
+isVisible: boolean: Estado que controla a visibilidade do diálogo.
+onBackdropPress: () => void: Função para lidar com o fechamento do diálogo ao clicar no fundo.
+onSuccess: () => Promise<void>: Função para ser executada após a exclusão bem-sucedida do veículo.
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+
+Funções
+handleDeleteCar: Função assíncrona que realiza a exclusão do veículo através da API. Exibe um alerta com o resultado da operação e chama onSuccess e onBackdropPress se a exclusão for bem-sucedida.
+
+JSX
+Dialog: Componente de diálogo modal que exibe a mensagem de confirmação.
+Text: Exibe o texto "Deseja mesmo excluir este veículo?".
+View: Contém os botões de ação para confirmar ou cancelar a exclusão.
+Button: Botões para "Voltar" (cancelar a exclusão) e "Excluir" (confirmar a exclusão).
+
+
+
+Documentação do Componente EditCarDialog
+
+Descrição:
+O componente EditCarDialog exibe um diálogo modal para editar informações de um veículo. Ele permite ao usuário modificar o modelo e a placa do veículo selecionado e confirmar as alterações ou cancelar a operação.
+
+Componente EditCarDialog:
+
+Props
+car: ICar: Objeto que contém as informações atuais do veículo a ser editado.
+isVisible: boolean: Estado que controla a visibilidade do diálogo.
+onBackdropPress: () => void: Função para lidar com o fechamento do diálogo ao clicar no fundo.
+onSuccess: () => Promise<void>: Função para ser executada após a edição bem-sucedida do veículo.
+
+Hooks e Estados
+useTheme: Hook para acessar o tema do aplicativo.
+useState: Hook para gerenciar estados locais de modelo e placa.
+
+Funções
+handleEditCar: Função assíncrona que realiza a atualização do veículo através da API. Exibe um alerta com o resultado da operação e chama onSuccess e onBackdropPress se a edição for bem-sucedida.
+
+JSX
+Dialog: Componente de diálogo modal que exibe os campos de edição.
+Text: Exibe o texto "Edite o veículo".
+View: Contém os campos de entrada para o modelo e a placa do veículo, além do botão de confirmação.
+Input: Campos de entrada de texto para o modelo e a placa do veículo.
+Button: Botão para "Confirmar" as alterações.
+
+
+
+Documentação do Componente Profile
+
+Descrição:
+O componente Profile representa a página de perfil do usuário, exibindo informações como nome, foto de perfil, CPF, avaliação média do usuário, lista de veículos cadastrados pelo usuário e botão para adicionar novo veículo. Além disso, o perfil permite ao usuário realizar logout da aplicação.
+
+Componente Profile:
+
+Hooks e Estados
+useContext: Hook do React para acessar o contexto de autenticação (authContext) e de usuário (userContext).
+useEffect: Hook do React para realizar efeitos colaterais, como buscar informações do usuário e veículos.
+useState: Hook do React para gerenciar estados locais, como controle de visibilidade do diálogo de adição de veículo (openAddCarDialog), lista de veículos (veiculos) e avaliação média do usuário (notaMedia).
+
+Props
+Nenhuma propriedade de entrada.
+
+Funções
+toggleAddCarDialog: Função para alternar a visibilidade do diálogo de adição de veículo.
+fetchUserVehicles: Função assíncrona para buscar os veículos do usuário através da API.
+fetchUserInfo: Função assíncrona para buscar as informações do usuário, incluindo a nota média.
+handleSignOut: Função para realizar logout do usuário, utilizando a função SignOut do contexto de autenticação (authContext).
+
+JSX
+PageContainer: Componente que envolve o conteúdo da página, fornecendo um layout estruturado.
+View: Componente básico do React Native para criar uma estrutura de layout.
+Text: Componente de texto customizado (Text) para exibir informações como nome, CPF e título de seção.
+Avatar: Componente de avatar para exibir a foto de perfil do usuário ou iniciais caso não haja foto.
+Button: Componente de botão para adicionar veículo, logout e botões dentro dos diálogos.
+ScrollView: Componente para scroll vertical, utilizado para listar os veículos do usuário.
+CarCard: Componente que representa um cartão de veículo na lista, mostrando modelo e placa do veículo, botões de edição e exclusão.
+AddCarDialog: Componente de diálogo para adicionar novo veículo.
+Rating: Componente para exibir a avaliação média do usuário em forma de estrelas.
+Icon: Componente de ícone para adicionar ícones aos botões.

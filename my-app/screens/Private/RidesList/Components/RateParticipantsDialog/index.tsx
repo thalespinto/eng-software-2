@@ -3,16 +3,17 @@ import { View } from "react-native";
 import Text from "../../../../../components/Text";
 import RateParticipantCard from "../RateParticipantCard";
 
+// Define a interface para as propriedades esperadas pelo componente RateParticipantesDialog
 interface IRateParticipantesDialog {
-  isVisible: boolean;
-  onBackdropPress: () => void;
+  isVisible: boolean; // Propriedade que define se o diálogo está visível 
+  onBackdropPress: () => void; // Função chamada quando o fundo do diálogo é pressionado
 }
 
 const RateParticipantesDialog = ({
   isVisible,
   onBackdropPress,
 }: IRateParticipantesDialog) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // Utiliza o hook useTheme para obter o tema atual
 
   return (
     <Dialog isVisible={isVisible} onBackdropPress={onBackdropPress}>

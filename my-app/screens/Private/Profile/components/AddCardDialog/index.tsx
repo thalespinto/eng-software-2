@@ -28,7 +28,6 @@ const AddCarDialog = ({ isVisible, onBackdropPress, onSuccess }: IAddCarDialog) 
     onSuccess();
     onBackdropPress();
     } catch (error) {
-      console.error("Erro ao cadastrar veículo:", error);
       Alert.alert("Erro ao cadastrar veículo");
     }
   }

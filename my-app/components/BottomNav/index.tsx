@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import HitchHike from "../../screens/Private/HItchHike/index.";
+import HitchHike from "../../screens/Private/HItchHike";
 import OfferRide from "../../screens/Private/OfferRide/index.";
 import Profile from "../../screens/Private/Profile";
 import RidesList from "../../screens/Private/RidesList";

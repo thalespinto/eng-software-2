@@ -3,15 +3,24 @@ import { Text, View, StyleSheet, Switch, TextInput, TouchableOpacity } from 'rea
 import { RideContext as rc } from "../../Provider/RideProvider";
 
 const ConfirmationScreen = () => {
+  // Obtém o contexto de passeio da aplicação
   const RideContext = useContext(rc);
+
+  // Estado local para armazenar se aceita automaticamente, inicializado como falso
   const [acceptAutomatically, setAcceptAutomatically] = useState(false);
+
+  // Estado local para armazenar o raio, inicializado como uma string vazia
   const [radius, setRadius] = useState('');
 
+  // Obtém o número de passageiros do contexto de passeio, ou uma string vazia se não existir
   const passengerCount = RideContext ? RideContext.RideInfos.passengerCount : '';
   const selectedVehicle = RideContext ? RideContext.selectedVehicle : null;
   const date = RideContext ? RideContext.RideInfos.date : '';
+
+  // Converte a string de data em um objeto Date
   const formattedDate = date ? new Date(date) : '';
 
+  // Função para formatar a data no formato dd/mm/aaaa
   const formatDate = (date: Date) => {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -20,6 +29,7 @@ const ConfirmationScreen = () => {
     return `${day}/${month}/${year}`;
   };
 
+  // Função para formatar a hora no formato hh:mm
   const formatTime = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");

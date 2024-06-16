@@ -8,6 +8,7 @@ import { RideContext } from "../../Provider/RideProvider";
 import { ICar } from "../../../../../interfaces/ICar";
 
 const AddVehicle = () => {
+  // Estados locais para armazenar o modelo, placa, visibilidade do modal e índice do veículo selecionado
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -36,6 +37,7 @@ const AddVehicle = () => {
   };
 
   const handleAddVehicle = async () => {
+
     if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
@@ -73,6 +75,7 @@ const AddVehicle = () => {
     }
   };
 
+  // Função para alternar a seleção de um veículo na lista
   const toggleSelectVehicle = (index: number) => {
     if (index === selectedVehicleIndex) {
       setSelectedVehicleIndex(null);

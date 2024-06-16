@@ -80,7 +80,7 @@ const Map = ({ setLocationText, setOpenMap }: IMap) => {
           ))}
         </MapView>
       ) : (
-        <Text>Não foi possível usar o mapa.</Text>
+        <Text testID="error-message">Não foi possível usar o mapa.</Text>
       )}
     </>
   );
