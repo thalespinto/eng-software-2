@@ -17,11 +17,22 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
 
   useEffect(() => {
     if (placeHolder && rideInfos && ref.current) {
-      placeHolder === "De"
-        ? ref.current?.setAddressText(rideInfos?.RideInfos.origin || "")
-        : ref.current?.setAddressText(rideInfos?.RideInfos.destination || "");
+      if (placeHolder === "De") {
+        ref.current?.setAddressText(rideInfos?.RideInfos.origin || "");
+      } else {
+        ref.current?.setAddressText(rideInfos?.RideInfos.destination || "");
+      }
     }
   }, [placeHolder, rideInfos]);
+
+  const handlePlaceSelected = (data: any) => {
+    console.log("Place selected:", data.description);
+    if (placeHolder === "De") {
+      rideInfos?.setOrigin(data.description);
+    } else {
+      rideInfos?.setDestination(data.description);
+    }
+  };
 
   return (
     <>
@@ -29,9 +40,7 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
         <Map
           setLocationText={(value) => {
             ref.current?.setAddressText(value);
-            placeHolder === "De"
-              ? rideInfos?.setOrigin(value)
-              : rideInfos?.setDestination(value);
+            handlePlaceSelected({ description: value });
           }}
           setOpenMap={setOpenMap}
         />
@@ -53,12 +62,8 @@ const GooglePlacesInput = ({ placeHolder }: IGooglePlacesInput) => {
                 width: 300,
               },
             }}
-            onPress={(data) =>
-              placeHolder === "De"
-                ? rideInfos?.setOrigin(data.description)
-                : rideInfos?.setDestination(data.description)
-            }
-            placeholder={`${placeHolder}`}
+            onPress={(data) => handlePlaceSelected(data)}
+            placeholder={placeHolder}
             query={{
               key: "",
               language: "pt-br",

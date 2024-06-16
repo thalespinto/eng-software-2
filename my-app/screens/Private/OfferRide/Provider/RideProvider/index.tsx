@@ -1,9 +1,9 @@
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { IOffer } from "../../../../../interfaces/IOffer";
 import { IUser } from "../../../../../interfaces/IUser";
 import { ICar } from "../../../../../interfaces/ICar";
 import { api } from "../../../../../server/api";
 import { userContext } from "../../../../../Providers/UserProvider";
-import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 export const RideContext = createContext<{
   RideInfos: Partial<IOffer>;
