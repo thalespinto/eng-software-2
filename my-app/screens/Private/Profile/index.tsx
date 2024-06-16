@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import PageContainer from "../../../components/PageContainer";
 import Text from "../../../components/Text";
@@ -45,7 +45,7 @@ const Profile = () => {
         setVeiculos(userVehicles); // Atualiza o estado veiculos com os veículos retornados
       }
     } catch (error) {
-      console.error("Erro ao buscar veículos do usuário:", error); // Exibe um erro caso a busca falhe
+      Alert.alert("Erro ao buscar veículos do usuário"); // Exibe um erro caso a busca falhe
     }
   };
 
@@ -57,7 +57,7 @@ const Profile = () => {
         setNotaMedia(userInfo.nota_media); // Atualiza o estado notaMedia com a nota média retornada
       }
     } catch (error) {
-      console.error("Erro ao buscar informações do usuário:", error); // Exibe um erro caso a busca falhe
+      Alert.alert("Erro ao buscar informações do usuário"); // Exibe um erro caso a busca falhe
     }
   };
 
