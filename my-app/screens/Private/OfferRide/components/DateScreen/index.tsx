@@ -9,14 +9,18 @@ import { RideContext as rc } from "../../Provider/RideProvider";
 import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
 const DateScreen = () => {
+  // Obtém o contexto de passeio da aplicação
   const RideContext = useContext(rc);
 
+  // Estado local para armazenar a data do passeio, inicializado com a data do contexto ou a data atual
   const [date, setDate] = useState<Date>(
     RideContext?.RideInfos.date ? RideContext.RideInfos.date : new Date()
   );
 
+  // Referência para o input de data
   const dateInputRef = useRef<any>(null);
 
+  // Função para atualizar o estado local com a data selecionada
   const onDateChange = (
     event: DateTimePickerEvent,
     selectedDate?: Date | undefined
@@ -25,6 +29,7 @@ const DateScreen = () => {
     setDate(currentDate!);
   };
 
+  // Abre o seletor de data nativo do Android
   const showDatePicker = () => {
     DateTimePickerAndroid.open({
       value: date!,
@@ -33,6 +38,7 @@ const DateScreen = () => {
     });
   };
 
+  // Abre o seletor de hora nativo do Android
   const showTimePicker = () => {
     DateTimePickerAndroid.open({
       value: date!,
@@ -42,6 +48,7 @@ const DateScreen = () => {
     });
   };
 
+  // Formata a data para o formato dd/mm/aaaa
   const formatDate = (date: Date) => {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -50,6 +57,7 @@ const DateScreen = () => {
     return `${day}/${month}/${year}`;
   };
 
+  // Formata a hora para o formato hh:mm
   function formatTime(date: Date) {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -57,6 +65,7 @@ const DateScreen = () => {
     return `${hours}:${minutes}`;
   }
 
+  // Efeito que atualiza o contexto de passeio com a nova data selecionada
   useEffect(() => {
     RideContext?.setRideInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 0) }));
   }, [date]);

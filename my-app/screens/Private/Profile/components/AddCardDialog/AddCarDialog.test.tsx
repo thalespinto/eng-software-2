@@ -50,6 +50,7 @@ describe("AddCardDialog", () => {
     mock.reset();
   });
 
+  // Testa se o formulário é renderizado corretamente
   it("should show form correctly", () => {
     expect(screen.getByText("Insira os dados do veículo")).toBeTruthy();
     expect(screen.getByText("Modelo")).toBeTruthy();
@@ -62,6 +63,7 @@ describe("AddCardDialog", () => {
     expect(screen.getByRole("button", { name: "Confirmar" })).toBeTruthy();
   });
 
+  // Testa se o formulário funciona corretamente ao cadastrar um veículo
   it("should form work correctly", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),
@@ -99,6 +101,7 @@ describe("AddCardDialog", () => {
     });
   });
 
+  // Testa se é exibida uma mensagem de erro quando o cadastro do veículo falha
   it("should show an error message on failure", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),

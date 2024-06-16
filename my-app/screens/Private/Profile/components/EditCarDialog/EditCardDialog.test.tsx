@@ -41,6 +41,7 @@ describe("EditCardDialog", () => {
     mock.reset();
   });
 
+  // Verifica se o formulário é exibido corretamente
   it("should show form correctly", () => {
     expect(screen.getByText("Edite o veículo")).toBeTruthy();
     expect(screen.getByText("Modelo")).toBeTruthy();
@@ -53,6 +54,7 @@ describe("EditCardDialog", () => {
     expect(screen.getByRole("button", { name: "Confirmar" })).toBeTruthy();
   });
 
+  // Verifica se o formulário funciona corretamente
   it("should form work correctly", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),
@@ -86,6 +88,7 @@ describe("EditCardDialog", () => {
     });
   });
 
+  // Verifica se uma mensagem de erro é exibida em caso de falha
   it("should show an error message on failure", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),

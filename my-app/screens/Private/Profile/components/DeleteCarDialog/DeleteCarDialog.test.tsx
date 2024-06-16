@@ -41,12 +41,14 @@ describe("DeleteCarDialog", () => {
     mock.reset();
   });
 
+  // Testa se o formulário de exclusão é exibido corretamente
   it("should show form correctly", () => {
     expect(screen.getByText("Deseja mesmo excluir este veículo?")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Voltar" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "Excluir" })).toBeTruthy();
   });
 
+  // Testa se a exclusão do veículo é tratada corretamente ao pressionar o botão
   it("should handle delete car correctly on button press", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),
@@ -66,6 +68,7 @@ describe("DeleteCarDialog", () => {
     });
   });
 
+  // Testa se uma mensagem de erro é exibida em caso de falha na exclusão
   it("should show an error message on failure", async () => {
     jest.mock("react-native/Libraries/Alert/Alert", () => ({
       alert: jest.fn(),

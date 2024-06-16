@@ -24,11 +24,13 @@ describe("CarCard", () => {
     );
   });
 
+  // Testa se as informações do carro são exibidas corretamente no componente
   it("should show car infos correctly", () => {
     expect(screen.getByText("Modelo: gol bolinha")).toBeTruthy();
     expect(screen.getByText("Placa: 123bb")).toBeTruthy();
   });
 
+  // Testa se os botões de ação (Editar e Excluir) são exibidos corretamente
   it("should show action buttons correctly", () => {
     const editButton = screen.getByRole("button", { name: "Editar" });
     const deleteButton = screen.getByRole("button", {name: "Excluir"});

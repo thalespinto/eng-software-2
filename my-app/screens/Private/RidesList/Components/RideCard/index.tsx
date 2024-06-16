@@ -4,16 +4,19 @@ import Text from "../../../../../components/Text";
 import { useState } from "react";
 import ManageRideDialog from "../ManageRideDialog";
 
+// Define uma interface para as propriedades esperadas pelo componente RideCard
 interface IRideCard {
   role: string;
 }
 
+// Define o componente RideCard, que recebe uma prop 'role'
 const RideCard = ({ role }: IRideCard) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // Utiliza o hook useTheme para obter o tema atual
   const [openManageRideDialog, setOpenManageRideDialog] = useState(false);
 
+  // Função para alternar a visibilidade do diálogo
   const toggleOpenManageRideDialog = () => {
-    setOpenManageRideDialog(!openManageRideDialog);
+    setOpenManageRideDialog(!openManageRideDialog); // Inverte o estado atual de openManageRideDialog
   };
 
   return (
