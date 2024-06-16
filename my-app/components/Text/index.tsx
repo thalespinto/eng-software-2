@@ -3,12 +3,12 @@ import { ReactNode } from "react";
 import { Text as RNText, StyleProp, TextProps, TextStyle } from "react-native";
 
 interface ITextVariants {
-  actions: StyleProp<TextStyle>;
+  action: StyleProp<TextStyle>;
   body: StyleProp<TextStyle>;
   menu: StyleProp<TextStyle>;
   title: StyleProp<TextStyle>;
   subtitle: StyleProp<TextStyle>;
-  messages: StyleProp<TextStyle>;
+  message: StyleProp<TextStyle>;
 }
 
 interface IText extends TextProps {
@@ -20,7 +20,7 @@ const Text = ({ children, variant, ...props }: IText) => {
   const { theme } = useTheme();
 
   const textVariants: ITextVariants = {
-    actions: {
+    action: {
       fontSize: 20,
       fontWeight: "bold",
       color: theme.colors.black,
@@ -43,7 +43,7 @@ const Text = ({ children, variant, ...props }: IText) => {
       color: theme.colors.black,
       fontWeight: "600",
     },
-    messages: {
+    message: {
       fontSize: 14,
       color: theme.colors.black,
     },
@@ -53,7 +53,7 @@ const Text = ({ children, variant, ...props }: IText) => {
 
   switch (variant) {
     case "Action":
-      textStyle = textVariants.actions;
+      textStyle = textVariants.action;
       break;
     case "Body":
       textStyle = textVariants.body;
@@ -68,7 +68,7 @@ const Text = ({ children, variant, ...props }: IText) => {
       textStyle = textVariants.subtitle;
       break;
     case "Message":
-      textStyle = textVariants.messages;
+      textStyle = textVariants.message;
       break;
     default:
       textStyle = textVariants.body;
