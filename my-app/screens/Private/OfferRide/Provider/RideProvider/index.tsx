@@ -76,7 +76,7 @@ const RideProvider = ({ children }: { children: ReactNode }) => {
           destino: RideInfos.destination || "",
           data: RideInfos.date ? new Date(RideInfos.date).toISOString().split("T")[0] : "",
           horario_de_partida: RideInfos.date ? new Date(RideInfos.date).toLocaleTimeString('en-GB', { hour12: false }) : "",
-          horario_de_retorno: "",
+          horario_de_retorno: "18:00:00",
           qt_de_passageiros: RideInfos.passengerCount || "",
           aceita_automaticamente: RideInfos.acceptAutomatically || false,
           raio_de_aceitacao_em_km: RideInfos.radius || null,
