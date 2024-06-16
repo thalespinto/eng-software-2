@@ -1,0 +1,188 @@
+Documentação do Componente CarCard
+
+Descrição:
+O componente CarCard representa visualmente um cartão que exibe informações básicas de um veículo, como modelo e placa.
+
+Componente CarCard:
+
+Hooks e Estados:
+useTheme: Hook fornecido pelo pacote @rneui/themed para acessar o tema atual da aplicação, permitindo estilos dinâmicos e adaptáveis.
+
+JSX:
+View e Icon (do pacote @rneui/themed): Componentes utilizados para estruturar e exibir o cartão do veículo, incluindo o ícone representando um veículo (Icon).
+Text (do componente customizado Text): Componente usado para exibir o modelo e a placa do veículo de maneira estilizada e responsiva.
+
+
+
+
+Documentação do Componente ChooseHikeScreen
+
+Descrição:
+O componente ChooseHikeScreen representa a tela onde são exibidas as caronas disponíveis para seleção pelo usuário. Ele consiste em um título centralizado indicando o propósito da tela e uma lista de caronas disponíveis renderizada pelo componente AvailableHikesList.
+
+Componente ChooseHikeScreen:
+
+JSX:
+View e Text (do componente customizado Text): Componentes utilizados para estruturar e exibir o conteúdo da tela. O título "Caronas disponíveis" é exibido centralizado na tela, indicando o objetivo principal da página.
+AvailableHikesList: Componente responsável por renderizar a lista de caronas disponíveis, facilitando a interação do usuário ao apresentar de forma organizada as opções disponíveis.
+
+Componentes Utilizados:
+View (do React Native): Componente básico para estruturar o layout da tela.
+Text (componente customizado Text): Utilizado para exibir o título "Caronas disponíveis" de forma estilizada, utilizando o estilo Title definido no componente customizado.
+AvailableHikesList: Componente que provavelmente renderiza uma lista de caronas disponíveis, mas o código não fornece detalhes específicos sobre sua implementação.
+
+
+
+Documentação do Componente AvailableHikesList
+
+Descrição:
+O componente AvailableHikesList é responsável por exibir uma lista de caronas disponíveis para o usuário selecionar. Ele utiliza o componente ScrollView para permitir a rolagem vertical através das opções disponíveis e renderiza múltiplas instâncias do componente AvailableHikesListItem para cada carona listada. Além disso, o componente inclui um diálogo de detalhes (HikeDetailsDialog) que é acionado ao selecionar uma carona na lista, proporcionando ao usuário acesso às informações detalhadas da carona selecionada.
+
+Componente AvailableHikesList:
+
+Hooks e Estados:
+useState: Utilizado para controlar o estado openHikeDetailsDialog, que determina se o diálogo de detalhes da carona está aberto ou fechado.
+
+Funções:
+toggleOpenHikeDetailsDialog: Função para alternar o estado openHikeDetailsDialog, abrindo ou fechando o diálogo de detalhes da carona conforme necessário.
+
+JSX:
+ScrollView: Componente utilizado para envolver e exibir a lista de caronas disponíveis de forma que o usuário possa rolar verticalmente para visualizar todas as opções.
+AvailableHikesListItem: Componente renderizado várias vezes dentro do ScrollView, representando cada item da lista de caronas disponíveis. Cada instância é configurada com um evento onPress que aciona a função toggleOpenHikeDetailsDialog quando o item é selecionado pelo usuário.
+HikeDetailsDialog: Componente utilizado para exibir os detalhes completos da carona selecionada. É exibido quando isVisible é verdadeiro e fecha quando o usuário pressiona fora da área do diálogo, utilizando onBackdropPress.
+
+
+
+Documentação do Componente AvailableHikesListItem
+
+Descrição:
+O componente AvailableHikesListItem representa um item individual na lista de caronas disponíveis. Ele exibe informações essenciais sobre uma carona específica, incluindo o nome do motorista, quantidade de caronas oferecidas, avaliação média do motorista, data e horário da carona. 
+
+Componente AvailableHikesListItem:
+
+Props:
+onPress: Função que é acionada quando o usuário pressiona sobre o item da lista de caronas disponíveis. Esta função é passada como propriedade para permitir a interação com o componente.
+
+Hooks e Estados:
+Nenhum estado local é utilizado neste componente.
+
+JSX:
+TouchableOpacity: Componente de botão sensível ao toque que envolve o conteúdo do item da lista de caronas disponíveis. É estilizado com borda fina (borderWidth: 0.2), bordas arredondadas (borderRadius: 4), margem (margin: 10), preenchimento (padding: 10) e cor de fundo (backgroundColor) definida pelo tema atual.
+Icon: Componente que exibe um ícone representando o tipo de transporte da carona. O ícone é exibido à esquerda do conteúdo e alinhado à esquerda (alignSelf: "flex-start").
+View: Componente de contêiner para agrupar e organizar os elementos de texto e avaliação da carona. É estilizado com layout de coluna (flexDirection: "column"), alinhamento de itens no centro (alignItems: "center").
+Text: Componente para exibir texto com informações como nome do motorista, quantidade de caronas oferecidas e data/horário da carona.
+Rating: Componente de classificação utilizado para exibir a avaliação média do motorista em forma de estrelas. 
+
+
+
+Documentação do Componente ConfirmedPassengersCard
+
+Descrição:
+O componente ConfirmedPassengersCard exibe uma lista de passageiros confirmados para uma viagem, apresentando o nome de cada passageiro juntamente com sua respectiva avaliação média em forma de estrelas. 
+
+Componente ConfirmedPassengersCard:
+
+Hooks e Estados:
+Nenhum estado local é utilizado neste componente.
+
+JSX:
+View: Componente básico do React Native utilizado para estruturar e organizar os elementos visuais do componente.
+Icon: Componente utilizado para exibir um ícone representando a presença de passageiros na viagem. Neste caso, o ícone utilizado é "people", indicando a presença de pessoas.
+Text: Componente para exibir o nome de cada passageiro confirmado.
+Rating: Componente utilizado para exibir a avaliação média de cada passageiro em forma de estrelas.
+
+
+
+Documentação do Componente ConfirmHikeScreen
+
+Descrição:
+O componente ConfirmHikeScreen exibe os detalhes confirmados de uma viagem, incluindo informações sobre o motorista, local de partida e destino, data e hora da viagem, além da lista de passageiros confirmados. 
+
+Componente ConfirmHikeScreen:
+
+Hooks e Estados:
+Nenhum estado local é utilizado neste componente.
+
+JSX:
+PageContainer: Componente utilizado para envolver o conteúdo da página, fornecendo um layout estruturado e consistente.
+Text: Componente utilizado para exibir títulos, rótulos e informações textuais, garantindo uma apresentação clara e legível dos detalhes da viagem.
+Rating: Componente utilizado para exibir a avaliação média de um item em forma de estrelas. 
+View: Componente básico do React Native utilizado para estruturar e organizar os elementos visuais do componente.
+Icon (do RNEUI): Componente utilizado para representar a presença de passageiros na viagem. 
+
+
+
+Documentação do Componente DateScreen
+
+Descrição:
+O componente DateScreen permite ao usuário selecionar e configurar a data e hora de uma trilha. Utiliza o DateTimePickerAndroid para exibir os seletores de data e hora nativos do dispositivo, e sincroniza essas seleções com o estado local e o contexto de trilha (hikeContext).A formatação da data e hora é realizada para exibição nos campos de entrada (Input).
+
+Componente DateScreen:
+
+Hooks e Estados:
+useState: Utilizado para gerenciar o estado local 'date', que representa a data e hora selecionada.
+useRef: Utilizado para criar uma referência para o componente de entrada de data, permitindo interação direta com o mesmo.
+useContext: Utilizado para acessar o contexto 'hikeContext', que fornece informações e funções relacionadas à trilha.
+useEffect: Utilizado para realizar efeitos colaterais quando o estado 'date' é alterado, atualizando o contexto 'hikeInfos'.
+
+Funções:
+onDateChange: Função chamada quando a data é alterada no DateTimePickerAndroid, atualizando o estado 'date'.
+showDatePicker: Função para exibir o seletor de data do DateTimePickerAndroid.
+showTimePicker: Função para exibir o seletor de hora do DateTimePickerAndroid.
+formatDate: Função para formatar a data no formato "DD/MM/YYYY".
+formatTime: Função para formatar a hora no formato "HH:mm".
+
+JSX:
+PageContainer: Componente para envolver o conteúdo da página, proporcionando um layout estruturado e consistente.
+Input: Componente de entrada de texto do RNEUI, utilizado para permitir ao usuário inserir a data e hora selecionadas.
+
+
+
+Documentação do Componente HikeDetailsDialog
+
+Descrição:
+O componente HikeDetailsDialog exibe os detalhes completos de uma viagem, incluindo informações sobre o motorista, avaliação, origem, destino, detalhes do veículo e passageiros confirmados. Ele também oferece opções para confirmar ou voltar da visualização dos detalhes da viagem.
+
+Componente HikeDetailsDialog:
+
+Hooks e Estados:
+useTheme: Utilizado para acessar o tema atual do aplicativo para estilização consistente.
+
+Props:
+isVisible: Booleano que determina se o diálogo está visível ou não.
+onBackdropPress: Função chamada ao pressionar fora do diálogo para fechá-lo.
+
+JSX:
+Dialog: Componente de diálogo do RNEUI para exibir conteúdo em um modal.
+Text: Componente de texto personalizado para exibir títulos e informações.
+View: Componente básico do React Native para estruturar o layout.
+Rating: Componente de classificação do React Native Ratings para exibir a avaliação.
+Button: Componente de botão do RNEUI para interação do usuário.
+CarCard: Componente para exibir os detalhes do veículo selecionado.
+ConfirmedPassangersCard: Componente para exibir os passageiros confirmados na viagem.
+
+
+
+Documentação do Componente AddPassangerDialog
+
+Descrição:
+O componente AddPassangerDialog permite ao usuário adicionar passageiros para viajar com ele. Ele exibe um diálogo modal com um campo de entrada para CPF e uma lista de cartões de passageiros pesquisados. O usuário pode confirmar a seleção dos passageiros adicionados ou fechar o diálogo.
+
+Componente AddPassangerDialog:
+
+Hooks e Estados:
+useTheme: Utilizado para acessar o tema atual do aplicativo para estilização consistente.
+
+Props:
+isVisible: Booleano que determina se o diálogo está visível ou não.
+onBackdropPress: Função chamada ao pressionar fora do diálogo para fechá-lo.
+
+JSX:
+Dialog: Componente de diálogo do RNEUI para exibir conteúdo em um modal.
+Text: Componente de texto personalizado para exibir títulos e informações.
+View: Componente básico do React Native para estruturar o layout.
+Input: Componente de entrada de texto do RNEUI para capturar o CPF do passageiro.
+Icon: Componente de ícone do RNEUI para indicar a ação de pesquisa.
+ScrollView: Componente de rolagem do React Native para exibir a lista de passageiros pesquisados.
+SearchedPassangerCard: Componente para exibir detalhes de cada passageiro pesquisado.
+Button: Componente de botão do RNEUI para interação do usuário, utilizado para confirmar a seleção de passageiros.
