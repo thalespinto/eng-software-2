@@ -45,7 +45,7 @@ describe("ProfileScreen", () => {
     mock.reset();
   });
 
-  it("deve renderizar a tela de perfil corretamente", async () => {
+  it("should render profile screen correctly", async () => {
     // Espia o método get da API
     const apiGetSpy = jest.spyOn(api, "get");
 
