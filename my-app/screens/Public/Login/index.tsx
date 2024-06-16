@@ -44,7 +44,7 @@ const LoginScreen = () => {
 
   return (
     <ImageBackground
-      source={require("C:/Users/LLevy/Documents/GitHub/eng-software-2/my-app/assets/uff-logo.png")}
+      source={require("C:/Users/david/Documents/GitHub/eng-software-2/my-app/assets/uff-logo.png")}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView
