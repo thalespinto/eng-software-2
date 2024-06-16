@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import GooglePlacesInput from "../../../../../components/GooglePlacesInput";
+import GooglePlacesInput from "../../../../../components/GooglePlacesInput/RideInput";
 
 const OriginAndDestinationScreen = () => {
   return (

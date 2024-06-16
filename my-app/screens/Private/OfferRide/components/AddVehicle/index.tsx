@@ -1,50 +1,89 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RideContext as rc } from "../../Provider/RideProvider";
 import { Swipeable } from 'react-native-gesture-handler';
+import { api, getUserVehicles, deleteUserVehicle } from "../../../../../server/api";
+import { userContext } from "../../../../../Providers/UserProvider";
+import { RideContext } from "../../Provider/RideProvider";
+import { ICar } from "../../../../../interfaces/ICar";
 
 const AddVehicle = () => {
   // Estados locais para armazenar o modelo, placa, visibilidade do modal e índice do veículo selecionado
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [vehicles, setVehicles] = useState<ICar[]>([]);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
+  const userInfos = useContext(userContext);
+  const rideContext = useContext(RideContext);
 
-  // Obtém o contexto de passeio da aplicação
-  const RideContext = useContext(rc);
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
 
-  // Função para adicionar um novo veículo ao contexto de viagem
-  const handleAddVehicle = () => {
+  const fetchVehicles = async () => {
+    try {
+      const userId = userInfos?.user?.id;
+      if (userId) {
+        const vehiclesData = await getUserVehicles(userId);
+        setVehicles(vehiclesData);
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    } catch (error) {
+      console.error("Erro ao carregar veículos:", error);
+      Alert.alert("Erro ao carregar veículos");
+    }
+  };
+
+  const handleAddVehicle = async () => {
+
     if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
 
-    // Cria um objeto representando o novo veículo
-    const newVehicle = {
-      modelo,
-      placa,
-    };
+    try {
+      const userId = userInfos?.user?.id;
+      if (userId) {
+        await api.post("/vehicle/create", { modelo, placa, id_usuario: userId });
 
-    // Chama a função addVehicle do contexto de passeio para adicionar o novo veículo
-    RideContext?.addVehicle(newVehicle);
-
-    // Limpa os estados de modelo e placa e fecha o modal
-    setModelo('');
-    setPlaca('');
-    setShowModal(false);
+        Alert.alert("Veículo cadastrado com sucesso!");
+        fetchVehicles();
+        setModelo('');
+        setPlaca('');
+        setShowModal(false);
+      } else {
+        throw new Error("User ID is undefined");
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar veículo:", error);
+      Alert.alert("Erro ao cadastrar veículo");
+    }
   };
 
-  // Função para deletar um veículo do contexto de passeio
-  const deleteVehicle = (index: number) => {
-    RideContext?.deleteVehicle(index);
+  const deleteVehicle = async (index: number) => {
+    try {
+      const vehicleId = vehicles[index].id;
+      await deleteUserVehicle(vehicleId);
+
+      Alert.alert("Veículo deletado com sucesso!");
+      fetchVehicles();
+    } catch (error) {
+      console.error("Erro ao deletar veículo:", error);
+      Alert.alert("Erro ao deletar veículo");
+    }
   };
 
   // Função para alternar a seleção de um veículo na lista
   const toggleSelectVehicle = (index: number) => {
-    setSelectedVehicleIndex(index === selectedVehicleIndex ? null : index);
+    if (index === selectedVehicleIndex) {
+      setSelectedVehicleIndex(null);
+      rideContext?.setSelectedVehicle(null);
+    } else {
+      setSelectedVehicleIndex(index);
+      rideContext?.setSelectedVehicle(vehicles[index]);
+    }
   };
 
   return (
@@ -55,7 +94,7 @@ const AddVehicle = () => {
       </TouchableOpacity>
       <ScrollView>
         <View>
-          {RideContext?.vehicles.map((vehicle, index) => (
+          {vehicles.map((vehicle, index) => (
             <Swipeable
               key={index}
               renderRightActions={() => (

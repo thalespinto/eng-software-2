@@ -8,6 +8,8 @@ export interface IOffer {
     cnh: string;
     vehicles: IVehicle[]; 
     passengerCount: string;
+    acceptAutomatically?: boolean;
+    radius?: string | null;
 }
 
 export interface IVehicle {

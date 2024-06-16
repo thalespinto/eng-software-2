@@ -13,7 +13,8 @@ CREATE TABLE USUARIO (
     cpf VARCHAR(14) UNIQUE NOT NULL,
     senha VARCHAR(200) NOT NULL,
     nome VARCHAR(100) NOT NULL,
-    profile_pic VARCHAR(255)
+    profile_pic VARCHAR(255),
+    nota_media DOUBLE DEFAULT 5
 );
 
 CREATE TABLE VEICULO (

@@ -6,4 +6,5 @@ export interface ICar {
   cor?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  capacidade: string;
 }

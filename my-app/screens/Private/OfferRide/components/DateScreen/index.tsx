@@ -6,7 +6,6 @@ import PageContainer from "../../../../../components/PageContainer";
 import { Input } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { RideContext as rc } from "../../Provider/RideProvider";
-import { dateMinusXhours } from "../../../../../utils/dateMinusThree";
 
 const DateScreen = () => {
   // Obtém o contexto de passeio da aplicação
@@ -14,7 +13,7 @@ const DateScreen = () => {
 
   // Estado local para armazenar a data do passeio, inicializado com a data do contexto ou a data atual
   const [date, setDate] = useState<Date>(
-    RideContext?.RideInfos.date ? RideContext.RideInfos.date : new Date()
+    RideContext?.RideInfos.date ? new Date(RideContext.RideInfos.date) : new Date()
   );
 
   // Referência para o input de data
@@ -58,16 +57,16 @@ const DateScreen = () => {
   };
 
   // Formata a hora para o formato hh:mm
-  function formatTime(date: Date) {
+  const formatTime = (date: Date) => {
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${hours}:${minutes}`;
-  }
+  };
 
   // Efeito que atualiza o contexto de passeio com a nova data selecionada
   useEffect(() => {
-    RideContext?.setRideInfos((prevState) => ({ ...prevState, date: dateMinusXhours(date, 0) }));
+    RideContext?.setRideInfos((prevState) => ({ ...prevState, date }));
   }, [date]);
 
   return (
