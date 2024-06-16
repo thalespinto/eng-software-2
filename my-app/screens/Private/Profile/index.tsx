@@ -1,4 +1,4 @@
-import { ScrollView, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import PageContainer from "../../../components/PageContainer";
 import Text from "../../../components/Text";
