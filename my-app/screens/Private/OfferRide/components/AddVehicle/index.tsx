@@ -1,19 +1,35 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Modal, ScrollView, StyleSheet, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Swipeable } from 'react-native-gesture-handler';
-import { api, getUserVehicles, deleteUserVehicle } from "../../../../../server/api";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Swipeable } from "react-native-gesture-handler";
+import {
+  api,
+  getUserVehicles,
+  deleteUserVehicle,
+} from "../../../../../server/api";
 import { userContext } from "../../../../../Providers/UserProvider";
 import { RideContext } from "../../Provider/RideProvider";
 import { ICar } from "../../../../../interfaces/ICar";
+import CarCard from "../CarCard";
 
 const AddVehicle = () => {
   // Estados locais para armazenar o modelo, placa, visibilidade do modal e índice do veículo selecionado
-  const [modelo, setModelo] = useState('');
-  const [placa, setPlaca] = useState('');
+  const [modelo, setModelo] = useState("");
+  const [placa, setPlaca] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [vehicles, setVehicles] = useState<ICar[]>([]);
-  const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
+  const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<
+    number | null
+  >(null);
   const userInfos = useContext(userContext);
   const rideContext = useContext(RideContext);
 
@@ -37,21 +53,24 @@ const AddVehicle = () => {
   };
 
   const handleAddVehicle = async () => {
-
     if (!modelo || !placa) {
-      alert('Por favor, preencha todos os campos.');
+      alert("Por favor, preencha todos os campos.");
       return;
     }
 
     try {
       const userId = userInfos?.user?.id;
       if (userId) {
-        await api.post("/vehicle/create", { modelo, placa, id_usuario: userId });
+        await api.post("/vehicle/create", {
+          modelo,
+          placa,
+          id_usuario: userId,
+        });
 
         Alert.alert("Veículo cadastrado com sucesso!");
         fetchVehicles();
-        setModelo('');
-        setPlaca('');
+        setModelo("");
+        setPlaca("");
         setShowModal(false);
       } else {
         throw new Error("User ID is undefined");
@@ -85,36 +104,27 @@ const AddVehicle = () => {
       rideContext?.setSelectedVehicle(vehicles[index]);
     }
   };
-
+  
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setShowModal(true)} style={styles.addButton}>
+      <TouchableOpacity
+        onPress={() => setShowModal(true)}
+        style={styles.addButton}
+      >
         <Ionicons name="add-circle-outline" size={24} color="blue" />
         <Text style={styles.addButtonText}>Adicionar Veículo</Text>
       </TouchableOpacity>
       <ScrollView>
         <View>
           {vehicles.map((vehicle, index) => (
-            <Swipeable
-              key={index}
-              renderRightActions={() => (
-                <TouchableOpacity onPress={() => deleteVehicle(index)}>
-                  <Ionicons name="trash-outline" size={24} color="white" />
-                </TouchableOpacity>
-              )}
-              onSwipeableRightWillOpen={() => deleteVehicle(index)}
-            >
-              <TouchableOpacity
-                style={[
-                  styles.vehicleItem,
-                  selectedVehicleIndex === index && styles.selectedVehicleItem,
-                ]}
+            <>
+              <CarCard
+                key={index}
+                vehicle={vehicle}
+                selected={selectedVehicleIndex === index}
                 onPress={() => toggleSelectVehicle(index)}
-              >
-                <Text>{vehicle.modelo}</Text>
-                <Text>{vehicle.placa}</Text>
-              </TouchableOpacity>
-            </Swipeable>
+              />
+            </>
           ))}
         </View>
       </ScrollView>
@@ -134,10 +144,16 @@ const AddVehicle = () => {
               value={placa}
               onChangeText={setPlaca}
             />
-            <TouchableOpacity onPress={handleAddVehicle} style={styles.modalButton}>
+            <TouchableOpacity
+              onPress={handleAddVehicle}
+              style={styles.modalButton}
+            >
               <Text style={styles.modalButtonText}>Adicionar Veículo</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setShowModal(false)} style={[styles.modalButton, styles.cancelButton]}>
+            <TouchableOpacity
+              onPress={() => setShowModal(false)}
+              style={[styles.modalButton, styles.cancelButton]}
+            >
               <Text style={styles.modalButtonText}>Cancelar</Text>
             </TouchableOpacity>
           </View>
@@ -153,51 +169,51 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   addButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   addButtonText: {
     marginLeft: 5,
-    color: 'blue',
+    color: "blue",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
-    width: '80%',
+    width: "80%",
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   modalButton: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 10,
   },
   modalButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   cancelButton: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
   vehicleItem: {
     marginBottom: 10,
@@ -205,9 +221,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedVehicleItem: {
-    backgroundColor: 'blue',
+    backgroundColor: "blue",
   },
 });
 
 export default AddVehicle;
-
