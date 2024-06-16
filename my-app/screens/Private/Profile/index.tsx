@@ -13,55 +13,60 @@ import { getUserVehicles, getUserInfo } from "../../../server/api";
 import { ICar } from "../../../interfaces/ICar";
 
 const Profile = () => {
-  const authInfos = useContext(authContext);
-  const userInfos = useContext(userContext);
-  const { theme } = useTheme();
-  const nomeCompleto = userInfos?.user?.nome;
-  let initials = "";
+  const authInfos = useContext(authContext); // Obtém informações de autenticação do contexto authContext
+  const userInfos = useContext(userContext); // Obtém informações do usuário do contexto userContext
+  const { theme } = useTheme(); 
+  const nomeCompleto = userInfos?.user?.nome; // Obtém o nome completo do usuário
+  let initials = ""; 
 
   if (nomeCompleto) {
-    const partesNome = nomeCompleto.split(" ");
-    initials = partesNome[0].charAt(0).toUpperCase();
+    const partesNome = nomeCompleto.split(" "); 
+    initials = partesNome[0].charAt(0).toUpperCase(); 
 
     if (partesNome.length > 1) {
-      initials += partesNome[1].charAt(0).toUpperCase(); 
+      initials += partesNome[1].charAt(0).toUpperCase();
     } 
   }
 
-  const [openAddCarDialog, setOpenAddCarDialog] = useState(false);
-  const [veiculos, setVeiculos] = useState<ICar[]>([]);
-  const [notaMedia, setNotaMedia] = useState(5);
+  const [openAddCarDialog, setOpenAddCarDialog] = useState(false); // Estado para controlar a visibilidade do diálogo de adicionar carro
+  const [veiculos, setVeiculos] = useState<ICar[]>([]); // Estado para armazenar os veículos do usuário
+  const [notaMedia, setNotaMedia] = useState(5); // Estado para armazenar a nota média do usuário
 
+  // Função para alternar a visibilidade do diálogo de adicionar carro
   const toggleAddCarDialog = () => {
     setOpenAddCarDialog(!openAddCarDialog);
   };
 
+  // Função para buscar os veículos do usuário
   const fetchUserVehicles = async () => {
     try {
-      if (userInfos?.user?.id) {
-        const userVehicles = await getUserVehicles(userInfos?.user?.id);
-        setVeiculos(userVehicles);
+      if (userInfos?.user?.id) { // Verifica se o ID do usuário está disponível
+        const userVehicles = await getUserVehicles(userInfos?.user?.id); // Chama a função getUserVehicles com o ID do usuário
+        setVeiculos(userVehicles); // Atualiza o estado veiculos com os veículos retornados
       }
     } catch (error) {
-      console.error("Erro ao buscar veículos do usuário:", error);
+      console.error("Erro ao buscar veículos do usuário:", error); // Exibe um erro caso a busca falhe
     }
   };
 
+  // Função para buscar as informações do usuário
   const fetchUserInfo = async () => {
     try {
-      if (userInfos?.user?.id) {
-        const userInfo = await getUserInfo(userInfos?.user?.id);
-        setNotaMedia(userInfo.nota_media);
+      if (userInfos?.user?.id) { // Verifica se o ID do usuário está disponível
+        const userInfo = await getUserInfo(userInfos?.user?.id); // Chama a função getUserInfo com o ID do usuário
+        setNotaMedia(userInfo.nota_media); // Atualiza o estado notaMedia com a nota média retornada
       }
     } catch (error) {
-      console.error("Erro ao buscar informações do usuário:", error);
+      console.error("Erro ao buscar informações do usuário:", error); // Exibe um erro caso a busca falhe
     }
   };
 
+  // useEffect é executado quando o componente é montado ou quando o ID do usuário muda
   useEffect(() => {
-    fetchUserVehicles();
-    fetchUserInfo();
-  }, [userInfos?.user?.id]);
+    fetchUserVehicles(); // Chama a função para buscar os veículos do usuário
+    fetchUserInfo(); // Chama a função para buscar as informações do usuário
+  }, [userInfos?.user?.id]); // Dependência do ID do usuário para re-executar as funções quando ele muda
+
 
   return (
     <PageContainer>

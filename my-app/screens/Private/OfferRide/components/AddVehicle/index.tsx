@@ -6,31 +6,43 @@ import { RideContext as rc } from "../../Provider/RideProvider";
 import { Swipeable } from 'react-native-gesture-handler';
 
 const AddVehicle = () => {
+  // Estados locais para armazenar o modelo, placa, visibilidade do modal e índice do veículo selecionado
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedVehicleIndex, setSelectedVehicleIndex] = useState<number | null>(null);
+
+  // Obtém o contexto de passeio da aplicação
   const RideContext = useContext(rc);
 
+  // Função para adicionar um novo veículo ao contexto de viagem
   const handleAddVehicle = () => {
     if (!modelo || !placa) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
+
+    // Cria um objeto representando o novo veículo
     const newVehicle = {
       modelo,
       placa,
     };
+
+    // Chama a função addVehicle do contexto de passeio para adicionar o novo veículo
     RideContext?.addVehicle(newVehicle);
+
+    // Limpa os estados de modelo e placa e fecha o modal
     setModelo('');
     setPlaca('');
     setShowModal(false);
   };
 
+  // Função para deletar um veículo do contexto de passeio
   const deleteVehicle = (index: number) => {
     RideContext?.deleteVehicle(index);
   };
 
+  // Função para alternar a seleção de um veículo na lista
   const toggleSelectVehicle = (index: number) => {
     setSelectedVehicleIndex(index === selectedVehicleIndex ? null : index);
   };

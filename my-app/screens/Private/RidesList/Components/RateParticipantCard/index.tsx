@@ -4,7 +4,8 @@ import { Rating } from "react-native-ratings";
 import { Icon, useTheme } from "@rneui/themed";
 
 const RateParticipantCard = () => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // Utiliza o hook useTheme para obter o tema atual
+
 
   return (
     <View

@@ -8,8 +8,8 @@ import RateParticipantesDialog from "../RateParticipantsDialog";
 
 interface IManageRideDialog {
   isVisible: boolean;
-  onBackdropPress: () => void;
-  role: string;
+  onBackdropPress: () => void; // Função chamada quando o fundo do diálogo é pressionado
+  role: string; // Define o papel do usuário (por exemplo, "Motorista")
 }
 
 const ManageRideDialog = ({
@@ -17,22 +17,23 @@ const ManageRideDialog = ({
   onBackdropPress,
   role,
 }: IManageRideDialog) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // Utiliza o hook useTheme para obter o tema atual
   const [openRescheduleRideDialog, setOpenRescheduleRideDialog] =
-    useState(false);
+    useState(false); // Define o estado para controlar a visibilidade do diálogo de reagendamento
   const [openRateParticipantsDialog, setOpenRateParticipantsDialog] =
-    useState(false);
+    useState(false); // Define o estado para controlar a visibilidade do diálogo de avaliação dos participantes
 
-  const isMotorista = role === "Motorista";
+  const isMotorista = role === "Motorista"; // Verifica se o papel do usuário é "Motorista"
 
+  // Função para alternar a visibilidade do diálogo de reagendamento
   const toggleOpenRescheduleRideDialog = () => {
-    setOpenRescheduleRideDialog(!openRescheduleRideDialog);
+    setOpenRescheduleRideDialog(!openRescheduleRideDialog); 
   };
 
+  // Função para alternar a visibilidade do diálogo de avaliação dos participantes
   const toggleOpenRateParticipantsDialog = () => {
-    setOpenRateParticipantsDialog(!openRateParticipantsDialog);
+    setOpenRateParticipantsDialog(!openRateParticipantsDialog); 
   };
-
   return (
     <>
       <Dialog isVisible={isVisible} onBackdropPress={onBackdropPress}>
