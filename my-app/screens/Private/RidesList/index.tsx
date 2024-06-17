@@ -26,7 +26,8 @@ const RidesList = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 10,
+            height: 3000,
+            
           }}
         >
           {rides.map((ride, index) => (
