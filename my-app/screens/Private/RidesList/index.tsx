@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, ActivityIndicator } from "react-native";
 import PageContainer from "../../../components/PageContainer";
 import RideCard from "./Components/RideCard";
 import useFetchAllRides from "./useFetchRides";
+import { userContext } from "../../../Providers/UserProvider";
 
 const RidesList = () => {
+  const userInfos = useContext(userContext);
+  const userId = userInfos?.user?.id; 
   const { rides, loading, error, fetchRides } = useFetchAllRides();
 
   if (loading) {
@@ -27,7 +30,13 @@ const RidesList = () => {
           }}
         >
           {rides.map((ride, index) => (
-            <RideCard key={index} role={"Passageiro"} ride={ride} fetchRides={fetchRides} />
+            <RideCard
+              key={index}
+              role={ride.motorista.id === userId ? "Motorista" : "Passageiro"}
+              ride={ride}
+              fetchRides={fetchRides}
+              userId={userId} // Passando o ID do usuário logado
+            />
           ))}
         </ScrollView>
       </PageContainer>

@@ -20,10 +20,11 @@ interface Ride {
 interface IRideCard {
   role: string;
   ride: Ride;
-  fetchRides: () => void; // Adicione esta linha
+  fetchRides: () => void;
+  userId: number; // Adicionando o ID do usuário logado como uma prop
 }
 
-const RideCard = ({ role, ride, fetchRides }: IRideCard) => {
+const RideCard = ({ role, ride, fetchRides, userId }: IRideCard) => {
   const { theme } = useTheme();
   const [openManageRideDialog, setOpenManageRideDialog] = useState(false);
 
@@ -60,6 +61,7 @@ const RideCard = ({ role, ride, fetchRides }: IRideCard) => {
         role={role}
         ride={ride}
         fetchRides={fetchRides}
+        userId={userId} // Passando o ID do usuário logado
       />
     </>
   );

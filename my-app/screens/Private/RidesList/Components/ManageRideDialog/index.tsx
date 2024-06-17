@@ -25,7 +25,8 @@ interface IManageRideDialog {
   onBackdropPress: () => void;
   role: string;
   ride: Ride;
-  fetchRides: () => void; // Adicione esta linha
+  fetchRides: () => void;
+  userId: number; // Adicionando o ID do usuário logado como uma prop
 }
 
 const ManageRideDialog = ({
@@ -33,13 +34,12 @@ const ManageRideDialog = ({
   onBackdropPress,
   role,
   ride,
-  fetchRides // Adicione esta linha
+  fetchRides,
+  userId // Recebendo o ID do usuário logado
 }: IManageRideDialog) => {
   const { theme } = useTheme();
-  const [openRescheduleRideDialog, setOpenRescheduleRideDialog] =
-    useState(false);
-  const [openRateParticipantsDialog, setOpenRateParticipantsDialog] =
-    useState(false);
+  const [openRescheduleRideDialog, setOpenRescheduleRideDialog] = useState(false);
+  const [openRateParticipantsDialog, setOpenRateParticipantsDialog] = useState(false);
 
   const isMotorista = role === "Motorista";
 
@@ -96,7 +96,7 @@ const ManageRideDialog = ({
             <Text>Ida: {ride.data} - {ride.horario_de_partida}</Text>
             {ride.horario_de_retorno && <Text>Retorno: {ride.horario_de_retorno}</Text>}
           </View>
-          {isMotorista && (
+          {isMotorista && userId === ride.motorista?.id && (
             <>
               <View style={{ marginTop: 10 }}>
                 <Text variant="Subtitle">Solicitações</Text>

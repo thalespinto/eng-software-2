@@ -38,3 +38,21 @@ export const getUserInfo = async (userId: number) => {
     throw error;
   }
 };
+
+export const cancelarCarona = async (id_carona: number) => {
+  try {
+    const response = await api.delete(`/carona/cancelar/${id_carona}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const addAvaliacao = async (avaliacaoData: { id_usuario_avaliador: number, id_usuario_avaliado: number, id_da_carona: number, nota: number }) => {
+  try {
+    const response = await api.post(`/avaliation/create`, avaliacaoData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
