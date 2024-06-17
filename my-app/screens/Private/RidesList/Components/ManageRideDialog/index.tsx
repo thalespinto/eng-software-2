@@ -5,35 +5,64 @@ import RequestCard from "../ResquestCard";
 import RescheduleRideDialog from "../RescheduleRideDialog";
 import { useState } from "react";
 import RateParticipantesDialog from "../RateParticipantsDialog";
+import { cancelarCarona } from "../../../../../server/api"; 
+
+interface Ride {
+  id_carona: number;
+  origem: string;
+  destino: string;
+  data: string;
+  horario_de_partida: string;
+  horario_de_retorno?: string;
+  motorista?: {
+    id: number;
+    nome: string;
+  };
+}
 
 interface IManageRideDialog {
   isVisible: boolean;
-  onBackdropPress: () => void; // Função chamada quando o fundo do diálogo é pressionado
-  role: string; // Define o papel do usuário (por exemplo, "Motorista")
+  onBackdropPress: () => void;
+  role: string;
+  ride: Ride;
+  fetchRides: () => void; // Adicione esta linha
 }
 
 const ManageRideDialog = ({
   isVisible,
   onBackdropPress,
   role,
+  ride,
+  fetchRides // Adicione esta linha
 }: IManageRideDialog) => {
-  const { theme } = useTheme(); // Utiliza o hook useTheme para obter o tema atual
+  const { theme } = useTheme();
   const [openRescheduleRideDialog, setOpenRescheduleRideDialog] =
-    useState(false); // Define o estado para controlar a visibilidade do diálogo de reagendamento
+    useState(false);
   const [openRateParticipantsDialog, setOpenRateParticipantsDialog] =
-    useState(false); // Define o estado para controlar a visibilidade do diálogo de avaliação dos participantes
+    useState(false);
 
-  const isMotorista = role === "Motorista"; // Verifica se o papel do usuário é "Motorista"
+  const isMotorista = role === "Motorista";
 
   // Função para alternar a visibilidade do diálogo de reagendamento
   const toggleOpenRescheduleRideDialog = () => {
-    setOpenRescheduleRideDialog(!openRescheduleRideDialog); 
+    setOpenRescheduleRideDialog(!openRescheduleRideDialog);
   };
 
   // Função para alternar a visibilidade do diálogo de avaliação dos participantes
   const toggleOpenRateParticipantsDialog = () => {
-    setOpenRateParticipantsDialog(!openRateParticipantsDialog); 
+    setOpenRateParticipantsDialog(!openRateParticipantsDialog);
   };
+
+  const handleCancelRide = async () => {
+    try {
+      await cancelarCarona(ride.id_carona);
+      fetchRides();
+      onBackdropPress();
+    } catch (error) {
+      console.error("Erro ao cancelar carona:", error);
+    }
+  };
+
   return (
     <>
       <Dialog isVisible={isVisible} onBackdropPress={onBackdropPress}>
@@ -61,11 +90,11 @@ const ManageRideDialog = ({
               <Icon name="person" />
               <Icon name="chat" onPress={() => {}} />
             </View>
-            <Text variant="Subtitle">Nome do Motorista</Text>
-            <Text>Origem: Tal lugar</Text>
-            <Text>Destino: Tal lugar</Text>
-            <Text>Ida: 01/09/2024 - 19:00</Text>
-            <Text>Retorno: 01/09/2024 - 19:00</Text>
+            <Text variant="Subtitle">{ride.motorista?.nome || "Nome não disponível"}</Text>
+            <Text>Origem: {ride.origem}</Text>
+            <Text>Destino: {ride.destino}</Text>
+            <Text>Ida: {ride.data} - {ride.horario_de_partida}</Text>
+            {ride.horario_de_retorno && <Text>Retorno: {ride.horario_de_retorno}</Text>}
           </View>
           {isMotorista && (
             <>
@@ -88,7 +117,7 @@ const ManageRideDialog = ({
           )}
           <Button
             buttonStyle={{ marginTop: 10 }}
-            onPress={onBackdropPress}
+            onPress={handleCancelRide}
             color="warning"
             uppercase
           >

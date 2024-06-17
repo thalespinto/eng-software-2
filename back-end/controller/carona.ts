@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
+import sequelize from '../util/database';
 import { Carona, Usuario, Veiculo, Avaliacao } from '../models/models';
-import { Op, fn, col } from 'sequelize';
 import moment from 'moment';
-
 
 export const oferecerCarona = async (req: Request, res: Response) => {
     const { id_usuario, id_veiculo, origem, destino, data, horario_de_partida, horario_de_retorno, qt_de_passageiros, aceita_automaticamente, raio_de_aceitacao_em_km } = req.body;
@@ -76,6 +75,73 @@ export const getHistoricoCaronas = async (req: Request, res: Response) => {
     }
 };
 
+export const getAllCaronas = async (req: Request, res: Response) => {
+    try {
+        const caronas = await Carona.findAll({
+            include: [
+                {
+                    model: Usuario,
+                    as: 'motorista',
+                    attributes: ['id', 'nome'],
+                }
+            ],
+            raw: true
+        });
+
+        if (!caronas.length) {
+            return res.status(404).json({ message: 'Nenhuma carona encontrada' });
+        }
+
+        const mappedCaronas = caronas.map((carona: any) => ({
+            id_carona: carona.id_carona_atual,
+            origem: carona.origem,
+            destino: carona.destino,
+            data: carona.data,
+            horario_de_partida: carona.horario_de_partida,
+            horario_de_retorno: carona.horario_de_retorno,
+            qt_de_passageiros: carona.qt_de_passageiros,
+            aceita_automaticamente: carona.aceita_automaticamente,
+            raio_de_aceitacao_em_km: carona.raio_de_aceitacao_em_km,
+            motorista: {
+                id: carona['motorista.id'],
+                nome: carona['motorista.nome'],
+            },
+        }));
+
+        res.status(200).json(mappedCaronas);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar todas as caronas' });
+    }
+};
+
+export const cancelarCarona = async (req: Request, res: Response) => {
+    const { id_carona } = req.params;
+
+    const transaction = await sequelize.transaction();
+
+    try {
+        const carona = await Carona.findByPk(id_carona, { transaction });
+
+        if (!carona) {
+            await transaction.rollback();
+            return res.status(404).json({ message: 'Carona não encontrada' });
+        }
+
+        await Avaliacao.update(
+            { id_da_carona: null },
+            { where: { id_da_carona: id_carona }, transaction }
+        );
+
+        await carona.destroy({ transaction });
+
+        await transaction.commit();
+
+        res.status(200).json({ message: 'Carona cancelada com sucesso' });
+    } catch (error) {
+        await transaction.rollback();
+        res.status(500).json({ message: 'Erro ao cancelar carona' });
+    }
+};
 
 export const listarCaronasDisponiveis = async (req: Request, res: Response) => {
     const { origem_, destino_, data_, horario_de_partida_ } = req.params;
