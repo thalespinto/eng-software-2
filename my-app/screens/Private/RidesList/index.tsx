@@ -7,7 +7,7 @@ import { userContext } from "../../../Providers/UserProvider";
 
 const RidesList = () => {
   const userInfos = useContext(userContext);
-  const userId = userInfos?.user?.id; 
+  const userId = userInfos?.user?.id ?? 0;
   const { rides, loading, error, fetchRides } = useFetchAllRides();
 
   if (loading) {
@@ -35,7 +35,7 @@ const RidesList = () => {
               role={ride.motorista.id === userId ? "Motorista" : "Passageiro"}
               ride={ride}
               fetchRides={fetchRides}
-              userId={userId} // Passando o ID do usuário logado
+              userId={userId}
             />
           ))}
         </ScrollView>
