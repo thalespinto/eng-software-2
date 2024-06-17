@@ -202,7 +202,7 @@ interface AvaliacaoAttributes {
     id_avaliacao?: number;
     id_usuario_avaliador: number;
     id_usuario_avaliado: number;
-    id_da_carona: number;
+    id_da_carona: number | null;
     nota: number;
 }
 
@@ -210,7 +210,7 @@ class Avaliacao extends Model<AvaliacaoAttributes> implements AvaliacaoAttribute
     public id_avaliacao!: number;
     public id_usuario_avaliador!: number;
     public id_usuario_avaliado!: number;
-    public id_da_carona!: number;
+    public id_da_carona!: number | null;
     public nota!: number;
 
     public readonly createdAt!: Date;
