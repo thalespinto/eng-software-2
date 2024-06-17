@@ -27,6 +27,7 @@ const RidesList = () => {
             flexDirection: "column",
             alignItems: "center",
             height: 3000,
+            gap: 15,
             
           }}
         >
