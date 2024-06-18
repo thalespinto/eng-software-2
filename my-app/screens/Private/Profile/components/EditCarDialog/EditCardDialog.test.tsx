@@ -28,6 +28,7 @@ describe("EditCardDialog", () => {
             cor: "preto",
             createdAt: new Date(),
             updatedAt: new Date(),
+            capacidade: "4"
           }}
           isVisible={true}
           onBackdropPress={() => jest.fn()}
