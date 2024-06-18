@@ -1,0 +1,11 @@
+Reunião do dia 13/04/24
+Participantes: David Lopes, Gustavo Henrique, João Vitor, Lucas Levy, Thales Mendonça Moreira Pinto, Vinícius Toledo.
+
+Foi organizado como será o foco para as próximas duas iterações:
+Os integrantes do back-end trabalharão na documentação para a primeira entrega, com o foco dessa iteração sendo em:
+-Escopo do projeto (EAP)
+-Estimativas de esforço (tanto via APF quanto via Planning Poker sobre os pacotes de trabalho da EAP)
+-O custo
+-O orçamento
+-O cronograma de desenvolvimento (Gantt)
+Os integrantes do front-end trabalharão na prototipação no figma, a implementação da tela de login e a implementação dos fluxos de listar caronas e oferecer caronas. 

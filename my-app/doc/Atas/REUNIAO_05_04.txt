@@ -1,0 +1,8 @@
+Reunião do dia 05/04/24
+Participantes: David Lopes, Gustavo Henrique, Lucas Levy, Thales Mendonca Moreira Pinto, Vinícius Toledo.
+Recapitulação da reunião do Back-end
+Back-end vai começar a implementação das tabelas no banco de dados na próxima semana
+Front-end vai continuar no figma o fluxo de listar caronas e fluxo de perfil (David fará "listar caronas" e Vinicíus fará fluxo de perfil)
+Front-end usará React Native
+Back-end usará Node.js
+Foi discutido o uso do Gihub vs. Jira para gerenciamento de tarefas e decidiu-se usar o Github 

@@ -1,0 +1,16 @@
+Reunião 28/04/2024
+
+Participantes: David Lopes, Gustavo Henrique, João Vítor, Lucas Levy, Thales Mendonça, Vinícius Toledo.
+
++Revisamos as documentações que fizemos para o primeiro seminário
++Discutimos os possíveis problemas
++Terminamos os slides
++Separamos o que cada membro iria falar durante a apresentação
+    +Thales: prototipo, requisitos
+    +João Vítor: Análise de Valor Agregado
+    +David Lopes: gráfico de Gantt
+    +Gustavo: APF
+    +Levy: introdução, tecnologias, burndown
+    +Vinicius: EAP 
+
+

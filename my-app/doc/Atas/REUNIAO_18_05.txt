@@ -1,0 +1,16 @@
+Reunião 18/05/2024
+
+Participantes: David Lopes, Gustavo Henrique, Lucas Levy, João Vítor.
+
+Foi discutido a participação dos membros no trabalho e possibilidade de nota ponderada;
+Posteriormente discutiu-se o andamento das atividades;
+Foi decidido retirar o requisito de CNH.
+
+Frontend:
+David: Integração do front e back
+Thales: API de documentação e teste
+Vinícius: Terminar Fluxo de Listar Caronas
+Backend:
+Gustavo: terminar endpoint veiculos e endpoint avaliações
+João: Auxiliar na integração front e back
+Levy: Auxiliar na integração front e back, e banco de dados unificado

@@ -1,0 +1,9 @@
+Reunião do dia 30/03/24
+Participantes: David Lopes, Gustavo Henrique, João Vitor, Lucas Levy, Thales Mendonca Moreira Pinto, Vinícius Toledo.
+Foi decidido que trabalharemos com iterações com 1 semana de duração.
+O grupo foi dividido entre Front e Back.
+Foi decidido que Thales será o Gerente do projeto na parte do Front.
+Foi decidido que Gustavo será o Gerente do projeto na parte do Back.
+Foi criado um repositório GitHub para o projeto.
+A parte de Front deverá organizar um figma para a próxima semana.
+A parte de Back deverá fazer o escopo do produto (requisitos).

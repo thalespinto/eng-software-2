@@ -1,0 +1,9 @@
+Reunião 15/06/2024
+
+Participantes: David Lopes, Gustavo Henrique, Lucas Levy, João Vítor.
+
+Foi decidido que até a apresentação será feito o seguinte:
+Terminar a integração front/back
+Terminar a documentação
+Terminar testes
+Elaborar a apresentação

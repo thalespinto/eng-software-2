@@ -1,0 +1,5 @@
+Reunião do dia 09/04/24
+Participantes: Gustavo Henrique, João Vitor, Lucas Levy.
+Reunião do back-end para formulação do Banco de Dados do projeto.
+Criação de um rascunho do banco de dados.
+Início da criação de scripts do banco de dados.

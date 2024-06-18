@@ -1,0 +1,14 @@
+Reunião 08/06/2024
+
+Participantes: Thales, Levy, David, João.
+
+Foi feito na última semana:
+    Continuamos a integração entre front e back.
+    A página de perfil já está integrada.
+    Testes de renderização foram feitos.
+
+Será feita na próxima semana:
+    A integração de oferecer e pedir carona serão feitas na próxima semana.
+    Os testes de funcionalidade da página de perfil serão feitos na próxima semana.
+    Será elaborada a apresentação em slides.
+    Serão feitos ajustes na documentação do código.
