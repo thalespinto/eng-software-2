@@ -1,0 +1,21 @@
+Reunião 25/05/2024
+
+Participantes: David, Levy, João e Gustavo.
+
+
+Front-end
+    David: 
+        continuar integração front/back
+        fazer documentação do código
+    Thales 
+        fazer testes do código na medida que avança a integração
+
+
+Back-end
+    Levy: 
+        continuar a integração 
+    João: 
+        implentar endpoint de pedir carona
+    Gustavo: 
+        começar organizar documentação da segunda apresentação
+        terminar endpoint avaliação

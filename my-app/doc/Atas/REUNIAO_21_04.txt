@@ -1,0 +1,15 @@
+Reunião 21/04/2024
+
+Participantes: David Lopes, Gustavo Henrique, João Vitor, Lucas Levy, Thales Mendonça Moreira Pinto, Vinícius Toledo.
+
+Conferimos o protótipo implementado no figma.
+Complementamos a análise de riscos.
+Realizamos o planningpoker para estimar o tempo das tarefas.
+
+Próximas tarefas:
+- Gráfico de gantt
+- Gráfico de burn down
+- Análise de valor agregado
+- Continuação do desenvolvimento do front end
+
+Próxima reunião geral: 27/04/2024.

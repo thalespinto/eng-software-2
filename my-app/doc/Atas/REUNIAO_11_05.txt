@@ -1,0 +1,13 @@
+Reunião 11/05/2024
+
+Participantes: David Lopes, Gustavo Henrique, Lucas Levy.
+
+Foi discutido sobre as implementações pendentes de frontend e backend
+Frontend:
+   David: Iniciar Integração Front-Back
+   Thales: Conseguir uma API para testar e documentar 
+   Vinícius: Terminar Fluxo de Listar Caronas
+Backend:
+    Levy: Endpoint de oferecer caronas
+    João:  Terminar Endpoint de Listar Caronas e escolher outro endpoint nos cards para implementar.
+    Gustavo: Terminar Endpoint de Cadastro de Veículo e escolher outro endpoint nos cards para implementar.

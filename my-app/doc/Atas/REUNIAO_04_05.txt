@@ -1,0 +1,13 @@
+Reunião 04/05/2024
+
+Participantes: David Lopes, Gustavo Henrique, João Vítor, Lucas Levy, Thales Mendonça, Vinícius Toledo.
+
+Foi discutido sobre as implementações pendentes de frontend e backend
+Frontend:
+   David: Terminar Fluxo de oferecer carona e API de mapa
+   Thales: Terminar Fluxo de pedir Caronas
+   Vinícius: Terminar Fluxo de Listar Caronas
+Backend:
+    Levy: Endpoint de Login
+    João:  Endpoint de Listar Caronas
+    Gustavo: Endpoint de Cadastro de Veículo
