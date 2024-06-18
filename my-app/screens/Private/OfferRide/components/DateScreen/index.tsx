@@ -13,7 +13,9 @@ const DateScreen = () => {
 
   // Estado local para armazenar a data do passeio, inicializado com a data do contexto ou a data atual
   const [date, setDate] = useState<Date>(
-    RideContext?.RideInfos.date ? new Date(RideContext.RideInfos.date) : new Date()
+    RideContext?.RideInfos.date
+      ? new Date(RideContext.RideInfos.date)
+      : new Date()
   );
 
   // Referência para o input de data
@@ -73,12 +75,14 @@ const DateScreen = () => {
     <>
       <PageContainer>
         <Input
+          testID="dayInput"
           ref={dateInputRef}
           label="Dia"
           value={formatDate(date)}
           onPressIn={showDatePicker}
         />
         <Input
+          testID="timeInput"
           ref={dateInputRef}
           label="Hora"
           value={formatTime(date)}

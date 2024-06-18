@@ -28,10 +28,6 @@ const HikeProvider = ({ children }: { children: ReactNode }) => {
     setHikeInfos((prevState) => ({ ...prevState, passengers: passangers }));
   };
 
-  useEffect(() => {
-    console.log(hikeInfos);
-  }, [hikeInfos]);
-
   return (
     <hikeContext.Provider
       value={{

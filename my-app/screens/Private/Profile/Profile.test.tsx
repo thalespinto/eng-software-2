@@ -106,7 +106,13 @@ describe("ProfileScreen", () => {
         `/user/getId/${mockUserContext.user.id}`
       );
     });
-
+    
+    // Verifica se os veículos do usuário são renderizados corretamente
+    getUserVehicleResponse.forEach((vehicle) => {
+      expect(screen.getByText(`Modelo: ${vehicle.modelo}`)).toBeTruthy();
+      expect(screen.getByText(`Placa: ${vehicle.placa}`)).toBeTruthy();
+    });
+    
     // Verifica se o nome do usuário e o CPF são renderizados corretamente
     expect(screen.getByText(mockUserContext.user.nome)).toBeTruthy();
     expect(screen.getByText(`CPF: ${mockUserContext.user.cpf}`)).toBeTruthy();
@@ -114,11 +120,6 @@ describe("ProfileScreen", () => {
     // Verifica se o botão "Adicionar Veículo" está presente
     expect(screen.getByRole("button", { name: "Adicionar Veículo" }));
 
-    // Verifica se os veículos do usuário são renderizados corretamente
-    getUserVehicleResponse.forEach((vehicle) => {
-      expect(screen.getByText(`Modelo: ${vehicle.modelo}`)).toBeTruthy();
-      expect(screen.getByText(`Placa: ${vehicle.placa}`)).toBeTruthy();
-    });
 
     // Verifica se o botão "Sair" está presente
     expect(screen.getByRole("button", { name: "Sair" })).toBeTruthy();

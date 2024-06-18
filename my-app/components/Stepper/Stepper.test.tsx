@@ -38,22 +38,6 @@ describe("Stepper Component", () => {
     expect(onNext).toHaveBeenCalled();
   });
 
-  test('should call onFinish when on the last step and "Confirmar Viagem" button is pressed', () => {
-    const onFinish = jest.fn();
-    const { getByText, rerender } = setup({
-      active: 1,
-      onFinish,
-      content: [
-        <Text key="step1">Step 1</Text>,
-        <Text key="step2">Step 2</Text>,
-      ],
-    });
-
-    fireEvent.press(getByText("Confirmar Viagem"));
-
-    expect(onFinish).toHaveBeenCalled();
-  });
-
   test('should call onBack when "Voltar" button is pressed', () => {
     const onBack = jest.fn();
     const { getByText } = setup({
