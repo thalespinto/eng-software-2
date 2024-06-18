@@ -16,6 +16,7 @@ const CarCard = ({ vehicle, selected, onPress }: ICarCard) => {
 
   return (
     <TouchableWithoutFeedback
+      testID="cardcar-container"
       style={{
         width: "100%",
         borderRadius: 8,
