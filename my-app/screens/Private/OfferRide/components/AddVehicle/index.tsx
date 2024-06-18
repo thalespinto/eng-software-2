@@ -47,7 +47,6 @@ const AddVehicle = () => {
         throw new Error("User ID is undefined");
       }
     } catch (error) {
-      console.error("Erro ao carregar veículos:", error);
       Alert.alert("Erro ao carregar veículos");
     }
   };
@@ -104,7 +103,7 @@ const AddVehicle = () => {
       rideContext?.setSelectedVehicle(vehicles[index]);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -117,14 +116,12 @@ const AddVehicle = () => {
       <ScrollView>
         <View>
           {vehicles.map((vehicle, index) => (
-            <>
-              <CarCard
-                key={index}
-                vehicle={vehicle}
-                selected={selectedVehicleIndex === index}
-                onPress={() => toggleSelectVehicle(index)}
-              />
-            </>
+            <CarCard
+              key={index}
+              vehicle={vehicle}
+              selected={selectedVehicleIndex === index}
+              onPress={() => toggleSelectVehicle(index)}
+            />
           ))}
         </View>
       </ScrollView>
